@@ -16,3 +16,31 @@
 *
 *
 ***************************************************************************/
+
+#include   <stdio.h>
+#include   <string.h>
+#include   <memory.h>
+#include   <malloc.h>
+
+#include "LISTA.H"
+
+
+/***********************************************************************
+*
+*  $TC Tipo de dados: GRF Vértice
+*
+*
+***********************************************************************/
+
+   typedef struct tagVertice {
+
+         int id ;
+               /* Ponteiro para o valor contido no elemento */
+
+         int visitado;
+               /* Ponteiro para o elemento predecessor */
+
+         LIS_tppLista arestas ;
+               /* Ponteiro para o elemento sucessor */
+
+   } tpVertice ;
