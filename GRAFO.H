@@ -48,11 +48,11 @@ typedef struct GRF_tagGrafo * GRF_tppGrafo ;
          GRF_CondRetOK ,
                /* Concluiu corretamente */
 
-         LIS_CondRetListaVazia ,
-               /* A lista não contém elementos */
+         GRF_VerticeNaoExiste,
+               /* o vertice nao existe no grafo*/
 
-         LIS_CondRetFimLista ,
-               /* Foi atingido o fim de lista */
+         GRF_ArestaJaExiste ,
+               /* a aresta ja existe no grafo */
 
          LIS_CondRetListaNaoExiste ,
                /* A lista não existe */
