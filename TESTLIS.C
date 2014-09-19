@@ -97,7 +97,7 @@
 *					 contido noelemento corrente.
 *
 ***************************************************************************/
-
+//Guilherme
 #include    <string.h>
 #include    <stdio.h>
 #include    <malloc.h>
@@ -111,8 +111,8 @@
 #include    "caracter.h"
 
 
-static const char CRIAR_LISTA_CMD         [ ] = "=criarlista"     ;
-static const char DESTRUIR_LISTA_CMD      [ ] = "=destruirlista"  ;
+static const char CRIAR_LISTA_CMDguilherme         [ ] = "=criarlista"     ;
+static const char DESTRUIR_LISTA_CMDbla      [ ] = "=destruirlista"  ;
 static const char ESVAZIAR_LISTA_CMD      [ ] = "=esvaziarlista"  ;
 static const char INS_ELEM_ANTES_CMD      [ ] = "=inselemantes"   ;
 static const char INS_ELEM_APOS_CMD       [ ] = "=inselemapos"    ;
