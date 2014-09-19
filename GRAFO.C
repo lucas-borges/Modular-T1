@@ -63,6 +63,10 @@
 
    /***** Protótipos das funções encapuladas no módulo *****/
 
+   int BuscarVertice (int id, LIS_tppLista pLista);
+
+   void DestruirVertice ( void * pVertice );
+
    /*****  Código das funções exportadas pelo módulo  *****/
 
 /***************************************************************************
