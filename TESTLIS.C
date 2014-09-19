@@ -1,4 +1,3 @@
-//mudanca no inicio
 /***************************************************************************
 *  $MCI Módulo de implementação: TLIS Teste lista de caracteres
 *
@@ -202,7 +201,27 @@ LIS_tppLista pLista;
          } /* fim ativa: Testar Esvaziar lista lista */
 
       /* Testar Destruir lista */
-		 /* fim ativa: Testar Destruir lista */
+
+         else if ( strcmp( ComandoTeste , DESTRUIR_LISTA_CMD ) == 0 )
+         {
+
+            numLidos = LER_LerParametros( "i" ,
+                               &CondRetEsp ) ;
+
+            if ( numLidos != 1 )
+            {
+               return TST_CondRetParm ;
+            } /* if */
+
+           
+			LIS_DestruirLista( pLista ) ;
+			pLista=NULL;
+			CondRetObt=LIS_CondRetOK;
+
+			return TST_CompararInt( CondRetEsp , CondRetObt ,
+                                    "Retorno errado ao destruir lista.") ;
+
+         } /* fim ativa: Testar Destruir lista */
 
       /* Testar inserir elemento antes */
 
