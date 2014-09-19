@@ -59,3 +59,32 @@
 		 LIS_tppLista origens;
 
    } GRF_tpGrafo ;
+
+   /***** Protótipos das funções encapuladas no módulo *****/
+
+   /*****  Código das funções exportadas pelo módulo  *****/
+
+/***************************************************************************
+*
+*  Função: GRF  &Nome da função
+*****/
+
+   /* Fim função: GRF  &Nome da função *
+   
+   
+   
+   
+   
+   
+/*****  Código das funções encapsuladas no módulo  *****/
+
+/***********************************************************************
+*
+*  $FC Função: GRF  -Nome da função
+*
+*  $ED Descrição da função
+*     
+*
+***********************************************************************/
+
+   /* Fim função: GRF  -Nome da função */
