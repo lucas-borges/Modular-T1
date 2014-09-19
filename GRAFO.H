@@ -19,7 +19,7 @@
 *     Implementa grafos não orientados utilizando listas 
 *	  genéricas duplamente encadeadas.
 *     Podem existir n listas em operação simultaneamente.
-*     As listas possuem uma cabeça encapsulando o seu estado.
+*     O grafo possui uma cabeça encapsulando o seu estado.
 *
 *
 *
