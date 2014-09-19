@@ -24,3 +24,62 @@
 *
 *
 *************************************************************************/
+
+
+/***** Declarações exportadas pelo módulo *****/
+
+/* Tipo referência para uma lista */
+
+typedef struct GRF_tagGrafo * GRF_tppGrafo ;
+
+
+/***********************************************************************
+*
+*  $TC Tipo de dados: GRF Condições de retorno
+*
+*
+*  $ED Descrição do tipo
+*     Condições de retorno das funções da lista
+*
+***********************************************************************/
+
+   typedef enum {
+
+         GRF_CondRetOK ,
+               /* Concluiu corretamente */
+
+         LIS_CondRetListaVazia ,
+               /* A lista não contém elementos */
+
+         LIS_CondRetFimLista ,
+               /* Foi atingido o fim de lista */
+
+         LIS_CondRetListaNaoExiste ,
+               /* A lista não existe */
+
+         LIS_CondRetFaltouMemoria ,
+               /* Faltou memória ao tentar criar um elemento de lista */
+		 
+   } GRF_tpCondRet ;
+
+
+/***********************************************************************
+*
+*  $FC Função: GRF  &Nome função
+*
+*  $ED Descrição da função
+*    
+*
+*  $EP Parâmetros
+*     
+*
+*  $FV Valor retornado
+*     
+*
+***********************************************************************/
+
+
+
+
+   
+/********** Fim do módulo de definição: GRF Grafo não orientado **********/
