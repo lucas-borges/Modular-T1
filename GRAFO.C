@@ -23,6 +23,7 @@
 #include   <malloc.h>
 
 #include "LISTA.H"
+#include "GRAFO.H"
 
 
 /***********************************************************************
@@ -66,6 +67,7 @@
 
 /***************************************************************************
 *
+<<<<<<< HEAD
 <<<<<<< HEAD
 *  Função: GRF  &Criar Vértice
 *****/
@@ -125,6 +127,11 @@
    }
 
 
+=======
+*  Função: GRF  &Nome da função
+*****/
+
+>>>>>>> parent of 5861500... CriaVertice (EM PROGRESSO)
    /* Fim função: GRF  &Nome da função *
    
 /***************************************************************************
@@ -133,40 +140,24 @@
 *****/
 
    GRF_tpCondRet GRF_CriarGrafo ( GRF_tppGrafo * ppGrafo)
+<<<<<<< HEAD
 >>>>>>> origin/master
+=======
+>>>>>>> parent of 5861500... CriaVertice (EM PROGRESSO)
    {
-	   tpVertice* vertice;
-	   void * aux;
 
-	   if(Grafo==NULL)
+	   *ppGrafo= ( GRF_tpGrafo * ) malloc ( sizeof ( GRF_tpGrafo )) ;
+	   if ( *ppGrafo == NULL )
 	   {
+		   return GRF_CondRetFaltouMemoria;
+	   } /* if */
 
-	   }
+	   LIS_CriarLista ( &((*ppGrafo)->origens) , DestruirVertice);
+	   LIS_CriarLista ( &((*ppGrafo)->vertices) , DestruirVertice);
 
-	   LIS_IrInicioLista ( Grafo->vertices );
-	   while( LIS_AvancarElementoCorrente ( Grafo->vertices ) != LIS_CondRetFimLista )
-	   {
-		   LIS_ObterValor ( Grafo->vertices , &aux );
-		   vertice = ( tpVertice * ) aux;
-		   
-		   if ( vertice->id == id ) break;
-	   }
-	   if ( vertice->id == id )
-	   {
-		   return GRF_VerticeJaExiste;
-	   }
+	   return GRF_CondRetOK;
 
-	   vertice = (tpVertice * ) malloc ( sizeof (tpVertice) );
-	   if ( vertice == NULL )
-	   {
-		   GRF_
-	   }
-
-   }
-   
-   
-   /* Fim função: GRF  &Nome da função *
-   
+   }   /* Fim função: GRF  &Nome da função *
    
    
    
@@ -182,6 +173,7 @@
 *     
 *
 ***********************************************************************/
+<<<<<<< HEAD
 <<<<<<< HEAD
 
    /* Fim função: GRF  -Nome da função */
@@ -208,6 +200,17 @@
 
 	    void * temp;
 		tpVertice * vertice;
+=======
+  
+   void DestruirVertice ( void * pVertice )
+   {
+
+	   free(pVertice);
+
+   } /* Fim função: GRF  -Nome da função */
+
+
+>>>>>>> parent of 5861500... CriaVertice (EM PROGRESSO)
 
 		LIS_IrInicioLista(pLista);
 
@@ -228,6 +231,7 @@
 
    }
 
+  
 
 
 
