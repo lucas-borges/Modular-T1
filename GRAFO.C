@@ -67,8 +67,58 @@
 
 /***************************************************************************
 *
-*  Função: GRF  &Nome da função
+*  Função: GRF &CriaAresta
 *****/
+
+   GRF_tpCondRet GRF_CriaAresta(tpVertice* vert_a, tpVertice * vert_b, GRF_tpGrafo * pGrafo)
+   {
+	   LIS_tpCondRet lis_ret;
+	   int vertice_ret;
+
+	   /*Verifica se os vertices existem*/
+
+	   vertice_ret=BuscarVertice(vert_a->id,pGrafo->vertices);
+
+	   if(vertice_ret==0)
+	   {
+		   return; //vertice nao existe
+	   }/*if*/
+
+	   vertice_ret=BuscarVertice(vert_b->id,pGrafo->vertices);
+
+	   if(vertice_ret==0)
+	   {
+		   return; //vertice nao existe
+	   }/*if*/
+
+	   /*Verifica se aresta já existe*/
+
+	   vertice_ret=BuscarVertice(vert_b->id,vert_a->arestas);
+
+	   if(vertice_ret==1)
+	   {
+		   return; //aresta já existe
+	   }/*if*/
+
+	   /*Inserir Aresta de a para b e de b para a*/
+
+	   lis_ret= LIS_InserirElementoApos(vert_a->arestas,vert_b);
+
+	   if(lis_ret!=LIS_CondRetOK)
+	   {
+		   return;//erro
+	   }/*if*/
+
+	   lis_ret= LIS_InserirElementoApos(vert_b->arestas,vert_a);
+
+	   if(lis_ret!=LIS_CondRetOK)
+	   {
+		   return;//erro
+	   }/*if*/
+
+	   return GRF_CondRetOK;
+   }
+
 
    /* Fim função: GRF  &Nome da função *
    
