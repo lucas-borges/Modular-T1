@@ -71,13 +71,7 @@
 
 /***************************************************************************
 *
-<<<<<<< HEAD
-<<<<<<< HEAD
-*  Função: GRF  &Criar Vértice
-*****/
 
-   void GRF_CriaVertice ( GRF_tpGrafo * Grafo , int id ) 
-=======
 *  Função: GRF &CriaAresta
 *****/
 
@@ -131,11 +125,6 @@
    }
 
 
-=======
-*  Função: GRF  &Nome da função
-*****/
-
->>>>>>> parent of 5861500... CriaVertice (EM PROGRESSO)
    /* Fim função: GRF  &Nome da função *
    
 /***************************************************************************
@@ -144,10 +133,6 @@
 *****/
 
    GRF_tpCondRet GRF_CriarGrafo ( GRF_tppGrafo * ppGrafo)
-<<<<<<< HEAD
->>>>>>> origin/master
-=======
->>>>>>> parent of 5861500... CriaVertice (EM PROGRESSO)
    {
 
 	   *ppGrafo= ( GRF_tpGrafo * ) malloc ( sizeof ( GRF_tpGrafo )) ;
@@ -177,11 +162,8 @@
 *     
 *
 ***********************************************************************/
-<<<<<<< HEAD
-<<<<<<< HEAD
 
    /* Fim função: GRF  -Nome da função */
-=======
   
    void DestruirVertice ( void * pVertice )
    {
@@ -204,18 +186,6 @@
 
 	    void * temp;
 		tpVertice * vertice;
-=======
-  
-   void DestruirVertice ( void * pVertice )
-   {
-
-	   free(pVertice);
-
-   } /* Fim função: GRF  -Nome da função */
-
-
->>>>>>> parent of 5861500... CriaVertice (EM PROGRESSO)
-
 		LIS_IrInicioLista(pLista);
 
 		do
@@ -231,7 +201,7 @@
 		} while (LIS_AvancarElementoCorrente(pLista,1)==LIS_CondRetOK);
 
 		return 0;
->>>>>>> origin/master
+
 
    }
 
