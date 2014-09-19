@@ -23,6 +23,7 @@
 #include   <malloc.h>
 
 #include "LISTA.H"
+#include "GRAFO.H"
 
 
 /***********************************************************************
@@ -71,6 +72,26 @@
 
    /* Fim função: GRF  &Nome da função *
    
+/***************************************************************************
+*
+*  Função: GRF  &Nome da função
+*****/
+
+   GRF_tpCondRet GRF_CriarGrafo ( GRF_tppGrafo * ppGrafo)
+   {
+
+	   *ppGrafo= ( GRF_tpGrafo * ) malloc ( sizeof ( GRF_tpGrafo )) ;
+	   if ( *ppGrafo == NULL )
+	   {
+		   return GRF_CondRetFaltouMemoria;
+	   } /* if */
+
+	   LIS_CriarLista ( &((*ppGrafo)->origens) , DestruirVertice);
+	   LIS_CriarLista ( &((*ppGrafo)->vertices) , DestruirVertice);
+
+	   return GRF_CondRetOK;
+
+   }   /* Fim função: GRF  &Nome da função *
    
    
    
@@ -86,10 +107,18 @@
 *     
 *
 ***********************************************************************/
+  
+   void DestruirVertice ( void * pVertice )
+   {
 
-   /* Fim função: GRF  -Nome da função */
+	   free(pVertice);
+
+   } /* Fim função: GRF  -Nome da função */
 
 
+
+
+  
 
 
 

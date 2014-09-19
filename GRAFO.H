@@ -57,7 +57,7 @@ typedef struct GRF_tagGrafo * GRF_tppGrafo ;
          LIS_CondRetListaNaoExiste ,
                /* A lista não existe */
 
-         LIS_CondRetFaltouMemoria ,
+         GRF_CondRetFaltouMemoria ,
                /* Faltou memória ao tentar criar um elemento de lista */
 		 
    } GRF_tpCondRet ;
