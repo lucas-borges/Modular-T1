@@ -44,3 +44,18 @@
                /* Ponteiro para o elemento sucessor */
 
    } tpVertice ;
+
+   /***********************************************************************
+*
+*  $TC Tipo de dados: GRF Descritor da cabeça de grafo
+*
+*
+***********************************************************************/
+
+   typedef struct GRF_tagGrafo {
+
+         LIS_tppLista vertices;
+
+		 LIS_tppLista origens;
+
+   } GRF_tpGrafo ;
