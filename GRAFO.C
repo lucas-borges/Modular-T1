@@ -175,7 +175,7 @@
 
 /***************************************************************************
 *
-*  Função: GRF  &Nome da função
+*  Função: GRF  &Criar grafo
 *****/
 
    GRF_tpCondRet GRF_CriarGrafo ( GRF_tppGrafo * ppGrafo)
@@ -192,11 +192,11 @@
 
 	   return GRF_CondRetOK;
 
-   }   /* Fim função: GRF  &Nome da função */
+   }   /* Fim função: GRF  &Criar grafo */
    
 /***************************************************************************
 *
-*  Função: GRF  &Destroi Grafo
+*  Função: GRF  &Destroi grafo
 *****/
    
    GRF_tpCondRet GRF_DestroiGrafo (GRF_tppGrafo pGrafo)
@@ -208,21 +208,19 @@
 
 	   return GRF_CondRetOK;
 
-   } /* Fim função: GRF  &Nome da função */
+   } /* Fim função: GRF  &Destroi grafo */
    
    
 /*****  Código das funções encapsuladas no módulo  *****/
 
 /***********************************************************************
 *
-*  $FC Função: GRF  -Nome da função
+*  $FC Função: GRF  -Destruir vértice
 *
 *  $ED Descrição da função
 *     
 *
 ***********************************************************************/
-
-   /* Fim função: GRF  -Nome da função */
   
    void DestruirVertice ( void * pVertice )
    {
@@ -230,11 +228,11 @@
 		LIS_DestruirLista(((tpVertice*)pVertice)->arestas);
 		free(pVertice);
 
-   } /* Fim função: GRF  -Nome da função */
+   } /* Fim função: GRF  -Destruir vértice */
 
 /***********************************************************************
 *
-*  $FC Função: GRF  -Nome da função
+*  $FC Função: GRF  -Buscar Vértice
 *
 *  $ED Descrição da função
 *     
@@ -262,7 +260,7 @@
 
 		return 0;
 
-   }
+   } /* Fim função: GRF  -Buscar Vértice */
 
   
 
