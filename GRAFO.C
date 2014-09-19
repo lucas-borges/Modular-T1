@@ -165,8 +165,38 @@
 
    } /* Fim função: GRF  -Nome da função */
 
+/***********************************************************************
+*
+*  $FC Função: GRF  -Nome da função
+*
+*  $ED Descrição da função
+*     
+*
+***********************************************************************/
 
+   int BuscarVertice (int id, LIS_tppLista pLista)
+   {
 
+	    void * temp;
+		tpVertice * vertice;
+
+		LIS_IrInicioLista(pLista);
+
+		do
+		{
+			LIS_ObterValor(pLista, &temp);
+			vertice=(tpVertice *) temp;
+
+			if (vertice->id == id) 
+			{
+				return 1;
+			} /* if */
+
+		} while (LIS_AvancarElementoCorrente(pLista,1)==LIS_CondRetOK);
+
+		return 0;
+
+   }
 
   
 
