@@ -79,25 +79,25 @@
 
 	   vertice_ret=BuscarVertice(vert_a->id,pGrafo->vertices);
 
-	   if(vertice_ret==0)
+	   if(vertice_ret==0)//vertice nao existe
 	   {
-		   return; //vertice nao existe
+		   return GRF_VerticeNaoExiste; 
 	   }/*if*/
 
 	   vertice_ret=BuscarVertice(vert_b->id,pGrafo->vertices);
 
-	   if(vertice_ret==0)
+	   if(vertice_ret==0)//vertice nao existe
 	   {
-		   return; //vertice nao existe
+		   return GRF_VerticeNaoExiste; 
 	   }/*if*/
 
 	   /*Verifica se aresta já existe*/
 
 	   vertice_ret=BuscarVertice(vert_b->id,vert_a->arestas);
 
-	   if(vertice_ret==1)
+	   if(vertice_ret==1)//aresta já existe
 	   {
-		   return; //aresta já existe
+		   return GRF_ArestaJaExiste; 
 	   }/*if*/
 
 	   /*Inserir Aresta de a para b e de b para a*/
