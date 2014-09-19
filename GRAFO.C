@@ -124,9 +124,55 @@
 	   return GRF_CondRetOK;
    }
 
+   
 
    /* Fim função: GRF  &Nome da função *
+
+   /***************************************************************************
+*
+*  Função: GRF  &RemoveAresta
+*****/
    
+   GRF_tpCondRet GRF_RemoveAresta(tpVertice* vert_a, tpVertice * vert_b, GRF_tpGrafo * pGrafo)
+   {
+	   int vertice_ret;
+
+	    /*Verifica se os vertices existem*/
+
+	   vertice_ret=BuscarVertice(vert_a->id,pGrafo->vertices);
+
+	   if(vertice_ret==0)//vertice nao existe
+	   {
+		   return GRF_VerticeNaoExiste; 
+	   }/*if*/
+
+	   vertice_ret=BuscarVertice(vert_b->id,pGrafo->vertices);
+
+	   if(vertice_ret==0)//vertice nao existe
+	   {
+		   return GRF_VerticeNaoExiste; 
+	   }/*if*/
+
+	   /*Verifica se aresta já existe*/
+
+	   vertice_ret=BuscarVertice(vert_b->id,vert_a->arestas);
+
+	   if(vertice_ret==0)//aresta nao existe
+	   {
+		   return GRF_ArestaNaoExiste;
+	   }/*if*/
+
+	   LIS_ExcluirElemento(vert_a->arestas);
+
+	   BuscarVertice(vert_a->id,vert_b->arestas);
+
+	   LIS_ExcluirElemento(vert_a->arestas);
+
+	   return GRF_CondRetOK;
+   }
+
+   /* Fim função: GRF  &RemoveAresta *
+
 /***************************************************************************
 *
 *  Função: GRF  &Nome da função
