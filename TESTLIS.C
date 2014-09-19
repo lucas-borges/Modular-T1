@@ -98,7 +98,7 @@
 *					 contido noelemento corrente.
 *
 ***************************************************************************/
-
+//aqui sera?
 #include    <string.h>
 #include    <stdio.h>
 #include    <malloc.h>
@@ -239,39 +239,7 @@ LIS_tppLista pLista;
 
       /* Testar inserir elemento apos */
 
-         else if ( strcmp( ComandoTeste , INS_ELEM_APOS_CMD ) == 0 )
-         {
-
-            numLidos = LER_LerParametros( "ci" ,&Dado , &CondRetEsp ) ;
-
-            if ( numLidos != 2 )
-            {
-               return TST_CondRetParm ;
-            } /* if */
-
-            pDado=CHR_CriarCaracter( Dado );
-
-            if ( pDado == NULL )
-            {
-               return TST_CondRetMemoria ;
-            } /* if */
-
-            CondRetObt = LIS_InserirElementoApos( pLista , pDado ) ; 
-
-			if ( CondRetObt != LIS_CondRetOK ) /* Destrói caracter se não consegue inserir */
-            {
-               CHR_DestruirCaracter( (CHR_tppCaracter)pDado ) ;
-            } /* if */
-
-			return TST_CompararInt( CondRetEsp , CondRetObt ,
-                     "Condicao de retorno errada ao inserir apos.") ;
-
-         } /* fim ativa: Testar inserir elemento apos */
-
-      /* Testar excluir elemento */
-
-         else if ( strcmp( ComandoTeste , EXC_ELEM_CMD ) == 0 )
-         {
+        
 
             numLidos = LER_LerParametros( "i", &CondRetEsp ) ;
 
