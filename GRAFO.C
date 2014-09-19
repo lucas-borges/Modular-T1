@@ -194,9 +194,47 @@
 
    }   /* Fim função: GRF  &Nome da função *
    
+/***************************************************************************
+*
+*  Função: GRF  &CriaVertice
+*****/
    
+ void GRF_CriaVertice ( GRF_tpGrafo * Grafo , int id ) 
+   {
+	   tpVertice* vertice;
+	   void * aux;
+
+	   if(Grafo==NULL)
+	   {
+		   return GRF_GrafoNaoExiste;
+	   }
+
+	   LIS_IrInicioLista ( Grafo->vertices );
+	   while( LIS_AvancarElementoCorrente ( Grafo->vertices ) != LIS_CondRetFimLista )
+	   {
+		   LIS_ObterValor ( Grafo->vertices , &aux );
+		   vertice = ( tpVertice * ) aux;
+		   
+		   if ( vertice->id == id ) break;
+	   }
+	   if ( vertice->id == id )
+	   {
+		   return GRF_VerticeJaExiste;
+	   }
+
+	   vertice = (tpVertice * ) malloc ( sizeof (tpVertice) );
+	   if ( vertice == NULL )
+	   {
+		   return GRF_FaltouMemoria;
+	   }
+	   
+	   vertice->id = id;
+
+	   LIS_CriarLista ( &vertice->arestas , destruiraresta );
+
+   }
    
-   
+   /* Fim função: GRF  &Nome da função *
    
 /*****  Código das funções encapsuladas no módulo  *****/
 
