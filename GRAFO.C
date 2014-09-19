@@ -192,10 +192,23 @@
 
 	   return GRF_CondRetOK;
 
-   }   /* Fim função: GRF  &Nome da função *
+   }   /* Fim função: GRF  &Nome da função */
    
+/***************************************************************************
+*
+*  Função: GRF  &Destroi Grafo
+*****/
    
-   
+   GRF_tpCondRet GRF_DestroiGrafo (GRF_tppGrafo pGrafo)
+   {
+
+	   LIS_DestruirLista(pGrafo->origens);
+	   LIS_DestruirLista(pGrafo->vertices);
+	   free(pGrafo);
+
+	   return GRF_CondRetOK;
+
+   } /* Fim função: GRF  &Nome da função */
    
    
 /*****  Código das funções encapsuladas no módulo  *****/
@@ -214,7 +227,8 @@
    void DestruirVertice ( void * pVertice )
    {
 
-	   free(pVertice);
+		LIS_DestruirLista(((tpVertice*)pVertice)->arestas);
+		free(pVertice);
 
    } /* Fim função: GRF  -Nome da função */
 
@@ -247,7 +261,6 @@
 		} while (LIS_AvancarElementoCorrente(pLista,1)==LIS_CondRetOK);
 
 		return 0;
-
 
    }
 
