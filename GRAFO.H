@@ -48,6 +48,9 @@ typedef struct GRF_tagGrafo * GRF_tppGrafo ;
          GRF_CondRetOK ,
                /* Concluiu corretamente */
 
+		 GRF_VerticeJaExiste ,
+		       /* O vertice ja existe no grafo */
+
          GRF_VerticeNaoExiste,
                /* o vertice nao existe no grafo*/
 
@@ -56,6 +59,9 @@ typedef struct GRF_tagGrafo * GRF_tppGrafo ;
 
          GRF_ArestaNaoExiste,
                /* a aresta nao existe */
+
+		 GRF_CondRetGrafoNaoExiste ,
+			   /* O grafo nao existe */
 
          GRF_CondRetFaltouMemoria ,
                /* Faltou memória ao tentar criar um elemento de lista */

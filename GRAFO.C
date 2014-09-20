@@ -192,52 +192,53 @@
 
 	   return GRF_CondRetOK;
 
-<<<<<<< HEAD
-   }   /* Fim função: GRF  &Nome da função *
+
+   }   /* Fim função: GRF  &Criar Grafo *
    
 /***************************************************************************
 *
 *  Função: GRF  &CriaVertice
 *****/
    
- void GRF_CriaVertice ( GRF_tpGrafo * Grafo , int id ) 
+ GRF_tpCondRet GRF_CriaVertice ( GRF_tpGrafo * Grafo , int id ) 
    {
+	   int Ret;
 	   tpVertice* vertice;
-	   void * aux;
 
 	   if(Grafo==NULL)
 	   {
-		   return GRF_GrafoNaoExiste;
+		   return GRF_CondRetGrafoNaoExiste;
 	   }
 
-	   LIS_IrInicioLista ( Grafo->vertices );
-	   while( LIS_AvancarElementoCorrente ( Grafo->vertices ) != LIS_CondRetFimLista )
+	   if(BuscarVertice ( id , Grafo->vertices ) == 1 )//Checa se o vertice já existe
 	   {
-		   LIS_ObterValor ( Grafo->vertices , &aux );
-		   vertice = ( tpVertice * ) aux;
-		   
-		   if ( vertice->id == id ) break;
-	   }
-	   if ( vertice->id == id )
-	   {
-		   return GRF_VerticeJaExiste;
+			return GRF_VerticeJaExiste ;
 	   }
 
-	   vertice = (tpVertice * ) malloc ( sizeof (tpVertice) );
+	   vertice = (tpVertice * ) malloc ( sizeof (tpVertice) );//cria vertice
 	   if ( vertice == NULL )
 	   {
-		   return GRF_FaltouMemoria;
+		   return GRF_CondRetFaltouMemoria;
 	   }
 	   
 	   vertice->id = id;
+	   LIS_CriarLista ( &vertice->arestas , free );//funcao free pois nao existem outras estruturas nessa lista, somente ponteiros
+	   
+	   if( vertice->arestas == NULL )
+	   {
+		   return GRF_CondRetFaltouMemoria;
+	   }
 
-	   LIS_CriarLista ( &vertice->arestas , destruiraresta );
+	   Ret = LIS_InserirElementoApos ( Grafo->vertices , vertice );
+	   if( Ret != LIS_CondRetOK )
+	   {
+		   return GRF_CondRetErro;//nao sei que erro colocar aqui
+	   }
 
+	   return GRF_CondRetOK;
    }
    
-   /* Fim função: GRF  &Nome da função *
-=======
-   }   /* Fim função: GRF  &Criar grafo */
+   /* Fim função: GRF  &Criar Vertice *
    
 /***************************************************************************
 *
@@ -255,7 +256,7 @@
 
    } /* Fim função: GRF  &Destroi grafo */
    
->>>>>>> origin/master
+
    
 /*****  Código das funções encapsuladas no módulo  *****/
 
@@ -304,7 +305,7 @@
 
 		} while (LIS_AvancarElementoCorrente(pLista,1)==LIS_CondRetOK);
 
-		return 0;
+		return 0 ;
 
    } /* Fim função: GRF  -Buscar Vértice */
 
