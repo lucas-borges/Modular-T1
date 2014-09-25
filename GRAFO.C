@@ -59,6 +59,9 @@
 
 		 LIS_tppLista origens;
 
+		 int ( ComparaValor * ) ( void * pValorA , void * pValorB ) ;
+			   /* Ponteiro para funçao que compara duas chaves, retornando 0 se iguais e 1 se diferentes */
+
 		// void  ( ExcluirValor * ) ( void * pvalor ) ;
 			   /* Ponteiro para a função de destruição do valor contido em um vertice */
 
@@ -85,14 +88,14 @@
 
 	   /*Verifica se os vertices existem*/
 
-	   vertice_ret=BuscarVertice(vert_a->pValor,pGrafo->vertices);
+	   vertice_ret=BuscarVertice(vert_a->pValor , pGrafo->vertices , pGrafo->ComparaValor );
 
 	   if(vertice_ret==0)//vertice nao existe
 	   {
 		   return GRF_VerticeNaoExiste; 
 	   }/*if*/
 
-	   vertice_ret=BuscarVertice(vert_b->pValor,pGrafo->vertices);
+	   vertice_ret=BuscarVertice(vert_b->pValor,pGrafo->vertices , pGrafo->ComparaValor );
 
 	   if(vertice_ret==0)//vertice nao existe
 	   {
@@ -101,7 +104,7 @@
 
 	   /*Verifica se aresta já existe*/
 
-	   vertice_ret=BuscarVertice(vert_b->pValor,vert_a->arestas);
+	   vertice_ret=BuscarVertice(vert_b->pValor,vert_a->arestas , pGrafo->ComparaValor );
 
 	   if(vertice_ret==1)//aresta já existe
 	   {
@@ -142,14 +145,14 @@
 
 	    /*Verifica se os vertices existem*/
 
-	   vertice_ret=BuscarVertice(vert_a->pValor,pGrafo->vertices);
+	   vertice_ret=BuscarVertice(vert_a->pValor,pGrafo->vertices , pGrafo->ComparaValor );
 
 	   if(vertice_ret==0)//vertice nao existe
 	   {
 		   return GRF_VerticeNaoExiste; 
 	   }/*if*/
 
-	   vertice_ret=BuscarVertice(vert_b->pValor,pGrafo->vertices);
+	   vertice_ret=BuscarVertice(vert_b->pValor,pGrafo->vertices , pGrafo->ComparaValor );
 
 	   if(vertice_ret==0)//vertice nao existe
 	   {
@@ -158,7 +161,7 @@
 
 	   /*Verifica se aresta já existe*/
 
-	   vertice_ret=BuscarVertice(vert_b->pValor,vert_a->arestas);
+	   vertice_ret=BuscarVertice(vert_b->pValor,vert_a->arestas , pGrafo->ComparaValor );
 
 	   if(vertice_ret==0)//aresta nao existe
 	   {
@@ -167,7 +170,7 @@
 
 	   LIS_ExcluirElemento(vert_a->arestas);
 
-	   BuscarVertice(vert_a->pValor,vert_b->arestas);
+	   BuscarVertice(vert_a->pValor,vert_b->arestas , pGrafo->ComparaValor );
 
 	   LIS_ExcluirElemento(vert_a->arestas);
 
@@ -181,7 +184,7 @@
 *  Função: GRF  &Criar grafo
 *****/
 
-   GRF_tpCondRet GRF_CriarGrafo ( GRF_tppGrafo * ppGrafo , void ( ExcluirValor * ) ( void * pValor ) )
+   GRF_tpCondRet GRF_CriarGrafo ( GRF_tppGrafo * ppGrafo , int ( ComparaValor * ) ( void * pValorA , void * pValorB ) , void ( ExcluirValor * ) ( void * pValor ) )
    {
 
 	   *ppGrafo= ( GRF_tpGrafo * ) malloc ( sizeof ( GRF_tpGrafo )) ;
@@ -190,9 +193,9 @@
 		   return GRF_CondRetFaltouMemoria;
 	   } /* if */
 
-	   LIS_CriarLista ( &((*ppGrafo)->origens) , ExcluirValor);
-	   LIS_CriarLista ( &((*ppGrafo)->vertices) , ExcluirValor);
-	   //( *ppGrafo ) -> ExcluirValor = ExcluirValor ;
+	   LIS_CriarLista ( &( ( * ppGrafo ) -> origens ) , ExcluirValor ) ;
+	   LIS_CriarLista ( &( ( * ppGrafo ) -> vertices ) , ExcluirValor ) ;
+	   ( *ppGrafo ) -> ComparaValor = ComparaValor ;
 
 	   return GRF_CondRetOK;
 
@@ -214,7 +217,7 @@
 		   return GRF_CondRetGrafoNaoExiste;
 	   }
 
-	   if(BuscarVertice ( pValor , Grafo->vertices ) == 1 )//Checa se o vertice já existe
+	   if(BuscarVertice ( pValor , Grafo->vertices , pGrafo->ComparaValor ) == 1 )//Checa se o vertice já existe
 	   {
 			return GRF_VerticeJaExiste ;
 	   }
@@ -290,7 +293,7 @@
 *
 ***********************************************************************/
 
-   int BuscarVertice (int id, LIS_tppLista pLista)
+   int BuscarVertice ( void * pValor, LIS_tppLista pLista , int ( ComparaValor * ) ( void * pValorA , void * pValorB ) )
    {
 
 	    void * temp;
@@ -302,7 +305,7 @@
 			LIS_ObterValor(pLista, &temp);
 			vertice=(tpVertice *) temp;
 
-			if (vertice->id == id) 
+			if ( ComparaValor( pValor , vertice->pValor ) == 0 ) 
 			{
 				return 1;
 			} /* if */

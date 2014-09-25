@@ -36,6 +36,8 @@
 
 #include	"GRAFO.H"
 
+#include	"CARACTER.H"
+
 static const char COMANDO_CMD         [ ] = "=comando"     ;
 
 
@@ -95,7 +97,7 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 
 	
 	/* Testar Criar Grafo */
-	else if( strcmp( Comandoteste , CRIAR_GRAFO_CMD ) == 0 )
+	else if( strcmp( ComandoTeste , CRIAR_GRAFO_CMD ) == 0 )
 	{
 		numLidos = LER_LerParametros ( "i" ,
 			 &CondRetEsp ) ;
@@ -105,13 +107,14 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 			return TST_CondRetParm ;
 		}/* if */
 
-		CondRetObt = GRF_CriarGrafo ( &pGrafo ) ;
+		CondRetObt = GRF_CriarGrafo ( &pGrafo , CHR_ComparaCaracter , CHR_DestruirCaracter ) ;
 
 		return TST_CompararInt ( CondRetEsp , CondRetObt , 
 				"Retorno errado ao criar grafo.") ;
 
 	} /* fim ativa: Testar Criar Grafo */
 
+	/* Testar Destroi Grafo */
 	else if ( strcmp( ComandoTeste , DESTROI_GRAFO_CMD ) == 0 )
 	{
 
@@ -130,13 +133,15 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 		return TST_CompararInt( CondRetEsp , CondRetObt ,
 			"Retorno errado ao destruir o Grafo." );
 
-	} /* fim ativa: Testar COMANDO */
+	} /* fim ativa: Testar Destroi Grafo */
 
+	/* Testar Insere Vertice */
 	else if ( strcmp( ComandoTeste , INSERE_VERTICE_CMD ) == 0 )
 	{
 
+		CHR_tppCaracter pCaracter ;
 		char ValorVertice ;
-		
+
 		numLidos = LER_LerParametros( "ci" ,
 			&ValorVertice , &CondRetEsp ) ;
 
@@ -145,12 +150,19 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 			return TST_CondRetParm ;
 		} /* if */
 
-		CondRetObt=GRF_(  ) ;
+		pCaracter = CHR_CriarCaracter ( ValorVertice ) ;
+
+		if ( pCaracter == NULL )
+		{
+			return TST_CondRetMemoria ;
+		}
+
+		CondRetObt = GRF_CriaVertice ( pGrafo , pCaracter ) ;
 
 		return TST_CompararInt( CondRetEsp , CondRetObt ,
 			"Retorno errado ao COMANDO." );
 
-	} /* fim ativa: Testar COMANDO */
+	} /* fim ativa: Testar Cria Vertice */
 
 	return TST_CondRetNaoConhec;
 
