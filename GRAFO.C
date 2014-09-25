@@ -35,14 +35,14 @@
 
    typedef struct tagVertice {
 
-         int id ;
+         void * pValor ;
                /* Ponteiro para o valor contido no elemento */
 
          int visitado;
                /* Ponteiro para o elemento predecessor */
 
          LIS_tppLista arestas ;
-               /* Ponteiro para o elemento sucessor */
+               /* Ponteiro para o elemento sucessor */		 
 
    } tpVertice ;
 
@@ -59,11 +59,14 @@
 
 		 LIS_tppLista origens;
 
+		// void  ( ExcluirValor * ) ( void * pvalor ) ;
+			   /* Ponteiro para a função de destruição do valor contido em um vertice */
+
    } GRF_tpGrafo ;
 
    /***** Protótipos das funções encapuladas no módulo *****/
 
-   int BuscarVertice (int id, LIS_tppLista pLista);
+   int BuscarVertice (void * pValor , LIS_tppLista pLista);
 
    void DestruirVertice ( void * pVertice );
 
@@ -82,14 +85,14 @@
 
 	   /*Verifica se os vertices existem*/
 
-	   vertice_ret=BuscarVertice(vert_a->id,pGrafo->vertices);
+	   vertice_ret=BuscarVertice(vert_a->pValor,pGrafo->vertices);
 
 	   if(vertice_ret==0)//vertice nao existe
 	   {
 		   return GRF_VerticeNaoExiste; 
 	   }/*if*/
 
-	   vertice_ret=BuscarVertice(vert_b->id,pGrafo->vertices);
+	   vertice_ret=BuscarVertice(vert_b->pValor,pGrafo->vertices);
 
 	   if(vertice_ret==0)//vertice nao existe
 	   {
@@ -98,7 +101,7 @@
 
 	   /*Verifica se aresta já existe*/
 
-	   vertice_ret=BuscarVertice(vert_b->id,vert_a->arestas);
+	   vertice_ret=BuscarVertice(vert_b->pValor,vert_a->arestas);
 
 	   if(vertice_ret==1)//aresta já existe
 	   {
@@ -139,14 +142,14 @@
 
 	    /*Verifica se os vertices existem*/
 
-	   vertice_ret=BuscarVertice(vert_a->id,pGrafo->vertices);
+	   vertice_ret=BuscarVertice(vert_a->pValor,pGrafo->vertices);
 
 	   if(vertice_ret==0)//vertice nao existe
 	   {
 		   return GRF_VerticeNaoExiste; 
 	   }/*if*/
 
-	   vertice_ret=BuscarVertice(vert_b->id,pGrafo->vertices);
+	   vertice_ret=BuscarVertice(vert_b->pValor,pGrafo->vertices);
 
 	   if(vertice_ret==0)//vertice nao existe
 	   {
@@ -155,7 +158,7 @@
 
 	   /*Verifica se aresta já existe*/
 
-	   vertice_ret=BuscarVertice(vert_b->id,vert_a->arestas);
+	   vertice_ret=BuscarVertice(vert_b->pValor,vert_a->arestas);
 
 	   if(vertice_ret==0)//aresta nao existe
 	   {
@@ -164,7 +167,7 @@
 
 	   LIS_ExcluirElemento(vert_a->arestas);
 
-	   BuscarVertice(vert_a->id,vert_b->arestas);
+	   BuscarVertice(vert_a->pValor,vert_b->arestas);
 
 	   LIS_ExcluirElemento(vert_a->arestas);
 
@@ -178,7 +181,7 @@
 *  Função: GRF  &Criar grafo
 *****/
 
-   GRF_tpCondRet GRF_CriarGrafo ( GRF_tppGrafo * ppGrafo)
+   GRF_tpCondRet GRF_CriarGrafo ( GRF_tppGrafo * ppGrafo , void ( ExcluirValor * ) ( void * pValor ) )
    {
 
 	   *ppGrafo= ( GRF_tpGrafo * ) malloc ( sizeof ( GRF_tpGrafo )) ;
@@ -187,8 +190,9 @@
 		   return GRF_CondRetFaltouMemoria;
 	   } /* if */
 
-	   LIS_CriarLista ( &((*ppGrafo)->origens) , DestruirVertice);
-	   LIS_CriarLista ( &((*ppGrafo)->vertices) , DestruirVertice);
+	   LIS_CriarLista ( &((*ppGrafo)->origens) , ExcluirValor);
+	   LIS_CriarLista ( &((*ppGrafo)->vertices) , ExcluirValor);
+	   //( *ppGrafo ) -> ExcluirValor = ExcluirValor ;
 
 	   return GRF_CondRetOK;
 
@@ -200,7 +204,7 @@
 *  Função: GRF  &CriaVertice
 *****/
    
- GRF_tpCondRet GRF_CriaVertice ( GRF_tpGrafo * Grafo , int id ) 
+ GRF_tpCondRet GRF_CriaVertice ( GRF_tpGrafo * Grafo , void * pValor ) 
    {
 	   int Ret;
 	   tpVertice* vertice;
@@ -210,7 +214,7 @@
 		   return GRF_CondRetGrafoNaoExiste;
 	   }
 
-	   if(BuscarVertice ( id , Grafo->vertices ) == 1 )//Checa se o vertice já existe
+	   if(BuscarVertice ( pValor , Grafo->vertices ) == 1 )//Checa se o vertice já existe
 	   {
 			return GRF_VerticeJaExiste ;
 	   }
@@ -221,7 +225,7 @@
 		   return GRF_CondRetFaltouMemoria;
 	   }
 	   
-	   vertice->id = id;
+	   vertice->pValor = pValor;
 	   LIS_CriarLista ( &vertice->arestas , free );//funcao free pois nao existem outras estruturas nessa lista, somente ponteiros
 	   
 	   if( vertice->arestas == NULL )

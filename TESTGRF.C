@@ -38,6 +38,11 @@
 
 static const char COMANDO_CMD         [ ] = "=comando"     ;
 
+
+static const char CRIAR_GRAFO_CMD	  [ ] = "=criagrafo"  ;
+static const char DESTROI_GRAFO_CMD   [ ] = "=destroigrafo" ;
+static const char INSERE_VERTICE_CMD  [ ] = "=inserevertice" ;
+
 GRF_tppGrafo pGrafo;
 
 /*****  Código das funções exportadas pelo módulo  *****/
@@ -86,7 +91,66 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 		return TST_CompararInt( CondRetEsp , CondRetObt ,
 			"Retorno errado ao COMANDO." );
 
-	} /* fim ativa: Testar CriarLista */
+	} /* fim ativa: Testar COMANDO */
+
+	
+	/* Testar Criar Grafo */
+	else if( strcmp( Comandoteste , CRIAR_GRAFO_CMD ) == 0 )
+	{
+		numLidos = LER_LerParametros ( "i" ,
+			 &CondRetEsp ) ;
+		
+		if ( numLidos != 1 )
+		{
+			return TST_CondRetParm ;
+		}/* if */
+
+		CondRetObt = GRF_CriarGrafo ( &pGrafo ) ;
+
+		return TST_CompararInt ( CondRetEsp , CondRetObt , 
+				"Retorno errado ao criar grafo.") ;
+
+	} /* fim ativa: Testar Criar Grafo */
+
+	else if ( strcmp( ComandoTeste , DESTROI_GRAFO_CMD ) == 0 )
+	{
+
+		numLidos = LER_LerParametros( "i" ,
+			&CondRetEsp ) ;
+
+		if ( numLidos != 1 )
+		{
+			return TST_CondRetParm ;
+		} /* if */
+
+		CondRetObt=GRF_DestroiGrafo ( pGrafo ) ;
+
+		pGrafo = NULL ;
+
+		return TST_CompararInt( CondRetEsp , CondRetObt ,
+			"Retorno errado ao destruir o Grafo." );
+
+	} /* fim ativa: Testar COMANDO */
+
+	else if ( strcmp( ComandoTeste , INSERE_VERTICE_CMD ) == 0 )
+	{
+
+		char ValorVertice ;
+		
+		numLidos = LER_LerParametros( "ci" ,
+			&ValorVertice , &CondRetEsp ) ;
+
+		if ( numLidos != 2 )
+		{
+			return TST_CondRetParm ;
+		} /* if */
+
+		CondRetObt=GRF_(  ) ;
+
+		return TST_CompararInt( CondRetEsp , CondRetObt ,
+			"Retorno errado ao COMANDO." );
+
+	} /* fim ativa: Testar COMANDO */
 
 	return TST_CondRetNaoConhec;
 
