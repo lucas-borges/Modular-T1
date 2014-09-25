@@ -59,7 +59,7 @@
 
 		 LIS_tppLista origens;
 
-		 int ( ComparaValor * ) ( void * pValorA , void * pValorB ) ;
+		 int ( * ComparaValor ) ( void * pValorA , void * pValorB ) ;
 			   /* Ponteiro para funçao que compara duas chaves, retornando 0 se iguais e 1 se diferentes */
 
 		// void  ( ExcluirValor * ) ( void * pvalor ) ;
@@ -184,7 +184,7 @@
 *  Função: GRF  &Criar grafo
 *****/
 
-   GRF_tpCondRet GRF_CriarGrafo ( GRF_tppGrafo * ppGrafo , int ( ComparaValor * ) ( void * pValorA , void * pValorB ) , void ( ExcluirValor * ) ( void * pValor ) )
+   GRF_tpCondRet GRF_CriarGrafo ( GRF_tppGrafo * ppGrafo , int ( * ComparaValor ) ( void * pValorA , void * pValorB ) , void ( * ExcluirValor ) ( void * pValor ) )
    {
 
 	   *ppGrafo= ( GRF_tpGrafo * ) malloc ( sizeof ( GRF_tpGrafo )) ;
@@ -195,7 +195,7 @@
 
 	   LIS_CriarLista ( &( ( * ppGrafo ) -> origens ) , ExcluirValor ) ;
 	   LIS_CriarLista ( &( ( * ppGrafo ) -> vertices ) , ExcluirValor ) ;
-	   ( *ppGrafo ) -> ComparaValor = ComparaValor ;
+	   (*ppGrafo)->ComparaValor=ComparaValor ;
 
 	   return GRF_CondRetOK;
 
@@ -293,7 +293,7 @@
 *
 ***********************************************************************/
 
-   int BuscarVertice ( void * pValor, LIS_tppLista pLista , int ( ComparaValor * ) ( void * pValorA , void * pValorB ) )
+   int BuscarVertice ( void * pValor, LIS_tppLista pLista , int ( * ComparaValor ) ( void * pValorA , void * pValorB ) )
    {
 
 	    void * temp;
@@ -302,15 +302,15 @@
 
 		do
 		{
-			LIS_ObterValor(pLista, &temp);
-			vertice=(tpVertice *) temp;
+			LIS_ObterValor ( pLista, &temp ) ;
+			vertice = ( tpVertice * ) temp ;
 
-			if ( ComparaValor( pValor , vertice->pValor ) == 0 ) 
+			if ( ComparaValor ( pValor , vertice->pValor ) == 0 ) 
 			{
 				return 1;
 			} /* if */
 
-		} while (LIS_AvancarElementoCorrente(pLista,1)==LIS_CondRetOK);
+		} while ( LIS_AvancarElementoCorrente ( pLista , 1 ) == LIS_CondRetOK ) ;
 
 		return 0 ;
 
