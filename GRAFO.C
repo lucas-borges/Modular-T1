@@ -279,6 +279,74 @@
 
    } /* Fim função: GRF  &Destroi grafo */
    
+/***************************************************************************
+*
+*  Função: GRF  &Existe Caminho
+*****/
+
+   GRF_tpCondRet GRF_ExisteCaminho ( GRF_tppGrafo pGrafo , void * verticeOrigem , void * verticeDestino )
+   {
+	   tpVertice * origem , * destino , * aux ;
+	   void * temp;
+	   
+	   if ( pGrafo == NULL )
+	   {
+		   return GRF_CondRetGrafoNaoExiste ;
+	   }
+
+	   if ( BuscarVertice ( verticeOrigem , pGrafo->vertices , pGrafo->ComparaValor ) == 0 )
+	   {
+		   return GRF_VerticeNaoExiste ;
+	   }
+
+	   if ( LIS_ObterValor ( pGrafo->vertices , &temp ) != LIS_CondRetOK )
+	   {
+		   return GRF_CondRetErro ; //novamente nao sei oque colocar como erro aqui
+	   }
+
+	   origem = ( tpVertice * ) temp ;
+
+
+	   if ( BuscarVertice ( verticeDestino , pGrafo->vertices , pGrafo->ComparaValor ) == 0 )
+	   {
+		   return GRF_VerticeNaoExiste ;
+	   }
+
+	   if ( LIS_ObterValor ( pGrafo->vertices , &temp ) != LIS_CondRetOK )
+	   {
+		   return GRF_CondRetErro ; //novamente nao sei oque colocar como erro aqui
+	   }
+
+	   destino = ( tpVertice * ) temp ;
+
+	   if ( LIS_IrInicioLista ( pGrafo->vertices ) != LIS_CondRetOK )
+	   {
+		   return GRF_CondRetErro ;
+	   }
+	   
+	   LIS_ObterValor ( pGrafo->vertices , &temp ) ;
+	   aux = ( tpVertice * ) temp ;
+
+	   while (aux != NULL)
+	   {			
+			aux->visitado = 0 ;
+
+			LIS_AvancarElementoCorrente ( pGrafo->vertices , 1 ) ;
+			LIS_ObterValor ( pGrafo->vertices , &temp ) ;
+			aux = ( tpVertice * ) temp ;
+	   }
+
+	   LIS_IrInicioLista ( origem->arestas ) ;
+
+	   if ( EncontraCaminho ( origem , destino ) == 0 )
+	   {
+		   return GRF_CondRetVerticesDesconexos ;
+	   }
+
+	   return GRF_CondRetOK;
+
+
+   }   /* Fim função: GRF  &Existe Caminho *
 
    
 /*****  Código das funções encapsuladas no módulo  *****/
@@ -332,7 +400,49 @@
 
    } /* Fim função: GRF  -Buscar Vértice */
 
+  /***********************************************************************
+*
+*  $FC Função: GRF  -Encontra Caminho
+*
+*  $ED Descrição da função
+*     
+*
+***********************************************************************/
   
+   int EncontraCaminho ( tpVertice * atual , tpVertice * destino )
+   {
+	   void * temp ;
+	   tpVertice * proximo ;
+	   
+	   if ( atual->visitado == 1 )
+	   {
+		   return 0 ;
+	   }
+	   
+	   atual->visitado = 1 ;
+
+	   if ( atual == destino )
+	   {
+		   return 1;
+	   }
+
+	   LIS_ObterValor ( atual->arestas , &temp );
+	   proximo = ( tpVertice * ) temp ;
+	   
+	   while ( proximo != NULL )
+	   {
+		   if ( EncontraCaminho ( proximo , destino ) == 1 )
+		   {
+			   return 1 ;
+		   }
+		   LIS_AvancarElementoCorrente ( atual->arestas , 1 ) ;
+		   LIS_ObterValor ( atual->arestas , &temp );
+		   proximo = ( tpVertice * ) temp ;
+	   }
+	   return 0 ;
+	  
+
+   } /* Fim função: GRF  -Destruir vértice */
 
 
 

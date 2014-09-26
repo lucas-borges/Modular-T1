@@ -44,6 +44,8 @@ static const char COMANDO_CMD         [ ] = "=comando"     ;
 static const char CRIAR_GRAFO_CMD	  [ ] = "=criagrafo"  ;
 static const char DESTROI_GRAFO_CMD   [ ] = "=destroigrafo" ;
 static const char INSERE_VERTICE_CMD  [ ] = "=inserevertice" ;
+static const char CRIA_ARESTA_CMD	  [ ] = "=criaaresta" ;
+static const char EXISTE_CAMINHO_CMD  [ ] = "=existecaminho" ;
 
 GRF_tppGrafo pGrafo;
 
@@ -160,9 +162,57 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 		CondRetObt = GRF_CriaVertice ( pGrafo , pCaracter ) ;
 
 		return TST_CompararInt( CondRetEsp , CondRetObt ,
-			"Retorno errado ao COMANDO." );
+			"Retorno errado ao criar o vertice." );
 
 	} /* fim ativa: Testar Cria Vertice */
+
+	/* Testar Cria Aresta */
+	else if ( strcmp( ComandoTeste , CRIA_ARESTA_CMD ) == 0 )
+	{
+		CHR_tppCaracter pChrA , pChrB ;
+		char verticeA , verticeB ;
+		
+		numLidos = LER_LerParametros( "cci" ,
+			&verticeA , &verticeB , &CondRetEsp ) ;
+
+		if ( numLidos != 3 )
+		{
+			return TST_CondRetParm ;
+		} /* if */
+
+		pChrA = CHR_CriarCaracter ( verticeA ) ;
+		pChrB = CHR_CriarCaracter ( verticeB ) ;
+
+		CondRetObt = GRF_CriaAresta ( pChrA , pChrB , pGrafo ) ;
+
+		return TST_CompararInt( CondRetEsp , CondRetObt ,
+			"Retorno errado ao criar a aresta." );
+
+	} /* fim ativa: Testar Cria Aresta */
+
+	/* Testar COMANDO */
+	else if ( strcmp( ComandoTeste , EXISTE_CAMINHO_CMD ) == 0 )
+	{
+		char verticeOrigem , verticeDestino ;
+		CHR_tppCaracter origem , destino ; 
+		
+		numLidos = LER_LerParametros( "cci" ,
+			&verticeOrigem , &verticeDestino , &CondRetEsp ) ;
+
+		if ( numLidos != 3 )
+		{
+			return TST_CondRetParm ;
+		} /* if */
+
+		origem = CHR_CriarCaracter ( verticeOrigem ) ;
+		destino = CHR_CriarCaracter ( verticeDestino ) ;
+
+		CondRetObt=GRF_ExisteCaminho ( pGrafo , origem , destino ) ;
+
+		return TST_CompararInt( CondRetEsp , CondRetObt ,
+			"Retorno errado ao verificar se existe caminho entre os vertices." );
+
+	} /* fim ativa: Testar COMANDO */
 
 	return TST_CondRetNaoConhec;
 
