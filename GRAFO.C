@@ -97,7 +97,7 @@
 		   return GRF_VerticeNaoExiste; 
 	   }/*if*/
 
-	   LIS_ObterValor ( pLista, &temp ) ;
+	   LIS_ObterValor ( pGrafo->vertices, &temp ) ;
 	   verticeA = ( tpVertice * ) temp ;
 
 	   vertice_ret=BuscarVertice(pValorB ,pGrafo->vertices , pGrafo->ComparaValor );
@@ -107,7 +107,7 @@
 		   return GRF_VerticeNaoExiste; 
 	   }/*if*/
 
-	   LIS_ObterValor ( pLista, &temp ) ;
+	   LIS_ObterValor ( pGrafo->vertices, &temp ) ;
 	   verticeB = ( tpVertice * ) temp ;
 
 	   /*Verifica se aresta já existe*/
@@ -162,7 +162,7 @@
 		   return GRF_VerticeNaoExiste; 
 	   }/*if*/
 
-	   LIS_ObterValor ( pLista, &temp ) ;
+	   LIS_ObterValor ( pGrafo->vertices, &temp ) ;
 	   verticeA = ( tpVertice * ) temp ;
 
 	   vertice_ret=BuscarVertice(pValorB, pGrafo->vertices , pGrafo->ComparaValor );
@@ -172,7 +172,7 @@
 		   return GRF_VerticeNaoExiste; 
 	   }/*if*/
 
-	   LIS_ObterValor ( pLista, &temp ) ;
+	   LIS_ObterValor ( pGrafo->vertices, &temp ) ;
 	   verticeB = ( tpVertice * ) temp ;
 
 	   /*Verifica se aresta já existe*/
