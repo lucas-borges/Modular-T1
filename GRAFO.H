@@ -48,16 +48,16 @@ typedef struct GRF_tagGrafo * GRF_tppGrafo ;
          GRF_CondRetOK ,
                /* Concluiu corretamente */
 
-		 GRF_VerticeJaExiste ,
+		 GRF_CondRetVerticeJaExiste ,
 		       /* O vertice ja existe no grafo */
 
-         GRF_VerticeNaoExiste,
+         GRF_CondRetVerticeNaoExiste,
                /* o vertice nao existe no grafo*/
 
-         GRF_ArestaJaExiste ,
+         GRF_CondRetArestaJaExiste ,
                /* a aresta ja existe no grafo */
 
-         GRF_ArestaNaoExiste,
+         GRF_CondRetArestaNaoExiste,
                /* a aresta nao existe */
 
 		 GRF_CondRetGrafoNaoExiste ,
@@ -65,6 +65,12 @@ typedef struct GRF_tagGrafo * GRF_tppGrafo ;
 
          GRF_CondRetFaltouMemoria ,
                /* Faltou memória ao tentar criar um elemento de lista */
+
+		 GRF_CondRetErroAoObterValor,
+		       /*erro ao obter elemento de alguma das listas */
+
+		 GRF_CondRetVerticesDesconexos
+		       /* nao existe caminho entre os vertices */
 		 
    } GRF_tpCondRet ;
 

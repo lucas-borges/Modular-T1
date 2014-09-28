@@ -94,7 +94,7 @@
 
 	   if(vertice_ret==0)//vertice nao existe
 	   {
-		   return GRF_VerticeNaoExiste; 
+		   return GRF_CondRetVerticeNaoExiste; 
 	   }/*if*/
 
 	   LIS_ObterValor ( pGrafo->vertices, &temp ) ;
@@ -104,7 +104,7 @@
 
 	   if(vertice_ret==0)//vertice nao existe
 	   {
-		   return GRF_VerticeNaoExiste; 
+		   return GRF_CondRetVerticeNaoExiste; 
 	   }/*if*/
 
 	   LIS_ObterValor ( pGrafo->vertices, &temp ) ;
@@ -116,7 +116,7 @@
 
 	   if(vertice_ret==1)//aresta já existe
 	   {
-		   return GRF_ArestaJaExiste; 
+		   return GRF_CondRetArestaJaExiste; 
 	   }/*if*/
 
 	   /*Inserir Aresta de a para b e de b para a*/
@@ -152,6 +152,7 @@
    {
 	   int vertice_ret;
 	   tpVertice * verticeA, *verticeB;
+	   void * temp;
 
 	    /*Verifica se os vertices existem*/
 
@@ -159,7 +160,7 @@
 
 	   if(vertice_ret==0)//vertice nao existe
 	   {
-		   return GRF_VerticeNaoExiste; 
+		   return GRF_CondRetVerticeNaoExiste; 
 	   }/*if*/
 
 	   LIS_ObterValor ( pGrafo->vertices, &temp ) ;
@@ -169,7 +170,7 @@
 
 	   if(vertice_ret==0)//vertice nao existe
 	   {
-		   return GRF_VerticeNaoExiste; 
+		   return GRF_CondRetVerticeNaoExiste; 
 	   }/*if*/
 
 	   LIS_ObterValor ( pGrafo->vertices, &temp ) ;
@@ -181,7 +182,7 @@
 
 	   if(vertice_ret==0)//aresta nao existe
 	   {
-		   return GRF_ArestaNaoExiste;
+		   return GRF_CondRetArestaNaoExiste;
 	   }/*if*/
 
 	   LIS_ExcluirElemento(verticeA->arestas);
@@ -223,26 +224,26 @@
 *  Função: GRF  &CriaVertice
 *****/
    
- GRF_tpCondRet GRF_CriaVertice ( GRF_tpGrafo * Grafo , void * pValor ) 
+ GRF_tpCondRet GRF_CriaVertice ( GRF_tpGrafo * pGrafo , void * pValor ) 
    {
 	   int Ret;
 	   tpVertice* vertice;
 
-	   if(Grafo==NULL)
+	   if(pGrafo==NULL)
 	   {
 		   return GRF_CondRetGrafoNaoExiste;
-	   }
+	   } /* if */
 
-	   if(BuscarVertice ( pValor , Grafo->vertices , pGrafo->ComparaValor ) == 1 )//Checa se o vertice já existe
+	   if(BuscarVertice ( pValor , pGrafo->vertices , pGrafo->ComparaValor ) == 1 )//Checa se o vertice já existe
 	   {
-			return GRF_VerticeJaExiste ;
-	   }
+			return GRF_CondRetVerticeJaExiste ;
+	   } /* if */
 
 	   vertice = (tpVertice * ) malloc ( sizeof (tpVertice) );//cria vertice
 	   if ( vertice == NULL )
 	   {
 		   return GRF_CondRetFaltouMemoria;
-	   }
+	   } /* if */
 	   
 	   vertice->pValor = pValor;
 	   LIS_CriarLista ( &vertice->arestas , free );//funcao free pois nao existem outras estruturas nessa lista, somente ponteiros
@@ -250,13 +251,13 @@
 	   if( vertice->arestas == NULL )
 	   {
 		   return GRF_CondRetFaltouMemoria;
-	   }
+	   } /* if */
 
-	   Ret = LIS_InserirElementoApos ( Grafo->vertices , vertice );
+	   Ret = LIS_InserirElementoApos ( pGrafo->vertices , vertice );
 	   if( Ret != LIS_CondRetOK )
 	   {
-		   return GRF_CondRetErro;//nao sei que erro colocar aqui
-	   }
+		   return GRF_CondRetErroAoObterValor;
+	   } /* if */
 
 	   return GRF_CondRetOK;
    }
@@ -292,37 +293,37 @@
 	   if ( pGrafo == NULL )
 	   {
 		   return GRF_CondRetGrafoNaoExiste ;
-	   }
+	   } /* if */
 
 	   if ( BuscarVertice ( verticeOrigem , pGrafo->vertices , pGrafo->ComparaValor ) == 0 )
 	   {
-		   return GRF_VerticeNaoExiste ;
-	   }
+		   return GRF_CondRetVerticeNaoExiste ;
+	   } /* if */
 
 	   if ( LIS_ObterValor ( pGrafo->vertices , &temp ) != LIS_CondRetOK )
 	   {
-		   return GRF_CondRetErro ; //novamente nao sei oque colocar como erro aqui
-	   }
+		   return GRF_CondRetErroAoObterValor ;
+	   } /* if */
 
 	   origem = ( tpVertice * ) temp ;
 
 
 	   if ( BuscarVertice ( verticeDestino , pGrafo->vertices , pGrafo->ComparaValor ) == 0 )
 	   {
-		   return GRF_VerticeNaoExiste ;
-	   }
+		   return GRF_CondRetVerticeNaoExiste ;
+	   } /* if */
 
 	   if ( LIS_ObterValor ( pGrafo->vertices , &temp ) != LIS_CondRetOK )
 	   {
-		   return GRF_CondRetErro ; //novamente nao sei oque colocar como erro aqui
-	   }
+		   return GRF_CondRetErroAoObterValor ;
+	   } /* if */
 
 	   destino = ( tpVertice * ) temp ;
 
 	   if ( LIS_IrInicioLista ( pGrafo->vertices ) != LIS_CondRetOK )
 	   {
-		   return GRF_CondRetErro ;
-	   }
+		   return GRF_CondRetErroAoObterValor ;
+	   } /* if */
 	   
 	   LIS_ObterValor ( pGrafo->vertices , &temp ) ;
 	   aux = ( tpVertice * ) temp ;
@@ -442,7 +443,7 @@
 	   return 0 ;
 	  
 
-   } /* Fim função: GRF  -Destruir vértice */
+   } /* Fim função: GRF  -Encontra caminho */
 
 
 
