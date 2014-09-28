@@ -123,10 +123,11 @@ typedef struct GRF_tagGrafo * GRF_tppGrafo ;
 *		GRF_CondRetFaltouMemoria - faltou memória ao alocar espaço  
 *
 *  $AE Assertivas de entrada
-*     - 
+*     - O grafo não existe
 *
 *  $AS Assertivas de saída
-*     - 
+*     - O grafo existe e é vazio
+*	  - Valem as assertivas estruturais do grafo
 *
 ***********************************************************************/
 
@@ -156,10 +157,12 @@ typedef struct GRF_tagGrafo * GRF_tppGrafo ;
 *							  como ponteiro
 *
 *  $AE Assertivas de entrada
-*     - 
+*     - O grafo existe e não contém o vértice a ser inserido
+*	  - Valem as assertivas estruturais do grafo
 *
 *  $AS Assertivas de saída
-*     - 
+*     - O grafo existe e tem um vértice a mais
+*	  - Valem as assertivas estruturais do grafo
 *
 ***********************************************************************/
 
@@ -189,10 +192,16 @@ typedef struct GRF_tagGrafo * GRF_tppGrafo ;
 *							  como ponteiro
 *
 *  $AE Assertivas de entrada
-*     - 
+*     - O grafo existe
+*	  - Os vértices de chaves A e B existem
+*	  - Não existe aresta entre os vértices
+*	  - Valem as assertivas estruturais do grafo
 *
 *  $AS Assertivas de saída
-*     - 
+*     - O grafo existe
+*	  - Os vértices de chaves A e B existem
+*	  - Existe aresta entre os vértices
+*	  - Valem as assertivas estruturais do grafo
 *
 ***********************************************************************/
 
@@ -222,10 +231,16 @@ typedef struct GRF_tagGrafo * GRF_tppGrafo ;
 *							  como ponteiro
 *
 *  $AE Assertivas de entrada
-*     - 
+*     - O grafo existe
+*	  - Os vértices de chaves A e B existem
+*	  - Existe aresta entre os vértices
+*	  - Valem as assertivas estruturais do grafo
 *
 *  $AS Assertivas de saída
-*     - 
+*     - O grafo existe
+*	  - Os vértices de chaves A e B existem
+*	  - Não existe aresta entre os vértices
+*	  - Valem as assertivas estruturais do grafo
 *
 ***********************************************************************/
 
@@ -247,10 +262,13 @@ typedef struct GRF_tagGrafo * GRF_tppGrafo ;
 *		GRF_CondRetOK     - destruiu grafo sem problemas
 *
 *  $AE Assertivas de entrada
-*     - 
+*     - O grafo existe
+*	  - Valem as assertivas estruturais do grafo
 *
 *  $AS Assertivas de saída
-*     - 
+*     - O grafo não existe
+*	  - O conteúdo dos vértices do grafo são desalocados segundo
+*		a função ExcluirValor fornecida
 *
 ***********************************************************************/
 
@@ -270,7 +288,7 @@ typedef struct GRF_tagGrafo * GRF_tppGrafo ;
 *
 *		verticeOrigem - ponteiro para chave de um dos vértices a procurar o caminho
 *
-*		verticeOrigem - ponteiro para chave de um dos vértices a procurar o caminho		
+*		verticeDestino - ponteiro para chave de um dos vértices a procurar o caminho		
 *
 *  $FV Valor retornado
 *		GRF_CondRetOK            - encontrou caminho entre os vértices
@@ -282,10 +300,13 @@ typedef struct GRF_tagGrafo * GRF_tppGrafo ;
 *		GRF_CondRetVerticesDesconexos - não há caminho entre os vértices
 *
 *  $AE Assertivas de entrada
-*     - 
+*     - O grafo existe
+*	  - Os vértices de origem e destino existem
+*	  - Valem as assertivas estruturais do grafo
 *
 *  $AS Assertivas de saída
-*     - 
+*     - O grafo permanece inalterado
+*	  - Valem as assertivas estruturais do grafo
 *
 ***********************************************************************/
 
