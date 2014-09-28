@@ -87,6 +87,12 @@ typedef struct GRF_tagGrafo * GRF_tppGrafo ;
 *  $FV Valor retornado
 *     
 *
+*  $AE Assertivas de entrada
+*     - 
+*
+*  $AS Assertivas de saída
+*     - 
+*
 ***********************************************************************/
 
 
@@ -116,6 +122,12 @@ typedef struct GRF_tagGrafo * GRF_tppGrafo ;
 *		GRF_CondRetOK            - criou grafo sem problemas
 *		GRF_CondRetFaltouMemoria - faltou memória ao alocar espaço  
 *
+*  $AE Assertivas de entrada
+*     - 
+*
+*  $AS Assertivas de saída
+*     - 
+*
 ***********************************************************************/
 
    GRF_tpCondRet GRF_CriarGrafo ( GRF_tppGrafo * ppGrafo , int ( * ComparaValor ) ( void * pValorA , void * pValorB ) , void (* ExcluirValor ) ( void * pValor ) );
@@ -142,6 +154,12 @@ typedef struct GRF_tagGrafo * GRF_tppGrafo ;
 *		GRF_CondRetGrafoNaoExiste - grafo passado como ponteiro não existe 
 *		GRF_VerticeJaExiste - já existe um vértice com a chave passada 
 *							  como ponteiro
+*
+*  $AE Assertivas de entrada
+*     - 
+*
+*  $AS Assertivas de saída
+*     - 
 *
 ***********************************************************************/
 
@@ -170,6 +188,12 @@ typedef struct GRF_tagGrafo * GRF_tppGrafo ;
 *		GRF_ArestaJaExiste - já existe uma aresta entre os vértices passados 
 *							  como ponteiro
 *
+*  $AE Assertivas de entrada
+*     - 
+*
+*  $AS Assertivas de saída
+*     - 
+*
 ***********************************************************************/
 
 
@@ -197,6 +221,12 @@ typedef struct GRF_tagGrafo * GRF_tppGrafo ;
 *		GRF_ArestaNaoExiste - Não existe uma aresta com a chave passada 
 *							  como ponteiro
 *
+*  $AE Assertivas de entrada
+*     - 
+*
+*  $AS Assertivas de saída
+*     - 
+*
 ***********************************************************************/
 
    GRF_tpCondRet GRF_RemoveAresta(void * pValorA, void * pValorB, GRF_tppGrafo pGrafo);
@@ -215,6 +245,12 @@ typedef struct GRF_tagGrafo * GRF_tppGrafo ;
 *
 *  $FV Valor retornado
 *		GRF_CondRetOK     - destruiu grafo sem problemas
+*
+*  $AE Assertivas de entrada
+*     - 
+*
+*  $AS Assertivas de saída
+*     - 
 *
 ***********************************************************************/
 
@@ -244,6 +280,12 @@ typedef struct GRF_tagGrafo * GRF_tppGrafo ;
 *		GRF_CondRetErroAoObterValor - houve erro ao obter um elemento de uma 
 *									das listas
 *		GRF_CondRetVerticesDesconexos - não há caminho entre os vértices
+*
+*  $AE Assertivas de entrada
+*     - 
+*
+*  $AS Assertivas de saída
+*     - 
 *
 ***********************************************************************/
 

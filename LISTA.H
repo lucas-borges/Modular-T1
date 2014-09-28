@@ -119,6 +119,12 @@ typedef struct LIS_tagLista * LIS_tppLista ;
 *     LIS_CondRetOK            - criou lista sem problemas
 *     LIS_CondRetFaltouMemoria - faltou memória ao alocar espaço
 *
+*  $AE Assertivas de entrada
+*     - 
+*
+*  $AS Assertivas de saída
+*     - 
+*
 ***********************************************************************/
 
    LIS_tpCondRet LIS_CriarLista( LIS_tppLista* pLista ,
@@ -135,6 +141,12 @@ typedef struct LIS_tagLista * LIS_tppLista ;
 *     Se ocorrer algum erro durante a destruição, a lista resultará
 *     estruturalmente incorreta.
 *     OBS. não existe previsão para possíveis falhas de execução.
+*
+*  $AE Assertivas de entrada
+*     - 
+*
+*  $AS Assertivas de saída
+*     - 
 *
 ***********************************************************************/
 
@@ -154,6 +166,12 @@ typedef struct LIS_tagLista * LIS_tppLista ;
 *  $FV Valor retornado
 *     LIS_CondRetOK             - esvaziou sem problemas
 *	  LIS_CondRetListaNaoExiste - ponteiro da lista é NULL
+*
+*  $AE Assertivas de entrada
+*     - 
+*
+*  $AS Assertivas de saída
+*     - 
 *
 ***********************************************************************/
 
@@ -177,6 +195,12 @@ typedef struct LIS_tagLista * LIS_tppLista ;
 *     LIS_CondRetOK              - inseriu antes sem problemas
 *	  LIS_CondRetListaNaoExiste  - ponteiro da lista é NULL
 *     LIS_CondRetFaltouMemoria   - faltou memória ao alocar espaço
+*
+*  $AE Assertivas de entrada
+*     - 
+*
+*  $AS Assertivas de saída
+*     - 
 *
 ***********************************************************************/
 
@@ -204,6 +228,12 @@ typedef struct LIS_tagLista * LIS_tppLista ;
 *	  LIS_CondRetListaNaoExiste  - ponteiro da lista é NULL
 *     LIS_CondRetFaltouMemoria   - faltou memória ao alocar espaço
 *
+*  $AE Assertivas de entrada
+*     - 
+*
+*  $AS Assertivas de saída
+*     - 
+*
 ***********************************************************************/
 
    LIS_tpCondRet LIS_InserirElementoApos( LIS_tppLista pLista ,
@@ -228,6 +258,13 @@ typedef struct LIS_tagLista * LIS_tppLista ;
 *     LIS_CondRetListaVazia      - lista é vazia
 *	  LIS_CondRetListaNaoExiste  - ponteiro da lista é NULL
 *
+*  $AE Assertivas de entrada
+*     - A lista existe e possui ao menos um elemento
+*	  - O elemento corrente é o que deve ser excluído
+*
+*  $AS Assertivas de saída
+*     - A lista
+*
 ***********************************************************************/
 
    LIS_tpCondRet LIS_ExcluirElemento( LIS_tppLista pLista ) ;
@@ -249,6 +286,12 @@ typedef struct LIS_tagLista * LIS_tppLista ;
 *     LIS_CondRetListaVazia      - lista é vazia
 *	  LIS_CondRetListaNaoExiste  - ponteiro da lista é NULL
 *
+*  $AE Assertivas de entrada
+*     - 
+*
+*  $AS Assertivas de saída
+*     - 
+*
 ***********************************************************************/
 
    LIS_tpCondRet LIS_ObterValor( LIS_tppLista pLista , void ** ppValor) ;
@@ -269,6 +312,12 @@ typedef struct LIS_tagLista * LIS_tppLista ;
 *       LIS_CondRetListaVazia      - lista é vazia
 *		LIS_CondRetListaNaoExiste  - ponteiro da lista é NULL
 *
+*  $AE Assertivas de entrada
+*     - 
+*
+*  $AS Assertivas de saída
+*     - 
+*
 ***********************************************************************/
 
     LIS_tpCondRet LIS_IrInicioLista( LIS_tppLista pLista ) ;
@@ -288,6 +337,12 @@ typedef struct LIS_tagLista * LIS_tppLista ;
 *		LIS_CondRetOK              - foi para elemento final sem problemas
 *       LIS_CondRetListaVazia      - lista é vazia
 *		LIS_CondRetListaNaoExiste  - ponteiro da lista é NULL
+*
+*  $AE Assertivas de entrada
+*     - 
+*
+*  $AS Assertivas de saída
+*     - 
 *
 ***********************************************************************/
 
@@ -317,6 +372,12 @@ typedef struct LIS_tagLista * LIS_tppLista ;
 *     CondRetListaVazia     - se a lista está vazia
 *	  CondRetListaNaoExiste - se a lista não existir
 *
+*  $AE Assertivas de entrada
+*     - 
+*
+*  $AS Assertivas de saída
+*     - 
+*
 ***********************************************************************/
 
    LIS_tpCondRet LIS_AvancarElementoCorrente( LIS_tppLista pLista ,
@@ -340,6 +401,12 @@ typedef struct LIS_tagLista * LIS_tppLista ;
 *     CondRetListaVazia     - lista é vazia
 *	  CondRetListaNaoExiste - ponteiro da lista é NULL
 *     
+*  $AE Assertivas de entrada
+*     - 
+*
+*  $AS Assertivas de saída
+*     - 
+*
 ***********************************************************************/
 
    LIS_tpCondRet LIS_AlterarValor( LIS_tppLista pLista ,
