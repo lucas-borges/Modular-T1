@@ -46,6 +46,7 @@ static const char DESTROI_GRAFO_CMD   [ ] = "=destroigrafo" ;
 static const char INSERE_VERTICE_CMD  [ ] = "=inserevertice" ;
 static const char CRIA_ARESTA_CMD	  [ ] = "=criaaresta" ;
 static const char EXISTE_CAMINHO_CMD  [ ] = "=existecaminho" ;
+static const char REMOVE_ARESTA_CMD   [ ] = "=removearesta";
 
 GRF_tppGrafo pGrafo;
 
@@ -79,7 +80,7 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 
 
 	/* Testar COMANDO */
-	if ( strcmp( ComandoTeste , COMANDO_CMD ) == 0 )
+/*	if ( strcmp( ComandoTeste , COMANDO_CMD ) == 0 )
 	{
 
 		numLidos = LER_LerParametros( "i" ,
@@ -90,7 +91,7 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 			return TST_CondRetParm ;
 		} /* if */
 
-		CondRetObt=GRF_funcao(   ) ;
+/*		CondRetObt=GRF_funcao(   ) ;
 
 		return TST_CompararInt( CondRetEsp , CondRetObt ,
 			"Retorno errado ao COMANDO." );
@@ -99,7 +100,7 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 
 	
 	/* Testar Criar Grafo */
-	else if( strcmp( ComandoTeste , CRIAR_GRAFO_CMD ) == 0 )
+/*	else */if( strcmp( ComandoTeste , CRIAR_GRAFO_CMD ) == 0 )
 	{
 		numLidos = LER_LerParametros ( "i" ,
 			 &CondRetEsp ) ;
@@ -190,7 +191,32 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 
 	} /* fim ativa: Testar Cria Aresta */
 
-	/* Testar COMANDO */
+	/*Testar Remove Aresta */
+	else if ( strcmp( ComandoTeste, REMOVE_ARESTA_CMD) ==0)
+	{
+		CHR_tppCaracter pChrA , pChrB ;
+		char verticeA , verticeB ;
+		
+		numLidos = LER_LerParametros( "cci" ,
+			&verticeA , &verticeB , &CondRetEsp ) ;
+
+		if ( numLidos != 3 )
+		{
+			return TST_CondRetParm ;
+		} /* if */
+
+		pChrA = CHR_CriarCaracter ( verticeA ) ;
+		pChrB = CHR_CriarCaracter ( verticeB ) ;
+
+		CondRetObt = GRF_RemoveAresta ( pChrA , pChrB , pGrafo ) ;
+
+		return TST_CompararInt( CondRetEsp , CondRetObt ,
+			"Retorno errado ao remover a aresta." );
+	}
+
+	/* fim ativa: Testar Criar Aresta */
+
+	/* Testar Existe Caminho */
 	else if ( strcmp( ComandoTeste , EXISTE_CAMINHO_CMD ) == 0 )
 	{
 		char verticeOrigem , verticeDestino ;
@@ -212,7 +238,7 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 		return TST_CompararInt( CondRetEsp , CondRetObt ,
 			"Retorno errado ao verificar se existe caminho entre os vertices." );
 
-	} /* fim ativa: Testar COMANDO */
+	} /* fim ativa: Testar Existe Caminho */
 
 	return TST_CondRetNaoConhec;
 

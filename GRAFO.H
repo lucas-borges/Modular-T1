@@ -28,10 +28,9 @@
 
 /***** Declarações exportadas pelo módulo *****/
 
-/* Tipo referência para uma lista */
+/* Tipo referência para um grafo */
 
 typedef struct GRF_tagGrafo * GRF_tppGrafo ;
-
 
 /***********************************************************************
 *
@@ -119,7 +118,7 @@ typedef struct GRF_tagGrafo * GRF_tppGrafo ;
 *
 ***********************************************************************/
 
-   GRF_tpCondRet GRF_CriarGrafo ( GRF_tppGrafo * ppGrafo , int ( * ComparaValor ) ( void * pValorA , void * pValorB ) , void ( ExcluirValor * ) ( void * pValor ) );
+   GRF_tpCondRet GRF_CriarGrafo ( GRF_tppGrafo * ppGrafo , int ( * ComparaValor ) ( void * pValorA , void * pValorB ) , void (* ExcluirValor ) ( void * pValor ) );
 
 
 /***********************************************************************
@@ -146,7 +145,7 @@ typedef struct GRF_tagGrafo * GRF_tppGrafo ;
 *
 ***********************************************************************/
 
-   GRF_tpCondRet GRF_CriaVertice ( GRF_tpGrafo * Grafo , void * pValor ) ;
+   GRF_tpCondRet GRF_CriaVertice ( GRF_tppGrafo pGrafo , void * pValor ) ;
 
 
    /***********************************************************************
@@ -174,7 +173,7 @@ typedef struct GRF_tagGrafo * GRF_tppGrafo ;
 ***********************************************************************/
 
 
-   GRF_tpCondRet GRF_CriaAresta(void * pValorA, void * pValorB, GRF_tpGrafo * pGrafo);
+   GRF_tpCondRet GRF_CriaAresta(void * pValorA, void * pValorB, GRF_tppGrafo pGrafo);
 
 
    /***********************************************************************
@@ -200,7 +199,7 @@ typedef struct GRF_tagGrafo * GRF_tppGrafo ;
 *
 ***********************************************************************/
 
-   GRF_tpCondRet GRF_RemoveAresta(void * pValorA, void * pValorB, GRF_tpGrafo * pGrafo);
+   GRF_tpCondRet GRF_RemoveAresta(void * pValorA, void * pValorB, GRF_tppGrafo pGrafo);
 
 
     /***********************************************************************
@@ -220,6 +219,36 @@ typedef struct GRF_tagGrafo * GRF_tppGrafo ;
 ***********************************************************************/
 
    GRF_tpCondRet GRF_DestroiGrafo (GRF_tppGrafo pGrafo);
+
+
+	/***********************************************************************
+*
+*  $FC Função: GRF  &Existe Caminho
+*
+*  $ED Descrição da função
+*		Procura um caminho entre dois vértices do grafo.
+*    
+*
+*  $EP Parâmetros
+*		pGrafo -  ponteiro para o grafo onde se deseja procurar o caminho
+*
+*		verticeOrigem - ponteiro para chave de um dos vértices a procurar o caminho
+*
+*		verticeOrigem - ponteiro para chave de um dos vértices a procurar o caminho		
+*
+*  $FV Valor retornado
+*		GRF_CondRetOK            - encontrou caminho entre os vértices
+*		GRF_CondRetGrafoNaoExiste - grafo passado como ponteiro não existe 
+*		GRF_CondRetVerticeNaoExiste - Não existe vértice com a chave passada 
+*									como ponteiro
+*		GRF_CondRetErroAoObterValor - houve erro ao obter um elemento de uma 
+*									das listas
+*		GRF_CondRetVerticesDesconexos - não há caminho entre os vértices
+*
+***********************************************************************/
+
+
+    GRF_tpCondRet GRF_ExisteCaminho ( GRF_tppGrafo pGrafo , void * verticeOrigem , void * verticeDestino );
    
 /********** Fim do módulo de definição: GRF Grafo não orientado **********/
 

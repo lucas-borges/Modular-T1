@@ -69,9 +69,11 @@
 
    /***** Protótipos das funções encapuladas no módulo *****/
 
-   int BuscarVertice (void * pValor , LIS_tppLista pLista);
+   int BuscarVertice ( void * pValor, LIS_tppLista pLista , int ( * ComparaValor ) ( void * pValorA , void * pValorB ) );
 
    void DestruirVertice ( void * pVertice );
+
+   int EncontraCaminho ( tpVertice * atual , tpVertice * destino );
 
    /*****  Código das funções exportadas pelo módulo  *****/
 
@@ -126,14 +128,14 @@
 
 	   if(lis_ret!=LIS_CondRetOK)
 	   {
-		   return;//erro
+		   return GRF_CondRetErroAoObterValor;
 	   }/*if*/
 
 	   lis_ret= LIS_InserirElementoApos(verticeB->arestas,verticeA);
 
 	   if(lis_ret!=LIS_CondRetOK)
 	   {
-		   return;//erro
+		   return GRF_CondRetErroAoObterValor; //erro
 	   }/*if*/
 
 	   return GRF_CondRetOK;
@@ -154,6 +156,8 @@
 	   tpVertice * verticeA, *verticeB;
 	   void * temp;
 
+	   printf("Entrou na remove aresta\n");
+
 	    /*Verifica se os vertices existem*/
 
 	   vertice_ret=BuscarVertice(pValorA, pGrafo->vertices , pGrafo->ComparaValor );
@@ -166,6 +170,8 @@
 	   LIS_ObterValor ( pGrafo->vertices, &temp ) ;
 	   verticeA = ( tpVertice * ) temp ;
 
+	   printf("obteve primeiro vertice\n");
+
 	   vertice_ret=BuscarVertice(pValorB, pGrafo->vertices , pGrafo->ComparaValor );
 
 	   if(vertice_ret==0)//vertice nao existe
@@ -176,6 +182,8 @@
 	   LIS_ObterValor ( pGrafo->vertices, &temp ) ;
 	   verticeB = ( tpVertice * ) temp ;
 
+	   printf("obteve segundo vertice\n");
+
 	   /*Verifica se aresta já existe*/
 
 	   vertice_ret=BuscarVertice(pValorB, verticeA->arestas , pGrafo->ComparaValor );
@@ -185,11 +193,25 @@
 		   return GRF_CondRetArestaNaoExiste;
 	   }/*if*/
 
+	   printf("verificou que aresta existe\n");
+
 	   LIS_ExcluirElemento(verticeA->arestas);
 
-	   BuscarVertice(pValorA, verticeB->arestas , pGrafo->ComparaValor );
+	   printf("excluiu aresta de a pra b\n");
+
+	   vertice_ret=BuscarVertice(pValorA, verticeB->arestas , pGrafo->ComparaValor );
+
+	   printf("buscou vertice a em b\n");
+
+	   if(vertice_ret==0)//aresta nao existe
+	   {
+		   printf("nao existe de b pra a\n");
+		   return GRF_CondRetArestaNaoExiste;
+	   }/*if*/
 
 	   LIS_ExcluirElemento(verticeB->arestas);
+
+	   printf("excluiu aresta de b pra a\n");
 
 	   return GRF_CondRetOK;
    }
@@ -225,7 +247,8 @@
 *****/
    
  GRF_tpCondRet GRF_CriaVertice ( GRF_tpGrafo * pGrafo , void * pValor ) 
-   {
+ {
+
 	   int Ret;
 	   tpVertice* vertice;
 
@@ -234,19 +257,22 @@
 		   return GRF_CondRetGrafoNaoExiste;
 	   } /* if */
 
-	   if(BuscarVertice ( pValor , pGrafo->vertices , pGrafo->ComparaValor ) == 1 )//Checa se o vertice já existe
+	   if(BuscarVertice ( pValor , pGrafo->vertices , pGrafo->ComparaValor ) == 1 ) //Checa se o vertice já existe
 	   {
 			return GRF_CondRetVerticeJaExiste ;
 	   } /* if */
+
 
 	   vertice = (tpVertice * ) malloc ( sizeof (tpVertice) );//cria vertice
 	   if ( vertice == NULL )
 	   {
 		   return GRF_CondRetFaltouMemoria;
 	   } /* if */
+
 	   
 	   vertice->pValor = pValor;
 	   LIS_CriarLista ( &vertice->arestas , free );//funcao free pois nao existem outras estruturas nessa lista, somente ponteiros
+
 	   
 	   if( vertice->arestas == NULL )
 	   {
@@ -258,6 +284,7 @@
 	   {
 		   return GRF_CondRetErroAoObterValor;
 	   } /* if */
+
 
 	   return GRF_CondRetOK;
    }
@@ -290,6 +317,8 @@
 	   tpVertice * origem , * destino , * aux ;
 	   void * temp;
 	   
+	   printf("Entrou na existe caminho\n");
+
 	   if ( pGrafo == NULL )
 	   {
 		   return GRF_CondRetGrafoNaoExiste ;
@@ -305,6 +334,8 @@
 		   return GRF_CondRetErroAoObterValor ;
 	   } /* if */
 
+	   printf("Obteve origem\n");
+
 	   origem = ( tpVertice * ) temp ;
 
 
@@ -318,6 +349,8 @@
 		   return GRF_CondRetErroAoObterValor ;
 	   } /* if */
 
+	    printf("Obteve destino\n");
+
 	   destino = ( tpVertice * ) temp ;
 
 	   if ( LIS_IrInicioLista ( pGrafo->vertices ) != LIS_CondRetOK )
@@ -327,6 +360,8 @@
 	   
 	   LIS_ObterValor ( pGrafo->vertices , &temp ) ;
 	   aux = ( tpVertice * ) temp ;
+
+	    printf("Foi pro primeiro vertice\n");
 
 	   while (aux != NULL)
 	   {			
@@ -383,17 +418,24 @@
 
 	    void * temp;
 		tpVertice * vertice;
+		LIS_tpCondRet lis_ret;
 		LIS_IrInicioLista(pLista);
 
 		do
 		{
-			LIS_ObterValor ( pLista, &temp ) ;
+			lis_ret=LIS_ObterValor ( pLista, &temp ) ;
+
+			if(lis_ret!=LIS_CondRetOK)
+			{
+				return 0;
+			}
 			vertice = ( tpVertice * ) temp ;
 
 			if ( ComparaValor ( pValor , vertice->pValor ) == 0 ) 
 			{
 				return 1;
 			} /* if */
+
 
 		} while ( LIS_AvancarElementoCorrente ( pLista , 1 ) == LIS_CondRetOK ) ;
 
