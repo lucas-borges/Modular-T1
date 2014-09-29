@@ -1,0 +1,1 @@
+TESTE_GRAFO.exe /sremove_aresta.script /lsaida.log 

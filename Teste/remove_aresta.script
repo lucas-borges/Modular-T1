@@ -1,0 +1,19 @@
+//Teste REMOVE ARESTA
+
+==Criar Grafo
+=criagrafo 0
+
+==Criar Vertice
+=inserevertice 'a' 0
+
+==Criar Segundo Vertice
+=inserevertice 'b' 0
+
+==Criar Aresta
+=criaaresta 'a' 'b' 0
+
+==Remover Aresta
+=removearesta 'a' 'b' 0
+
+==Existe caminho
+=existecaminho 'a' 'b' 0

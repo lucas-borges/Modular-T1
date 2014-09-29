@@ -1,0 +1,12 @@
+
+!!! Inicio dos testes
+!!!      Construto sob teste: TESTE_GRAFO.exe
+!!!      Script de teste:     remove_aresta.script
+
+!!!    0  Linha:     1  //Teste REMOVE ARESTA 
+    3  ==Criar Grafo
+    6  ==Criar Vertice
+    9  ==Criar Segundo Vertice
+   12  ==Criar Aresta
+   15  ==Remover Aresta
+   18  ==Existe caminho

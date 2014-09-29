@@ -426,7 +426,7 @@
 			LIS_ObterValor ( pGrafo->vertices , &temp ) ;
 			aux = ( tpVertice * ) temp ;
 	   }
-
+	   printf("Saiu do primeiro vértice\n");
 	   LIS_IrInicioLista ( origem->arestas ) ;
 
 	   if ( EncontraCaminho ( origem , destino ) == 0 )
