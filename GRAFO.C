@@ -153,7 +153,7 @@
    GRF_tpCondRet GRF_RemoveAresta(void * pValorA, void * pValorB, GRF_tpGrafo * pGrafo)
    {
 	   int vertice_ret;
-	   tpVertice * verticeA, *verticeB;
+	   tpVertice * verticeA, *verticeB, *verticeC;
 	   void * temp;
 
 	   printf("Entrou na remove aresta\n");
@@ -201,13 +201,18 @@
 
 	   vertice_ret=BuscarVertice(pValorA, verticeB->arestas , pGrafo->ComparaValor );
 
-	   printf("buscou vertice a em b\n");
-
 	   if(vertice_ret==0)//aresta nao existe
 	   {
 		   printf("nao existe de b pra a\n");
 		   return GRF_CondRetArestaNaoExiste;
 	   }/*if*/
+
+	   printf("buscou vertice a em b\n");
+
+	   LIS_ObterValor ( pGrafo->vertices, &temp ) ;
+	   verticeC = ( tpVertice * ) temp ;
+
+	   printf("%c\n",verticeC->pValor);
 
 	   LIS_ExcluirElemento(verticeB->arestas);
 
@@ -246,7 +251,7 @@
 *  Função: GRF  &CriaVertice
 *****/
    
- GRF_tpCondRet GRF_CriaVertice ( GRF_tpGrafo * pGrafo , void * pValor ) 
+ GRF_tpCondRet GRF_CriaVertice ( GRF_tppGrafo pGrafo , void * pValor ) 
  {
 
 	   int Ret;
@@ -290,6 +295,60 @@
    }
    
    /* Fim função: GRF  &Criar Vertice *
+
+
+
+   /***************************************************************************
+*
+*  Função: GRF  &CriaVerticeOrigem
+*****/
+   
+ GRF_tpCondRet GRF_CriaVerticeOrigem ( GRF_tppGrafo pGrafo , void * pValor ) 
+ {
+
+	   int Ret;
+	   GRF_tpCondRet ret_grafo;
+	   tpVertice* vertice;
+	   void * temp;
+
+	   if(pGrafo==NULL)
+	   {
+		   return GRF_CondRetGrafoNaoExiste;
+	   } /* if */
+
+	   if(BuscarVertice ( pValor , pGrafo->origens , pGrafo->ComparaValor ) == 1 ) //Checa se o vértice já é origem
+	   {
+		   return GRF_CondRetVerticeJaExiste;
+	   }
+
+	   if(BuscarVertice ( pValor , pGrafo->vertices , pGrafo->ComparaValor ) == 0 ) //Checa se o vertice já existe
+	   {
+		   ret_grafo=GRF_CriaVertice ( pGrafo ,pValor );
+
+		   if(ret_grafo!=GRF_CondRetOK)
+		   {
+			   return ret_grafo;
+		   }/*if*/
+		 
+	   } /* if */
+
+	   else
+	   {
+		   LIS_ObterValor(pGrafo->vertices,&temp);
+		   vertice=(tpVertice*)temp;
+	   }
+
+	   Ret=LIS_InserirElementoApos(pGrafo->origens,pValor);
+	   
+	   if( Ret != LIS_CondRetOK )
+			{
+				return GRF_CondRetErroAoObterValor;
+			} /* if */
+
+	   return GRF_CondRetOK;
+   }
+   
+   /* Fim função: GRF  &Criar Vertice Origem*
    
 /***************************************************************************
 *

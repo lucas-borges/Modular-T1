@@ -168,6 +168,40 @@ typedef struct GRF_tagGrafo * GRF_tppGrafo ;
 
    GRF_tpCondRet GRF_CriaVertice ( GRF_tppGrafo pGrafo , void * pValor ) ;
 
+   /***********************************************************************
+*
+*  $FC Função: GRF  &Criar Vertice Origem
+*
+*  $ED Descrição da função
+*		insere o vértice na lista de origens, se ainda não existir o vértice
+*		também o cria.
+*    
+*
+*  $EP Parâmetros
+*		pGrafo -  ponteiro para o grafo onde se deseja inserir a origem
+*
+*		pValor - ponteiro para chave do vértice a ser origem
+*		
+*
+*  $FV Valor retornado
+*		GRF_CondRetOK            - criou vértice sem problemas
+*		GRF_CondRetFaltouMemoria - faltou memória ao alocar espaço  
+*		GRF_CondRetGrafoNaoExiste - grafo passado como ponteiro não existe 
+*		GRF_VerticeJaExiste - já existe um vértice com a chave passada 
+*							  como ponteiro como origem
+*
+*  $AE Assertivas de entrada
+*     - O grafo existe e não contém o vértice a ser inserido como origem
+*	  - Valem as assertivas estruturais do grafo
+*
+*  $AS Assertivas de saída
+*     - O grafo existe e tem um vértice a mais como origem
+*	  - Valem as assertivas estruturais do grafo
+*
+***********************************************************************/
+
+   GRF_tpCondRet GRF_CriaVerticeOrigem ( GRF_tppGrafo pGrafo , void * pValor );
+
 
    /***********************************************************************
 *
