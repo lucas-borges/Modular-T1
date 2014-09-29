@@ -439,6 +439,22 @@
 
    }   /* Fim função: GRF  &Existe Caminho */
 
+/***************************************************************************
+*
+*  Função: GRF  &Existe Vértice
+*****/
+
+   GRF_tpCondRet GRF_ExisteVertice ( GRF_tppGrafo pGrafo , void * pValor )
+   {
+	   if (BuscarVertice(pValor, pGrafo->vertices, pGrafo->ComparaValor)==1)
+	   {
+		   return GRF_CondRetVerticeJaExiste;
+	   } /* if */
+
+	   return GRF_CondRetVerticeNaoExiste;
+
+   } /* Fim função: GRF  &Existe Vértice */
+
    
 /*****  Código das funções encapsuladas no módulo  *****/
 
