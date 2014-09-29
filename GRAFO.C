@@ -42,7 +42,10 @@
                /* Ponteiro para o elemento predecessor */
 
          LIS_tppLista arestas ;
-               /* Ponteiro para o elemento sucessor */		 
+               /* Ponteiro para o elemento sucessor */	
+
+		 void ( * ExcluirValor ) ( void * pvalor ) ;
+			   /* Ponteiro para a função de destruição do valor contido em um vertice */
 
    } tpVertice ;
 
@@ -62,7 +65,7 @@
 		 int ( * ComparaValor ) ( void * pValorA , void * pValorB ) ;
 			   /* Ponteiro para funçao que compara duas chaves, retornando 0 se iguais e 1 se diferentes */
 
-		// void  ( ExcluirValor * ) ( void * pvalor ) ;
+		 void ( * ExcluirValor ) ( void * pvalor ) ;
 			   /* Ponteiro para a função de destruição do valor contido em um vertice */
 
    } GRF_tpGrafo ;
@@ -79,8 +82,7 @@
 
 /***************************************************************************
 *
-
-*  Função: GRF &CriaAresta
+*  Função: GRF &Cria Aresta
 *****/
 
    GRF_tpCondRet GRF_CriaAresta(void * pValorA, void * pValorB, GRF_tpGrafo * pGrafo)
@@ -139,15 +141,12 @@
 	   }/*if*/
 
 	   return GRF_CondRetOK;
-   }
+   } /* Fim função: GRF  &Cria Aresta */
 
-   
 
-   /* Fim função: GRF  &Nome da função *
-
-   /***************************************************************************
+/***************************************************************************
 *
-*  Função: GRF  &RemoveAresta
+*  Função: GRF  &Remove Aresta
 *****/
    
    GRF_tpCondRet GRF_RemoveAresta(void * pValorA, void * pValorB, GRF_tpGrafo * pGrafo)
@@ -219,9 +218,8 @@
 	   printf("excluiu aresta de b pra a\n");
 
 	   return GRF_CondRetOK;
-   }
+   }  /* Fim função: GRF  &Remove Aresta */
 
-   /* Fim função: GRF  &RemoveAresta *
 
 /***************************************************************************
 *
@@ -237,18 +235,19 @@
 		   return GRF_CondRetFaltouMemoria;
 	   } /* if */
 
-	   LIS_CriarLista ( &( ( * ppGrafo ) -> origens ) , ExcluirValor ) ;
-	   LIS_CriarLista ( &( ( * ppGrafo ) -> vertices ) , ExcluirValor ) ;
+	   LIS_CriarLista ( &( ( * ppGrafo ) -> origens ) , NULL ) ;
+	   LIS_CriarLista ( &( ( * ppGrafo ) -> vertices ) , DestruirVertice ) ; //ao destruir a lista de vértices tem que destruir o vértice
+	   (*ppGrafo)->ExcluirValor=ExcluirValor;
 	   (*ppGrafo)->ComparaValor=ComparaValor ;
 
 	   return GRF_CondRetOK;
 
 
-   }   /* Fim função: GRF  &Criar Grafo *
+   }   /* Fim função: GRF  &Criar Grafo */
    
 /***************************************************************************
 *
-*  Função: GRF  &CriaVertice
+*  Função: GRF  &Criar Vertice
 *****/
    
  GRF_tpCondRet GRF_CriaVertice ( GRF_tppGrafo pGrafo , void * pValor ) 
@@ -276,9 +275,10 @@
 
 	   
 	   vertice->pValor = pValor;
-	   LIS_CriarLista ( &vertice->arestas , free );//funcao free pois nao existem outras estruturas nessa lista, somente ponteiros
+	   vertice->ExcluirValor=pGrafo->ExcluirValor;
+	   LIS_CriarLista ( &vertice->arestas , NULL ); //NULL pois a lista vai apontar para outros vértices e não queremos que 
+													//ao remover uma aresta os vértices que elas apontam sejam removidos também
 
-	   
 	   if( vertice->arestas == NULL )
 	   {
 		   return GRF_CondRetFaltouMemoria;
@@ -294,11 +294,10 @@
 	   return GRF_CondRetOK;
    }
    
-   /* Fim função: GRF  &Criar Vertice *
+   /* Fim função: GRF  &Criar Vertice */
 
 
-
-   /***************************************************************************
+/***************************************************************************
 *
 *  Função: GRF  &CriaVerticeOrigem
 *****/
@@ -319,7 +318,7 @@
 	   if(BuscarVertice ( pValor , pGrafo->origens , pGrafo->ComparaValor ) == 1 ) //Checa se o vértice já é origem
 	   {
 		   return GRF_CondRetVerticeJaExiste;
-	   }
+	   } /* if */
 
 	   if(BuscarVertice ( pValor , pGrafo->vertices , pGrafo->ComparaValor ) == 0 ) //Checa se o vertice já existe
 	   {
@@ -328,27 +327,24 @@
 		   if(ret_grafo!=GRF_CondRetOK)
 		   {
 			   return ret_grafo;
-		   }/*if*/
+		   } /* if */
 		 
-	   } /* if */
-
-	   else
-	   {
+	   } else {
 		   LIS_ObterValor(pGrafo->vertices,&temp);
 		   vertice=(tpVertice*)temp;
-	   }
+	   } /* if */
 
-	   Ret=LIS_InserirElementoApos(pGrafo->origens,pValor);
+	   Ret=LIS_InserirElementoApos(pGrafo->origens,vertice); // o elemento da lista de origens é um ponteiro pra um vértice
+															 // não o conteúdo do vértice que se queria inserir
 	   
 	   if( Ret != LIS_CondRetOK )
-			{
-				return GRF_CondRetErroAoObterValor;
-			} /* if */
+	   {
+				return GRF_CondRetErroAoObterValor; //na verdade seria erro ao inserir vértice
+	   } /* if */
 
 	   return GRF_CondRetOK;
-   }
-   
-   /* Fim função: GRF  &Criar Vertice Origem*
+   }  /* Fim função: GRF  &Criar Vertice Origem*/
+
    
 /***************************************************************************
 *
@@ -441,7 +437,7 @@
 	   return GRF_CondRetOK;
 
 
-   }   /* Fim função: GRF  &Existe Caminho *
+   }   /* Fim função: GRF  &Existe Caminho */
 
    
 /*****  Código das funções encapsuladas no módulo  *****/
@@ -457,8 +453,10 @@
   
    void DestruirVertice ( void * pVertice )
    {
+		tpVertice* ptemp = (tpVertice*) pVertice;
 
-		LIS_DestruirLista(((tpVertice*)pVertice)->arestas);
+	    LIS_DestruirLista(ptemp->arestas);
+		ptemp->ExcluirValor(ptemp->pValor);
 		free(pVertice);
 
    } /* Fim função: GRF  -Destruir vértice */
