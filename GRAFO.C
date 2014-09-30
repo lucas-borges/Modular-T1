@@ -412,27 +412,31 @@
 	   {
 		   return GRF_CondRetErroAoObterValor ;
 	   } /* if */
-	   
-	   LIS_ObterValor ( pGrafo->vertices , &temp ) ;
-	   aux = ( tpVertice * ) temp ;
 
 	    printf("Foi pro primeiro vertice\n");
 
-	   while (aux != NULL)
+	   do 
 	   {			
+			
+		    LIS_ObterValor ( pGrafo->vertices , &temp ) ;
+			aux = ( tpVertice * ) temp ;
+			printf("i");
 			aux->visitado = 0 ;
 
-			LIS_AvancarElementoCorrente ( pGrafo->vertices , 1 ) ;
-			LIS_ObterValor ( pGrafo->vertices , &temp ) ;
-			aux = ( tpVertice * ) temp ;
-	   }
+	   } while ( LIS_AvancarElementoCorrente ( pGrafo->vertices , 1 ) == LIS_CondRetOK ) ;
 	   printf("Saiu do primeiro vértice\n");
+
 	   LIS_IrInicioLista ( origem->arestas ) ;
+
+	   printf("Foi inicio arestas\n");
 
 	   if ( EncontraCaminho ( origem , destino ) == 0 )
 	   {
+		   printf("deu cao\n");
 		   return GRF_CondRetVerticesDesconexos ;
 	   }
+
+	   printf("Saiu do if\n");
 
 	   return GRF_CondRetOK;
 
@@ -529,32 +533,44 @@
    {
 	   void * temp ;
 	   tpVertice * proximo ;
+
+	   printf("j");
+
+	   printf("%d",atual->visitado);
 	   
 	   if ( atual->visitado == 1 )
 	   {
+		   printf("Dei de cara em uma parede\n");
 		   return 0 ;
 	   }
+
+	   printf("%d",atual->visitado);
 	   
 	   atual->visitado = 1 ;
 
+	   printf("%d",atual->visitado);
+
 	   if ( atual == destino )
 	   {
+		   printf("Achou!:D\n");
 		   return 1;
 	   }
-
-	   LIS_ObterValor ( atual->arestas , &temp );
-	   proximo = ( tpVertice * ) temp ;
 	   
-	   while ( proximo != NULL )
+	   do
 	   {
-		   if ( EncontraCaminho ( proximo , destino ) == 1 )
-		   {
-			   return 1 ;
-		   }
-		   LIS_AvancarElementoCorrente ( atual->arestas , 1 ) ;
+		   printf("k");
+
 		   LIS_ObterValor ( atual->arestas , &temp );
 		   proximo = ( tpVertice * ) temp ;
-	   }
+
+		   if ( EncontraCaminho ( proximo , destino ) == 1 )
+		   {
+			   printf("Achou!:D\n");
+			   return 1 ;
+		   }
+
+	    } while(LIS_AvancarElementoCorrente ( atual->arestas , 1 )==LIS_CondRetOK);
+
 	   return 0 ;
 	  
 
