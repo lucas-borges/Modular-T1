@@ -327,6 +327,94 @@
 
    } /* Fim função: GRF  &Existe Vértice */
 
+  
+/***************************************************************************
+*
+*  Função: GRF  &Existe Caminho
+*****/
+
+   GRF_tpCondRet GRF_ExisteCaminho ( GRF_tppGrafo pGrafo , void * verticeOrigem , void * verticeDestino )
+   {
+
+	   tpVertice * origem , * destino , * aux ;
+	   void * temp;
+	   
+	   if ( pGrafo == NULL )
+	   {
+		   return GRF_CondRetGrafoNaoExiste ;
+	   } /* if */
+
+	   if ( BuscarVertice ( verticeOrigem , pGrafo->vertices , pGrafo->ComparaValor ) == 0 )
+	   {
+		   return GRF_CondRetVerticeNaoExiste ;
+	   } /* if */
+
+	   if ( LIS_ObterValor ( pGrafo->vertices , &temp ) != LIS_CondRetOK )
+	   {
+		   return GRF_CondRetErroAoObterValor ;
+	   } /* if */
+
+	   origem = ( tpVertice * ) temp ;
+
+
+	   if ( BuscarVertice ( verticeDestino , pGrafo->vertices , pGrafo->ComparaValor ) == 0 )
+	   {
+		   return GRF_CondRetVerticeNaoExiste ;
+	   } /* if */
+
+	   if ( LIS_ObterValor ( pGrafo->vertices , &temp ) != LIS_CondRetOK )
+	   {
+		   return GRF_CondRetErroAoObterValor ;
+	   } /* if */
+
+	   destino = ( tpVertice * ) temp ;
+
+	   if ( LIS_IrInicioLista ( pGrafo->vertices ) != LIS_CondRetOK )
+	   {
+		   return GRF_CondRetErroAoObterValor ;
+	   } /* if */
+ 
+	   do 
+	   {			
+		
+		    LIS_ObterValor ( pGrafo->vertices , &temp ) ;
+			aux = ( tpVertice * ) temp ;
+			aux->visitado = 0 ;
+
+	   } while ( LIS_AvancarElementoCorrente ( pGrafo->vertices , 1 ) == LIS_CondRetOK ) ;
+
+	   LIS_IrInicioLista ( origem->arestas ) ;
+	   
+	   if ( EncontraCaminho ( origem , destino ) == 0 )
+	   {
+		   return GRF_CondRetVerticesDesconexos ;
+	   } /* if */
+
+	   return GRF_CondRetOK;
+
+   }   /* Fim função: GRF  &Existe Caminho */
+
+/***************************************************************************
+*
+*  Função: GRF  &Existe Vértice
+*****/
+
+   GRF_tpCondRet GRF_ExisteVertice ( GRF_tppGrafo pGrafo , void * pValor )
+   {
+
+	   if ( pGrafo == NULL )
+	   {
+		   return GRF_CondRetGrafoNaoExiste;
+	   }
+	   
+	   if (BuscarVertice(pValor, pGrafo->vertices, pGrafo->ComparaValor)==1)
+	   {
+		   return GRF_CondRetVerticeJaExiste;
+	   } /* if */
+
+	   return GRF_CondRetVerticeNaoExiste;
+
+   } /* Fim função: GRF  &Existe Vértice */
 
 /***************************************************************************
 *
@@ -378,96 +466,6 @@
 	   return GRF_CondRetOK;
 
    }  /* Fim função: GRF  &Criar Vertice Origem*/
-
-  
-/***************************************************************************
-*
-*  Função: GRF  &Existe Caminho
-*****/
-
-   GRF_tpCondRet GRF_ExisteCaminho ( GRF_tppGrafo pGrafo , void * verticeOrigem , void * verticeDestino )
-   {
-
-	   tpVertice * origem , * destino , * aux ;
-	   void * temp;
-	   
-	   if ( pGrafo == NULL )
-	   {
-		   return GRF_CondRetGrafoNaoExiste ;
-	   } /* if */
-
-	   if ( BuscarVertice ( verticeOrigem , pGrafo->vertices , pGrafo->ComparaValor ) == 0 )
-	   {
-		   return GRF_CondRetVerticeNaoExiste ;
-	   } /* if */
-
-	   if ( LIS_ObterValor ( pGrafo->vertices , &temp ) != LIS_CondRetOK )
-	   {
-		   return GRF_CondRetErroAoObterValor ;
-	   } /* if */
-
-	   origem = ( tpVertice * ) temp ;
-
-
-	   if ( BuscarVertice ( verticeDestino , pGrafo->vertices , pGrafo->ComparaValor ) == 0 )
-	   {
-		   return GRF_CondRetVerticeNaoExiste ;
-	   } /* if */
-
-	   if ( LIS_ObterValor ( pGrafo->vertices , &temp ) != LIS_CondRetOK )
-	   {
-		   return GRF_CondRetErroAoObterValor ;
-	   } /* if */
-
-	   destino = ( tpVertice * ) temp ;
-
-	   if ( LIS_IrInicioLista ( pGrafo->vertices ) != LIS_CondRetOK )
-	   {
-		   return GRF_CondRetErroAoObterValor ;
-	   } /* if */
-
-	    
-	   do 
-	   {			
-			
-		    LIS_ObterValor ( pGrafo->vertices , &temp ) ;
-			aux = ( tpVertice * ) temp ;
-			aux->visitado = 0 ;
-
-	   } while ( LIS_AvancarElementoCorrente ( pGrafo->vertices , 1 ) == LIS_CondRetOK ) ;
-
-	   LIS_IrInicioLista ( origem->arestas ) ;
-	   
-	   if ( EncontraCaminho ( origem , destino ) == 0 )
-	   {
-		   return GRF_CondRetVerticesDesconexos ;
-	   } /* if */
-
-	   return GRF_CondRetOK;
-
-   }   /* Fim função: GRF  &Existe Caminho */
-
-/***************************************************************************
-*
-*  Função: GRF  &Existe Vértice
-*****/
-
-   GRF_tpCondRet GRF_ExisteVertice ( GRF_tppGrafo pGrafo , void * pValor )
-   {
-
-	   if ( pGrafo == NULL )
-	   {
-		   return GRF_CondRetGrafoNaoExiste;
-	   }
-	   
-	   if (BuscarVertice(pValor, pGrafo->vertices, pGrafo->ComparaValor)==1)
-	   {
-		   return GRF_CondRetVerticeJaExiste;
-	   } /* if */
-
-	   return GRF_CondRetVerticeNaoExiste;
-
-   } /* Fim função: GRF  &Existe Vértice */
 
 
 /*****  Código das funções encapsuladas no módulo  *****/

@@ -76,8 +76,7 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 
 	int numLidos   = -1 , 
 		CondRetEsp = -1 ,
-		CondRetObt = -1 ,
-		numElem    = -1 ;
+		CondRetObt = -1 ;
 	/* Inicializa para qualquer coisa */
 
 
@@ -131,8 +130,8 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 			return TST_CondRetParm ;
 		} /* if */
 
-		CondRetObt=GRF_DestroiGrafo ( pGrafo ) ;
-
+		GRF_DestroiGrafo ( pGrafo ) ;
+		CondRetObt=GRF_CondRetOK;
 		pGrafo = NULL ;
 
 		return TST_CompararInt( CondRetEsp , CondRetObt ,

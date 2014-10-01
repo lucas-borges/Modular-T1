@@ -171,39 +171,6 @@ typedef struct GRF_tagGrafo * GRF_tppGrafo ;
 
    GRF_tpCondRet GRF_CriaVertice ( GRF_tppGrafo pGrafo , void * pValor ) ;
 
-   /***********************************************************************
-*
-*  $FC Função: GRF  &Criar Vertice Origem
-*
-*  $ED Descrição da função
-*		insere o vértice na lista de origens, se ainda não existir o vértice
-*		também o cria.
-*    
-*  $EP Parâmetros
-*		pGrafo -  ponteiro para o grafo onde se deseja inserir a origem
-*
-*		pValor - ponteiro para chave do vértice a ser origem
-*
-*  $FV Valor retornado
-*		GRF_CondRetOK                 - criou vértice sem problemas
-*		GRF_CondRetFaltouMemoria      - faltou memória ao alocar espaço  
-*		GRF_CondRetGrafoNaoExiste     - grafo passado como ponteiro não existe 
-*		GRF_VerticeJaExiste           - já existe um vértice com a chave passada 
-*							            como ponteiro como origem
-*		GRF_CondRetErroInserirVertice - falhou ao inserir vértice na lista de origens
-*
-*  $AE Assertivas de entrada
-*     - O grafo existe e não contém o vértice a ser inserido como origem
-*	  - Valem as assertivas estruturais do grafo
-*
-*  $AS Assertivas de saída
-*     - O grafo existe e tem um vértice a mais como origem
-*	  - Valem as assertivas estruturais do grafo
-*
-***********************************************************************/
-
-   GRF_tpCondRet GRF_CriaVerticeOrigem ( GRF_tppGrafo pGrafo , void * pValor );
-
 
    /***********************************************************************
 *
@@ -285,7 +252,7 @@ typedef struct GRF_tagGrafo * GRF_tppGrafo ;
    GRF_tpCondRet GRF_RemoveAresta(void * pValorA, void * pValorB, GRF_tppGrafo pGrafo);
 
 
-    /***********************************************************************
+/***********************************************************************
 *
 *  $FC Função: GRF  &Destroi Grafo
 *
@@ -294,10 +261,6 @@ typedef struct GRF_tagGrafo * GRF_tppGrafo ;
 *
 *  $EP Parâmetros
 *		pGrafo -  ponteiro para o grafo a ser destruido
-*	
-*
-*  $FV Valor retornado
-*		GRF_CondRetOK     - destruiu grafo sem problemas
 *
 *  $AE Assertivas de entrada
 *     - O grafo existe
@@ -310,7 +273,34 @@ typedef struct GRF_tagGrafo * GRF_tppGrafo ;
 *
 ***********************************************************************/
 
-   GRF_tpCondRet GRF_DestroiGrafo (GRF_tppGrafo pGrafo);
+   void GRF_DestroiGrafo (GRF_tppGrafo pGrafo);
+
+
+/***********************************************************************
+*
+*  $FC Função: GRF  &Esvazia Grafo
+*
+*  $ED Descrição da função
+*		Retorna o grafo ao seu estado original, sem nenhum vértice
+*
+*  $EP Parâmetros
+*		pGrafo - ponteiro para o grafo que se deseja esvaziar	
+*
+*  $FV Valor retornado
+*		GRF_CondRetOK             - grafo foi esvaziado com sucesso
+*		GRF_CondRetGrafoNaoExiste - grafo passado como ponteiro não existe
+*
+*  $AE Assertivas de entrada
+*		- O grafo existe
+*		- Valem as assertivas estruturais do grafo
+*
+*  $AS Assertivas de saída
+*		- O grafo nao possui nenhum vertice
+*		- Valem as assertivas estruturais do grafo
+*
+***********************************************************************/
+
+	GRF_tpCondRet GRF_EsvaziaGrafo ( GRF_tppGrafo pGrafo ) ;
 
 
 /***********************************************************************
@@ -320,11 +310,10 @@ typedef struct GRF_tagGrafo * GRF_tppGrafo ;
 *  $ED Descrição da função
 *		Procura um caminho entre dois vértices do grafo.
 *    
-*
 *  $EP Parâmetros
-*		pGrafo -  ponteiro para o grafo onde se deseja procurar o caminho
+*		pGrafo         -  ponteiro para o grafo onde se deseja procurar o caminho
 *
-*		verticeOrigem - ponteiro para chave de um dos vértices a procurar o caminho
+*		verticeOrigem  - ponteiro para chave de um dos vértices a procurar o caminho
 *
 *		verticeDestino - ponteiro para chave de um dos vértices a procurar o caminho		
 *
@@ -348,64 +337,73 @@ typedef struct GRF_tagGrafo * GRF_tppGrafo ;
 *
 ***********************************************************************/
 
-
     GRF_tpCondRet GRF_ExisteCaminho ( GRF_tppGrafo pGrafo , void * verticeOrigem , void * verticeDestino );
-   
+
+
 /***********************************************************************
 *
 *  $FC Função: GRF  &Existe Vertice
 *
 *  $ED Descrição da função
-*    Verifica se o vertice passado como parametro esta contido no grafo
-*	 passado como parametro
+*		Verifica se o vertice passado como parametro esta contido no grafo
+*		passado como parametro
 *
 *  $EP Parâmetros
-*    pGrafo - grafo aonde sera buscado o vertice
-*    pValor - chave do vertice que se deseja buscar
+*		pGrafo - grafo aonde sera buscado o vertice
+*		pValor - chave do vertice que se deseja buscar
 *
 *  $FV Valor retornado
-*    GRF_CondRetGrafoNaoExiste - grafo nao existe
-*    GRF_CondRetVerticeJaExiste - vertice esta contido no grafo
-*    GRF_COndRetVerticeNaoExiste - vertice nao esta contido no grafo
+*		GRF_CondRetGrafoNaoExiste   - grafo nao existe
+*		GRF_CondRetVerticeJaExiste  - vertice esta contido no grafo
+*		GRF_COndRetVerticeNaoExiste - vertice nao esta contido no grafo
 *
 *  $AE Assertivas de entrada
-*    - O grafo existe
-*    - Valem as assertivas estruturais do grafo
-*    - A chave passada e de um tipo valido
+*		- O grafo existe
+*		- Valem as assertivas estruturais do grafo
+*		- A chave passada e de um tipo valido
 *
 *  $AS Assertivas de saída
-*    - O grafo permanece inalterado
-*    - Valem as assertivas estruturais do grafo
+*		- O grafo permanece inalterado
+*		- Valem as assertivas estruturais do grafo
 *
 ***********************************************************************/
 
 	GRF_tpCondRet GRF_ExisteVertice ( GRF_tppGrafo pGrafo , void * pValor );
 
+
 /***********************************************************************
 *
-*  $FC Função: GRF  &Esvazia Grafo
+*  $FC Função: GRF  &Criar Vertice Origem
 *
 *  $ED Descrição da função
-*    Retorna o grafo ao seu estado original, esvaziando todas suas listas
-*
+*		insere o vértice na lista de origens, se ainda não existir o vértice
+*		também o cria.
+*    
 *  $EP Parâmetros
-*     pGrafo - ponteiro para o grafo que se deseja esvaziar	
+*		pGrafo -  ponteiro para o grafo onde se deseja inserir a origem
+*
+*		pValor - ponteiro para chave do vértice a ser origem
 *
 *  $FV Valor retornado
-*     CondRetOK - grafo foi esvaziado com sucesso
-*	  CondRetGrafoNaoExiste - pGrafo nao aponta para um grafo
+*		GRF_CondRetOK                 - criou vértice sem problemas
+*		GRF_CondRetFaltouMemoria      - faltou memória ao alocar espaço  
+*		GRF_CondRetGrafoNaoExiste     - grafo passado como ponteiro não existe 
+*		GRF_VerticeJaExiste           - já existe um vértice com a chave passada 
+*							            como ponteiro como origem
+*		GRF_CondRetErroInserirVertice - falhou ao inserir vértice na lista de origens
 *
 *  $AE Assertivas de entrada
-*     - O grafo existe
+*     - O grafo existe e não contém o vértice a ser inserido como origem
 *	  - Valem as assertivas estruturais do grafo
 *
 *  $AS Assertivas de saída
-*     - O grafo nao possui nenhum vertice
+*     - O grafo existe e tem um vértice a mais como origem
 *	  - Valem as assertivas estruturais do grafo
 *
 ***********************************************************************/
 
-	GRF_tpCondRet GRF_EsvaziaGrafo ( GRF_tppGrafo pGrafo ) ;
+   GRF_tpCondRet GRF_CriaVerticeOrigem ( GRF_tppGrafo pGrafo , void * pValor );
+
 
 /********** Fim do módulo de definição: GRF Grafo não orientado **********/
 

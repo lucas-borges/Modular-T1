@@ -20,7 +20,6 @@
 =removearesta   'a' 'b' GrafoNaoExiste
 =criaaresta     'a' 'b' GrafoNaoExiste
 =existecaminho  'a' 'b' GrafoNaoExiste
-=destroigrafo           GrafoNaoExiste
 
 == Criar grafo
 =criargrafo OK
