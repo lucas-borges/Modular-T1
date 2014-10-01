@@ -14,6 +14,73 @@
 =declararparm   ErroAoObterValor      int  7
 =declararparm   VerticesDesconexos    int  8
 
+== Verificar situações relativas a grafo inexistente
+=inserevertice  'a'     GrafoNaoExiste
+=existevertice  'a'     GrafoNaoExiste
+=removearesta   'a' 'b' GrafoNaoExiste
+=criaaresta     'a' 'b' GrafoNaoExiste
+=existecaminho  'a' 'b' GrafoNaoExiste
+=destroigrafo           GrafoNaoExiste
+
+== Criar grafo
+=criargrafo OK
+
+== Verificar situações relativas a grafo sem vértices
+=existevertice 'a'     VerticeNaoExiste
+=criaaresta    'a' 'b' VerticeNaoExiste
+=removearesta  'a' 'b' VerticeNaoExiste
+=existecaminho 'a' 'b' VerticeNaoExiste
+
+== Inserir um vértice e verificar se existe
+=inserevertice 'a' OK
+=existevertice 'a' VerticeJaExiste
+
+== Inserir mesmo vértice novamente
+=inserevertice 'a' VerticeJaExiste
+
+== Verificar situações relativas a somente um vértice existente
+=existevertice 'b' VerticeNaoExiste
+=criaaresta    'a' 'b' VerticeNaoExiste
+=removearesta  'a' 'b' VerticeNaoExiste
+=existecaminho 'a' 'b' VerticeNaoExiste
+
+== Verificar recuperar de ExisteVértice
+=existevertice 'b' VerticeJaExiste
+=recuperar
+
+== Inserir segundo vértice
+=inserevertice 'b' OK
+=existevertice 'b' VerticeJaExiste 
+
+== Verificar situações relativas a dois vértices existentes
+=removearesta  'a' 'b' ArestaNaoExiste
+=criaaresta    'a' 'b' OK
+=criaaresta    'b' 'a' ArestaJaExiste
+=existecaminho 'a' 'b' OK
+=existecaminho 'b' 'a' OK
+
+== Verificar situações relativas a duas partes desconexas
+=inserevertice 'c'     OK
+=inserevertice 'd'     OK
+=criaaresta    'c' 'd' OK
+=existecaminho 'd' 'c' OK
+=existecaminho 'a' 'c' VerticesDesconexos
+=existecaminho 'a' 'd' VerticesDesconexos
+=existecaminho 'b' 'c' VerticesDesconexos
+=existecaminho 'b' 'd' VerticesDesconexos
+
+== Verificar situações relativas a aresta removida
+=removearesta  'a' 'b' OK
+=removearesta  'b' 'a' ArestaNaoExiste
+=existecaminho 'a' 'b' VerticesDesconexos
+=existecaminho 'b' 'a' VerticesDesconexos
+
+== Verificar Destroi Grafo
+=destroigrafo      OK
+=existevertice 'a' GrafoNaoExiste
+=existevertice 'b' GrafoNaoExiste
+
+
 
 == Verificar ExisteCaminho para grafo com trecho cíclico
 =criargrafo        OK
