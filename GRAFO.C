@@ -417,6 +417,11 @@
 
    GRF_tpCondRet GRF_ExisteVertice ( GRF_tppGrafo pGrafo , void * pValor )
    {
+	   if ( pGrafo == NULL )
+	   {
+		   return GRF_CondRetGrafoNaoExiste;
+	   }
+	   
 	   if (BuscarVertice(pValor, pGrafo->vertices, pGrafo->ComparaValor)==1)
 	   {
 		   return GRF_CondRetVerticeJaExiste;
