@@ -1,6 +1,6 @@
 // Script:    TesteGrafo.script
 // Autor:     Clara Szwarcman, Guilherme Simas e Lucas Borges
-// Data:      30/08/2014
+// Data:      30/09/2014
 // Propósito: Testar o módulo ARVORE.C utilizando uma lista de 10 árvores
 
 == Inicializar valores
@@ -17,4 +17,17 @@
 ==Criar grafo
 =criagrafo OK
 
-==
+==Insere Vertices
+=inserevertice 'a' 0
+=inserevertice 'b' 0
+=inserevertice 'c' 0
+=inserevertice 'd' 0
+
+==Cria Arestas
+=cria aresta 'a' 'd' 0
+=cria aresta 'a' 'b' 0
+=cria aresta 'd' 'b' 0
+=cria aresta 'b' 'c' 0
+
+==Confere Caminho
+=existecaminho 'a' 'c' 0
