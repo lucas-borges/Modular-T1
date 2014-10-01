@@ -82,28 +82,6 @@ typedef struct GRF_tagGrafo * GRF_tppGrafo ;
 
 /***********************************************************************
 *
-*  $FC Função: GRF  &Nome função
-*
-*  $ED Descrição da função
-*    
-*
-*  $EP Parâmetros
-*     
-*
-*  $FV Valor retornado
-*     
-*
-*  $AE Assertivas de entrada
-*     - 
-*
-*  $AS Assertivas de saída
-*     - 
-*
-***********************************************************************/
-
-
-/***********************************************************************
-*
 *  $FC Função: GRF  &Criar Grafo
 *
 *  $ED Descrição da função

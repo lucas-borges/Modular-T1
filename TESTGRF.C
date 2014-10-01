@@ -38,9 +38,6 @@
 
 #include	"CARACTER.H"
 
-static const char COMANDO_CMD         [ ] = "=comando"     ;
-
-
 static const char CRIAR_GRAFO_CMD	  [ ] = "=criargrafo"  ;
 static const char DESTROI_GRAFO_CMD   [ ] = "=destroigrafo" ;
 static const char INSERE_VERTICE_CMD  [ ] = "=inserevertice" ;
@@ -79,29 +76,9 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 		CondRetObt = -1 ;
 	/* Inicializa para qualquer coisa */
 
-
-	/* Testar COMANDO */
-/*	if ( strcmp( ComandoTeste , COMANDO_CMD ) == 0 )
-	{
-
-		numLidos = LER_LerParametros( "i" ,
-			&CondRetEsp ) ;
-
-		if ( numLidos != 1 )
-		{
-			return TST_CondRetParm ;
-		} /* if */
-
-/*		CondRetObt=GRF_funcao(   ) ;
-
-		return TST_CompararInt( CondRetEsp , CondRetObt ,
-			"Retorno errado ao COMANDO." );
-
-	} /* fim ativa: Testar COMANDO */
-
 	
 	/* Testar Criar Grafo */
-/*	else */if( strcmp( ComandoTeste , CRIAR_GRAFO_CMD ) == 0 )
+	if( strcmp( ComandoTeste , CRIAR_GRAFO_CMD ) == 0 )
 	{
 		numLidos = LER_LerParametros ( "i" ,
 			 &CondRetEsp ) ;
