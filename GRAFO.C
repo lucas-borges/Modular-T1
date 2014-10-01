@@ -372,8 +372,6 @@
 	   tpVertice * origem , * destino , * aux ;
 	   void * temp;
 	   
-	   printf("Entrou na existe caminho\n");
-
 	   if ( pGrafo == NULL )
 	   {
 		   return GRF_CondRetGrafoNaoExiste ;
@@ -389,8 +387,6 @@
 		   return GRF_CondRetErroAoObterValor ;
 	   } /* if */
 
-	   printf("Obteve origem\n");
-
 	   origem = ( tpVertice * ) temp ;
 
 
@@ -404,8 +400,6 @@
 		   return GRF_CondRetErroAoObterValor ;
 	   } /* if */
 
-	    printf("Obteve destino\n");
-
 	   destino = ( tpVertice * ) temp ;
 
 	   if ( LIS_IrInicioLista ( pGrafo->vertices ) != LIS_CondRetOK )
@@ -413,30 +407,22 @@
 		   return GRF_CondRetErroAoObterValor ;
 	   } /* if */
 
-	    printf("Foi pro primeiro vertice\n");
-
+	    
 	   do 
 	   {			
 			
 		    LIS_ObterValor ( pGrafo->vertices , &temp ) ;
 			aux = ( tpVertice * ) temp ;
-			printf("i");
 			aux->visitado = 0 ;
 
 	   } while ( LIS_AvancarElementoCorrente ( pGrafo->vertices , 1 ) == LIS_CondRetOK ) ;
-	   printf("Saiu do primeiro vértice\n");
 
 	   LIS_IrInicioLista ( origem->arestas ) ;
-
-	   printf("Foi inicio arestas\n");
-
+	   
 	   if ( EncontraCaminho ( origem , destino ) == 0 )
 	   {
-		   printf("deu cao\n");
 		   return GRF_CondRetVerticesDesconexos ;
-	   }
-
-	   printf("Saiu do if\n");
+	   } /*if*/
 
 	   return GRF_CondRetOK;
 
@@ -534,40 +520,35 @@
 	   void * temp ;
 	   tpVertice * proximo ;
 
-	   printf("j");
-
-	   printf("%d",atual->visitado);
-	   
+	     
 	   if ( atual->visitado == 1 )
 	   {
-		   printf("Dei de cara em uma parede\n");
 		   return 0 ;
-	   }
-
-	   printf("%d",atual->visitado);
+	   } /*if*/
 	   
 	   atual->visitado = 1 ;
 
-	   printf("%d",atual->visitado);
 
-	   if ( atual == destino )
+	   if ( atual->pValor == destino->pValor )
 	   {
-		   printf("Achou!:D\n");
 		   return 1;
-	   }
+	   } /*if*/
+
+	   if(LIS_IrInicioLista(atual->arestas)!=LIS_CondRetOK)
+	   {
+		   return 0;
+	   } /*if*/
 	   
 	   do
 	   {
-		   printf("k");
-
-		   LIS_ObterValor ( atual->arestas , &temp );
+		   LIS_ObterValor (atual->arestas , &temp );   
 		   proximo = ( tpVertice * ) temp ;
 
+		
 		   if ( EncontraCaminho ( proximo , destino ) == 1 )
 		   {
-			   printf("Achou!:D\n");
 			   return 1 ;
-		   }
+		   }/*if*/
 
 	    } while(LIS_AvancarElementoCorrente ( atual->arestas , 1 )==LIS_CondRetOK);
 
