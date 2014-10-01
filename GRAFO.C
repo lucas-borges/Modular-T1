@@ -328,6 +328,9 @@
 		   {
 			   return ret_grafo;
 		   } /* if */
+
+		   LIS_ObterValor(pGrafo->vertices,&temp);
+		   vertice=(tpVertice*)temp;
 		 
 	   } else {
 		   LIS_ObterValor(pGrafo->vertices,&temp);

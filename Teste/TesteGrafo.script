@@ -1,0 +1,15 @@
+// Script:    TesteGrafo.script
+// Autor:     Clara Szwarcman, Guilherme Simas e Lucas Borges
+// Data:      30/08/2014
+// Propósito: Testar o módulo ARVORE.C utilizando uma lista de 10 árvores
+
+== Inicializar valores
+=declararparm   OK               int  0
+=declararparm   NaoCriouRaiz     int  1
+=declararparm   ErroEstrutura    int  2
+=declararparm   NaoEhFolha       int  3
+=declararparm   ArvoreNaoExiste  int  4
+=declararparm   ArvoreVazia      int  5
+=declararparm   NohEhRaiz        int  6
+=declararparm   NaoPossuiFilho   int  7
+=declararparm   FaltouMemoria    int  8
