@@ -82,11 +82,87 @@
 
 /***************************************************************************
 *
+*  Função: GRF  &Criar grafo
+*****/
+
+   GRF_tpCondRet GRF_CriarGrafo ( GRF_tppGrafo * ppGrafo , int ( * ComparaValor ) ( void * pValorA , void * pValorB ) , void ( * ExcluirValor ) ( void * pValor ) )
+   {
+
+	   *ppGrafo= ( GRF_tpGrafo * ) malloc ( sizeof ( GRF_tpGrafo )) ;
+	   if ( *ppGrafo == NULL )
+	   {
+		   return GRF_CondRetFaltouMemoria;
+	   } /* if */
+
+	   LIS_CriarLista ( &( ( * ppGrafo ) -> origens ) , NULL ) ;
+	   LIS_CriarLista ( &( ( * ppGrafo ) -> vertices ) , DestruirVertice ) ; //ao destruir a lista de vértices tem que destruir o vértice
+	   (*ppGrafo)->ExcluirValor=ExcluirValor;
+	   (*ppGrafo)->ComparaValor=ComparaValor ;
+
+	   return GRF_CondRetOK;
+
+   }   /* Fim função: GRF  &Criar Grafo */
+
+
+/***************************************************************************
+*
+*  Função: GRF  &Criar Vertice
+*****/
+   
+ GRF_tpCondRet GRF_CriaVertice ( GRF_tppGrafo pGrafo , void * pValor ) 
+ {
+
+	   int Ret;
+	   tpVertice* vertice;
+
+	   if(pGrafo==NULL)
+	   {
+		   return GRF_CondRetGrafoNaoExiste;
+	   } /* if */
+
+	   if(BuscarVertice ( pValor , pGrafo->vertices , pGrafo->ComparaValor ) == 1 ) //Checa se o vertice já existe
+	   {
+			return GRF_CondRetVerticeJaExiste ;
+	   } /* if */
+
+
+	   vertice = (tpVertice * ) malloc ( sizeof (tpVertice) );//cria vertice
+	   if ( vertice == NULL )
+	   {
+		   return GRF_CondRetFaltouMemoria;
+	   } /* if */
+
+	   
+	   vertice->pValor = pValor;
+	   vertice->ExcluirValor=pGrafo->ExcluirValor;
+	   LIS_CriarLista ( &vertice->arestas , NULL ); //NULL pois a lista vai apontar para outros vértices e não queremos que 
+													//ao remover uma aresta os vértices que elas apontam sejam removidos também
+
+	   if( vertice->arestas == NULL )
+	   {
+		   return GRF_CondRetFaltouMemoria;
+	   } /* if */
+
+	   Ret = LIS_InserirElementoApos ( pGrafo->vertices , vertice );
+	   if( Ret != LIS_CondRetOK )
+	   {
+		   return GRF_CondRetErroAoObterValor;
+	   } /* if */
+
+
+	   return GRF_CondRetOK;
+
+   }  /* Fim função: GRF  &Criar Vertice */
+
+
+/***************************************************************************
+*
 *  Função: GRF &Cria Aresta
 *****/
 
    GRF_tpCondRet GRF_CriaAresta(void * pValorA, void * pValorB, GRF_tpGrafo * pGrafo)
    {
+
 	   LIS_tpCondRet lis_ret;
 	   int vertice_ret;
 	   tpVertice * verticeA, * verticeB;
@@ -130,7 +206,6 @@
 
 	   /*Inserir Aresta de a para b e de b para a*/
 
-	   
 	   lis_ret= LIS_InserirElementoApos(verticeA->arestas,verticeB);
 
 	   if(lis_ret!=LIS_CondRetOK)
@@ -146,6 +221,7 @@
 	   }/*if*/
 
 	   return GRF_CondRetOK;
+
    } /* Fim função: GRF  &Cria Aresta */
 
 
@@ -156,6 +232,7 @@
    
    GRF_tpCondRet GRF_RemoveAresta(void * pValorA, void * pValorB, GRF_tpGrafo * pGrafo)
    {
+
 	   int vertice_ret;
 	   tpVertice * verticeA, *verticeB, *verticeC;
 	   void * temp;
@@ -206,84 +283,31 @@
 	   LIS_ExcluirElemento(verticeB->arestas);
 	   
 	   return GRF_CondRetOK;
+
    }  /* Fim função: GRF  &Remove Aresta */
 
-
+   
 /***************************************************************************
 *
-*  Função: GRF  &Criar grafo
+*  Função: GRF  &Destroi grafo
 *****/
-
-   GRF_tpCondRet GRF_CriarGrafo ( GRF_tppGrafo * ppGrafo , int ( * ComparaValor ) ( void * pValorA , void * pValorB ) , void ( * ExcluirValor ) ( void * pValor ) )
+   
+   GRF_tpCondRet GRF_DestroiGrafo (GRF_tppGrafo pGrafo)
    {
-
-	   *ppGrafo= ( GRF_tpGrafo * ) malloc ( sizeof ( GRF_tpGrafo )) ;
-	   if ( *ppGrafo == NULL )
-	   {
-		   return GRF_CondRetFaltouMemoria;
-	   } /* if */
-
-	   LIS_CriarLista ( &( ( * ppGrafo ) -> origens ) , NULL ) ;
-	   LIS_CriarLista ( &( ( * ppGrafo ) -> vertices ) , DestruirVertice ) ; //ao destruir a lista de vértices tem que destruir o vértice
-	   (*ppGrafo)->ExcluirValor=ExcluirValor;
-	   (*ppGrafo)->ComparaValor=ComparaValor ;
-
-	   return GRF_CondRetOK;
-
-
-   }   /* Fim função: GRF  &Criar Grafo */
-   
-/***************************************************************************
-*
-*  Função: GRF  &Criar Vertice
-*****/
-   
- GRF_tpCondRet GRF_CriaVertice ( GRF_tppGrafo pGrafo , void * pValor ) 
- {
-
-	   int Ret;
-	   tpVertice* vertice;
 
 	   if(pGrafo==NULL)
 	   {
 		   return GRF_CondRetGrafoNaoExiste;
 	   } /* if */
 
-	   if(BuscarVertice ( pValor , pGrafo->vertices , pGrafo->ComparaValor ) == 1 ) //Checa se o vertice já existe
-	   {
-			return GRF_CondRetVerticeJaExiste ;
-	   } /* if */
-
-
-	   vertice = (tpVertice * ) malloc ( sizeof (tpVertice) );//cria vertice
-	   if ( vertice == NULL )
-	   {
-		   return GRF_CondRetFaltouMemoria;
-	   } /* if */
-
-	   
-	   vertice->pValor = pValor;
-	   vertice->ExcluirValor=pGrafo->ExcluirValor;
-	   LIS_CriarLista ( &vertice->arestas , NULL ); //NULL pois a lista vai apontar para outros vértices e não queremos que 
-													//ao remover uma aresta os vértices que elas apontam sejam removidos também
-
-	   if( vertice->arestas == NULL )
-	   {
-		   return GRF_CondRetFaltouMemoria;
-	   } /* if */
-
-	   Ret = LIS_InserirElementoApos ( pGrafo->vertices , vertice );
-	   if( Ret != LIS_CondRetOK )
-	   {
-		   return GRF_CondRetErroAoObterValor;
-	   } /* if */
-
+	   LIS_DestruirLista(pGrafo->origens);
+	   LIS_DestruirLista(pGrafo->vertices);
+	   free(pGrafo);
 
 	   return GRF_CondRetOK;
-   }
-   
-   /* Fim função: GRF  &Criar Vertice */
 
+   } /* Fim função: GRF  &Destroi grafo */
+   
 
 /***************************************************************************
 *
@@ -334,30 +358,10 @@
 	   } /* if */
 
 	   return GRF_CondRetOK;
+
    }  /* Fim função: GRF  &Criar Vertice Origem*/
 
-   
-/***************************************************************************
-*
-*  Função: GRF  &Destroi grafo
-*****/
-   
-   GRF_tpCondRet GRF_DestroiGrafo (GRF_tppGrafo pGrafo)
-   {
-
-	   if(pGrafo==NULL)
-	   {
-		   return GRF_CondRetGrafoNaoExiste;
-	   } /* if */
-
-	   LIS_DestruirLista(pGrafo->origens);
-	   LIS_DestruirLista(pGrafo->vertices);
-	   free(pGrafo);
-
-	   return GRF_CondRetOK;
-
-   } /* Fim função: GRF  &Destroi grafo */
-   
+  
 /***************************************************************************
 *
 *  Função: GRF  &Existe Caminho
@@ -365,6 +369,7 @@
 
    GRF_tpCondRet GRF_ExisteCaminho ( GRF_tppGrafo pGrafo , void * verticeOrigem , void * verticeDestino )
    {
+
 	   tpVertice * origem , * destino , * aux ;
 	   void * temp;
 	   
@@ -422,7 +427,6 @@
 
 	   return GRF_CondRetOK;
 
-
    }   /* Fim função: GRF  &Existe Caminho */
 
 /***************************************************************************
@@ -432,6 +436,7 @@
 
    GRF_tpCondRet GRF_ExisteVertice ( GRF_tppGrafo pGrafo , void * pValor )
    {
+
 	   if ( pGrafo == NULL )
 	   {
 		   return GRF_CondRetGrafoNaoExiste;
@@ -453,6 +458,7 @@
 
    GRF_tpCondRet GRF_EsvaziaGrafo ( GRF_tppGrafo pGrafo )
    {
+
 	   LIS_tpCondRet Ret = LIS_CondRetListaNaoExiste;
 	   
 	   if ( pGrafo == NULL )
