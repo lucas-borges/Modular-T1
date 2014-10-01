@@ -360,6 +360,7 @@ typedef struct GRF_tagGrafo * GRF_tppGrafo ;
 *    pValor - chave do vertice que se deseja buscar
 *
 *  $FV Valor retornado
+*    GRF_CondRetGrafoNaoExiste - grafo nao existe
 *    GRF_CondRetVerticeJaExiste - vertice esta contido no grafo
 *    GRF_COndRetVerticeNaoExiste - vertice nao esta contido no grafo
 *
