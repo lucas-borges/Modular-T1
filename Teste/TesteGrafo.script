@@ -74,6 +74,13 @@
 =existecaminho 'a' 'b' VerticesDesconexos
 =existecaminho 'b' 'a' VerticesDesconexos
 
+== Verificar esvaziar grafo
+=esvaziagrafo          OK
+=existevertice 'a'     VerticeNaoExiste
+=criaaresta    'b' 'c' VerticeNaoExiste
+=inserevertice 'b'     OK
+=existevertice 'b'     VerticeJaExiste
+
 == Verificar Destroi Grafo
 =destroigrafo      OK
 =existevertice 'a' GrafoNaoExiste
