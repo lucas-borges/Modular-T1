@@ -47,6 +47,7 @@ static const char INSERE_VERTICE_CMD  [ ] = "=inserevertice" ;
 static const char CRIA_ARESTA_CMD	  [ ] = "=criaaresta" ;
 static const char EXISTE_CAMINHO_CMD  [ ] = "=existecaminho" ;
 static const char REMOVE_ARESTA_CMD   [ ] = "=removearesta";
+static const char EXISTE_VERTICE_CMD  [ ] = "=existevertice";
 
 GRF_tppGrafo pGrafo;
 
@@ -239,6 +240,31 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 			"Retorno errado ao verificar se existe caminho entre os vertices." );
 
 	} /* fim ativa: Testar Existe Caminho */
+
+	/* Testar Existe Vertice */
+	if ( strcmp( ComandoTeste , EXISTE_VERTICE_CMD ) == 0 )
+	{
+		CHR_tppCaracter pChr;
+		char ValorVertice ;
+
+
+		numLidos = LER_LerParametros( "ci" , &ValorVertice,
+			&CondRetEsp ) ;
+
+		if ( numLidos != 2 )
+		{
+			return TST_CondRetParm ;
+		} /* if */
+
+		pChr=CHR_CriarCaracter(ValorVertice);
+		CondRetObt=GRF_ExisteVertice(pGrafo, (void*)pChr  ) ;
+
+		CHR_DestruirCaracter(pChr);
+
+		return TST_CompararInt( CondRetEsp , CondRetObt ,
+			"Retorno errado ao verificar se existe vertice." );
+
+	} /* fim ativa: Testar Existe Vertice */
 
 	return TST_CondRetNaoConhec;
 

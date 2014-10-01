@@ -309,7 +309,7 @@ typedef struct GRF_tagGrafo * GRF_tppGrafo ;
    GRF_tpCondRet GRF_DestroiGrafo (GRF_tppGrafo pGrafo);
 
 
-	/***********************************************************************
+/***********************************************************************
 *
 *  $FC Função: GRF  &Existe Caminho
 *
@@ -347,6 +347,26 @@ typedef struct GRF_tagGrafo * GRF_tppGrafo ;
 
     GRF_tpCondRet GRF_ExisteCaminho ( GRF_tppGrafo pGrafo , void * verticeOrigem , void * verticeDestino );
    
+/***********************************************************************
+*
+*  $FC Função: GRF  &Existe Vrtice
+*
+*  $ED Descrição da função
+*    
+*
+*  $EP Parâmetros
+*
+*  $FV Valor retornado
+*
+*  $AE Assertivas de entrada
+*
+*  $AS Assertivas de saída
+*
+***********************************************************************/
+
+
+	GRF_tpCondRet GRF_ExisteVertice ( GRF_tppGrafo pGrafo , void * pValor );
+
 /********** Fim do módulo de definição: GRF Grafo não orientado **********/
 
 
