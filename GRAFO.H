@@ -68,8 +68,14 @@ typedef struct GRF_tagGrafo * GRF_tppGrafo ;
 		 GRF_CondRetErroAoObterValor,
 		       /*erro ao obter elemento de alguma das listas */
 
-		 GRF_CondRetVerticesDesconexos
+		 GRF_CondRetVerticesDesconexos,
 		       /* nao existe caminho entre os vertices */
+
+		 GRF_CondRetErroInserirVertice,
+		      /* erro ao inserir o vértice */
+
+		 GRF_CondRetErroInserirAresta
+			  /* erro ao inserir a aresta */
 		 
    } GRF_tpCondRet ;
 
@@ -105,10 +111,8 @@ typedef struct GRF_tagGrafo * GRF_tppGrafo ;
 *		para seus vértices e uma para suas origens.
 *		Não existe identificador de tipo associado ao grafo.
 *    
-*
 *  $EP Parâmetros
 *		ppGrafo - referência para ponteiro de grafo a ser criado
-*
 *
 *		ComparaValor - ponteiro para a função que compara os valores
 *					 referenciados por vértices do grafo.
@@ -142,19 +146,18 @@ typedef struct GRF_tagGrafo * GRF_tppGrafo ;
 *		Cria um vértice com uma chave genérica e o insere na lista
 *		de vértices.
 *    
-*
 *  $EP Parâmetros
 *		pGrafo -  ponteiro para o grafo onde se deseja criar o vértice
 *
 *		pValor - ponteiro para chave do vértice a ser criado
 *		
-*
 *  $FV Valor retornado
-*		GRF_CondRetOK            - criou vértice sem problemas
-*		GRF_CondRetFaltouMemoria - faltou memória ao alocar espaço  
-*		GRF_CondRetGrafoNaoExiste - grafo passado como ponteiro não existe 
-*		GRF_VerticeJaExiste - já existe um vértice com a chave passada 
-*							  como ponteiro
+*		GRF_CondRetOK                   - criou vértice sem problemas
+*		GRF_CondRetFaltouMemoria        - faltou memória ao alocar espaço  
+*		GRF_CondRetGrafoNaoExiste       - grafo passado como ponteiro não existe 
+*		GRF_CondRetVerticeJaExiste      - já existe um vértice com a chave passada 
+*							              como ponteiro
+*		GRF_CondRetErroAoInserirVertice - falhou ao inserir vértice na lista de vértices
 *
 *  $AE Assertivas de entrada
 *     - O grafo existe e não contém o vértice a ser inserido
@@ -176,19 +179,18 @@ typedef struct GRF_tagGrafo * GRF_tppGrafo ;
 *		insere o vértice na lista de origens, se ainda não existir o vértice
 *		também o cria.
 *    
-*
 *  $EP Parâmetros
 *		pGrafo -  ponteiro para o grafo onde se deseja inserir a origem
 *
 *		pValor - ponteiro para chave do vértice a ser origem
-*		
 *
 *  $FV Valor retornado
-*		GRF_CondRetOK            - criou vértice sem problemas
-*		GRF_CondRetFaltouMemoria - faltou memória ao alocar espaço  
-*		GRF_CondRetGrafoNaoExiste - grafo passado como ponteiro não existe 
-*		GRF_VerticeJaExiste - já existe um vértice com a chave passada 
-*							  como ponteiro como origem
+*		GRF_CondRetOK                 - criou vértice sem problemas
+*		GRF_CondRetFaltouMemoria      - faltou memória ao alocar espaço  
+*		GRF_CondRetGrafoNaoExiste     - grafo passado como ponteiro não existe 
+*		GRF_VerticeJaExiste           - já existe um vértice com a chave passada 
+*							            como ponteiro como origem
+*		GRF_CondRetErroInserirVertice - falhou ao inserir vértice na lista de origens
 *
 *  $AE Assertivas de entrada
 *     - O grafo existe e não contém o vértice a ser inserido como origem
@@ -205,7 +207,7 @@ typedef struct GRF_tagGrafo * GRF_tppGrafo ;
 
    /***********************************************************************
 *
-*  $FC Função: GRF  &Criar Aresta
+*  $FC Função: GRF  &Cria Aresta
 *
 *  $ED Descrição da função
 *		Cria uma aresta entre dois vértices do grafo.
@@ -219,11 +221,13 @@ typedef struct GRF_tagGrafo * GRF_tppGrafo ;
 *		pValorB - ponteiro para chave de um dos vértice a ser criada a aresta		
 *
 *  $FV Valor retornado
-*		GRF_CondRetOK            - criou aresta sem problemas
-*		GRF_CondRetFaltouMemoria - faltou memória ao alocar espaço  
-*		GRF_CondRetGrafoNaoExiste - grafo passado como ponteiro não existe 
-*		GRF_ArestaJaExiste - já existe uma aresta entre os vértices passados 
-*							  como ponteiro
+*		GRF_CondRetOK                - criou aresta sem problemas
+*		GRF_CondRetFaltouMemoria     - faltou memória ao alocar espaço  
+*		GRF_CondRetGrafoNaoExiste    - grafo passado como ponteiro não existe 
+*		GRF_ArestaJaExiste           - já existe uma aresta entre os vértices passados 
+*							           como ponteiro
+*		GRF_CondRetVerticeNaoExiste  - ao menos um dos vértices não existe
+*		GRF_CondRetErroInserirAresta - falhou ao inserir aresta
 *
 *  $AE Assertivas de entrada
 *     - O grafo existe
@@ -250,7 +254,6 @@ typedef struct GRF_tagGrafo * GRF_tppGrafo ;
 *  $ED Descrição da função
 *		Remove uma aresta entre dois vértices do grafo.
 *    
-*
 *  $EP Parâmetros
 *		pGrafo -  ponteiro para o grafo onde se deseja criar a aresta
 *
@@ -259,10 +262,11 @@ typedef struct GRF_tagGrafo * GRF_tppGrafo ;
 *		pValorB - ponteiro para chave de um dos vértice a ser removida a aresta		
 *
 *  $FV Valor retornado
-*		GRF_CondRetOK            - removeu aresta sem problemas
-*		GRF_CondRetGrafoNaoExiste - grafo passado como ponteiro não existe 
-*		GRF_ArestaNaoExiste - Não existe uma aresta com a chave passada 
-*							  como ponteiro
+*		GRF_CondRetOK               - removeu aresta sem problemas
+*		GRF_CondRetGrafoNaoExiste   - grafo passado como ponteiro não existe 
+*		GRF_CondRetArestaNaoExiste  - Não existe uma aresta com a chave passada 
+*							          como ponteiro
+*		GRF_CondRetVerticeNaoExiste - ao menos um dos vértices não existe
 *
 *  $AE Assertivas de entrada
 *     - O grafo existe
