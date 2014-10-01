@@ -21,7 +21,40 @@
 *  $EIU Interface com o usuário pessoa
 *     Comandos de teste específicos para testar o módulo lista:
 *
-*     =comando <Parâmetro>
+*     
+*	  =criargrafo                    - chama a função GRF_CriarGrafo () que cria um grafo 
+*                                      de listas duplamente encadeadas vazio 
+*
+*	  =destroigrafo                  - chama a função GRF_DestroiGrafo () que desaloca
+*					                   todos os vertices do grafo e a cabeça do grafo.
+*
+*	  =inserevertice <Chave>         - chama função GRF_CriaVertice () para criar
+*						               um vertice com a chave passada como parametro
+*						               e em seguida insere o vertice na lista de 
+*						               vertices do grafo.
+*						               Obs. notação <Chave> = chave que identifica o
+*						               vertice
+*
+*     =criaaresta <Chave> <Chave>    - chama a função GRF_CriaAresta () para criar
+*								       uma aresta entre os vertices correspondentes
+*								       às chaves passadas como parâmetro
+*
+*     =removearesta <Chave> <Chave>  - chama a função GRF_RemoveAresta () para remover
+*								       a aresta entre os dois vertices correspondentes 
+*								       às chaves passadas como parâmetro
+*
+*     =existecaminho <Chave> <Chave> - chama a função GRF_ExisteCaminho () para verificar
+*								       se os vertices correspondentes às chaves passadas
+*								       como parametro estão interligados por meio de arestas
+*
+*     =existevertice <Chave>         - chama a função GRF_ExisteVertice () para verificar
+*								       se o vertice correspondente à chave passada como
+*								       parametro está contido no grafo
+*
+*     =esvaziagrafo                  - chama a função GRF_EsvaziaGrafo () que desaloca todos
+*								       os vertices do grafo
+*
+*
 *
 ***************************************************************************/
 
