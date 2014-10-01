@@ -92,6 +92,11 @@
 	   tpVertice * verticeA, * verticeB;
 	   void * temp;
 
+	   if(pGrafo==NULL)
+	   {
+		   return GRF_CondRetGrafoNaoExiste;
+	   } /* if */
+
 	   /*Verifica se os vertices existem*/
 
 	   vertice_ret=BuscarVertice(pValorA , pGrafo->vertices , pGrafo->ComparaValor );
@@ -155,6 +160,11 @@
 	   tpVertice * verticeA, *verticeB, *verticeC;
 	   void * temp;
 	   
+	   if(pGrafo==NULL)
+	   {
+		   return GRF_CondRetGrafoNaoExiste;
+	   } /* if */
+
 	    /*Verifica se os vertices existem*/
 
 	   vertice_ret=BuscarVertice(pValorA, pGrafo->vertices , pGrafo->ComparaValor );
@@ -334,6 +344,11 @@
    
    GRF_tpCondRet GRF_DestroiGrafo (GRF_tppGrafo pGrafo)
    {
+
+	   if(pGrafo==NULL)
+	   {
+		   return GRF_CondRetGrafoNaoExiste;
+	   } /* if */
 
 	   LIS_DestruirLista(pGrafo->origens);
 	   LIS_DestruirLista(pGrafo->vertices);
