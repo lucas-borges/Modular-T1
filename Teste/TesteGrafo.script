@@ -1,7 +1,7 @@
 // Script:    TesteGrafo.script
 // Autor:     Clara Szwarcman, Guilherme Simas e Lucas Borges
 // Data:      30/09/2014
-// Propósito: Testar o módulo ARVORE.C utilizando uma lista de 10 árvores
+// Propósito: Testar o módulo GRAFO.C
 
 == Inicializar valores
 =declararparm   OK                    int  0
@@ -14,20 +14,31 @@
 =declararparm   ErroAoObterValor      int  7
 =declararparm   VerticesDesconexos    int  8
 
-==Criar grafo
-=criagrafo OK
 
-==Insere Vertices
-=inserevertice 'a' 0
-=inserevertice 'b' 0
-=inserevertice 'c' 0
-=inserevertice 'd' 0
+== Verificar ExisteCaminho para grafo com trecho cíclico
+=criargrafo        OK
+=inserevertice 'a' OK
+=existevertice 'a' VerticeJaExiste
+=inserevertice 'b' OK
+=existevertice 'b' VerticeJaExiste
+=inserevertice 'c' OK
+=existevertice 'c' VerticeJaExiste
+=inserevertice 'd' OK
+=existevertice 'd' VerticeJaExiste
 
-==Cria Arestas
-=cria aresta 'a' 'd' 0
-=cria aresta 'a' 'b' 0
-=cria aresta 'd' 'b' 0
-=cria aresta 'b' 'c' 0
+=criaaresta 'a' 'd' OK
+=criaaresta 'a' 'b' OK
+=criaaresta 'd' 'b' OK
+=criaaresta 'b' 'c' OK
 
-==Confere Caminho
-=existecaminho 'a' 'c' 0
+=existecaminho 'a' 'c' OK
+=existecaminho 'c' 'a' OK
+
+=removearesta  'c' 'b' OK
+=removearesta  'c' 'b' ArestaNaoExiste
+=removearesta  'b' 'c' ArestaNaoExiste
+=existecaminho 'a' 'c' VerticesDesconexos
+=existecaminho 'c' 'a' VerticesDesconexos
+
+=destroigrafo OK
+

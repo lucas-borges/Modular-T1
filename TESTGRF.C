@@ -41,7 +41,7 @@
 static const char COMANDO_CMD         [ ] = "=comando"     ;
 
 
-static const char CRIAR_GRAFO_CMD	  [ ] = "=criagrafo"  ;
+static const char CRIAR_GRAFO_CMD	  [ ] = "=criargrafo"  ;
 static const char DESTROI_GRAFO_CMD   [ ] = "=destroigrafo" ;
 static const char INSERE_VERTICE_CMD  [ ] = "=inserevertice" ;
 static const char CRIA_ARESTA_CMD	  [ ] = "=criaaresta" ;
