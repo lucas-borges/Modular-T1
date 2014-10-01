@@ -4,12 +4,17 @@
 // Propósito: Testar o módulo ARVORE.C utilizando uma lista de 10 árvores
 
 == Inicializar valores
-=declararparm   OK               int  0
-=declararparm   NaoCriouRaiz     int  1
-=declararparm   ErroEstrutura    int  2
-=declararparm   NaoEhFolha       int  3
-=declararparm   ArvoreNaoExiste  int  4
-=declararparm   ArvoreVazia      int  5
-=declararparm   NohEhRaiz        int  6
-=declararparm   NaoPossuiFilho   int  7
-=declararparm   FaltouMemoria    int  8
+=declararparm   OK                    int  0
+=declararparm   VerticeJaExiste       int  1
+=declararparm   VerticeNaoExiste      int  2
+=declararparm   ArestaJaExiste        int  3
+=declararparm   ArestaNaoExiste       int  4
+=declararparm   GrafoNaoExiste        int  5
+=declararparm   FaltouMemoria         int  6
+=declararparm   ErroAoObterValor      int  7
+=declararparm   VerticesDesconexos    int  8
+
+==Criar grafo
+=criagrafo OK
+
+==
