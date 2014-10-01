@@ -48,6 +48,7 @@ static const char CRIA_ARESTA_CMD	  [ ] = "=criaaresta" ;
 static const char EXISTE_CAMINHO_CMD  [ ] = "=existecaminho" ;
 static const char REMOVE_ARESTA_CMD   [ ] = "=removearesta";
 static const char EXISTE_VERTICE_CMD  [ ] = "=existevertice";
+static const char ESVAZIA_GRAFO_CMD	  [ ] = "=esvaziagrafo" ;
 
 GRF_tppGrafo pGrafo;
 
@@ -242,7 +243,7 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 	} /* fim ativa: Testar Existe Caminho */
 
 	/* Testar Existe Vertice */
-	if ( strcmp( ComandoTeste , EXISTE_VERTICE_CMD ) == 0 )
+	else if ( strcmp( ComandoTeste , EXISTE_VERTICE_CMD ) == 0 )
 	{
 		CHR_tppCaracter pChr;
 		char ValorVertice ;
@@ -256,15 +257,34 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 			return TST_CondRetParm ;
 		} /* if */
 
-		pChr=CHR_CriarCaracter(ValorVertice);
-		CondRetObt=GRF_ExisteVertice(pGrafo, (void*)pChr  ) ;
+		pChr = CHR_CriarCaracter ( ValorVertice ) ;
+		CondRetObt = GRF_ExisteVertice ( pGrafo , ( void * ) pChr  ) ;
 
-		CHR_DestruirCaracter(pChr);
+		CHR_DestruirCaracter ( pChr ) ;
 
 		return TST_CompararInt( CondRetEsp , CondRetObt ,
 			"Retorno errado ao verificar se existe vertice." );
 
 	} /* fim ativa: Testar Existe Vertice */
+
+	/* Testar Esvazia Grafo */
+	if ( strcmp( ComandoTeste , ESVAZIA_GRAFO_CMD ) == 0 )
+	{
+
+		numLidos = LER_LerParametros( "i" ,
+			&CondRetEsp ) ;
+
+		if ( numLidos != 1 )
+		{
+			return TST_CondRetParm ;
+		} /* if */
+
+		CondRetObt=GRF_EsvaziaGrafo ( pGrafo ) ;
+
+		return TST_CompararInt( CondRetEsp , CondRetObt ,
+			"Retorno errado ao esvaziar o grafo." );
+
+	} /* fim ativa: Testar Esvazia Grafo */
 
 	return TST_CondRetNaoConhec;
 

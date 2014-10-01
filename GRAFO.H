@@ -349,23 +349,58 @@ typedef struct GRF_tagGrafo * GRF_tppGrafo ;
    
 /***********************************************************************
 *
-*  $FC Função: GRF  &Existe Vrtice
+*  $FC Função: GRF  &Existe Vertice
 *
 *  $ED Descrição da função
-*    
+*    Verifica se o vertice passado como parametro esta contido no grafo
+*	 passado como parametro
 *
 *  $EP Parâmetros
+*    pGrafo - grafo aonde sera buscado o vertice
+*    pValor - chave do vertice que se deseja buscar
 *
 *  $FV Valor retornado
+*    GRF_CondRetVerticeJaExiste - vertice esta contido no grafo
+*    GRF_COndRetVerticeNaoExiste - vertice nao esta contido no grafo
 *
 *  $AE Assertivas de entrada
+*    - O grafo existe
+*    - Valem as assertivas estruturais do grafo
+*    - A chave passada e de um tipo valido
 *
 *  $AS Assertivas de saída
+*    - O grafo permanece inalterado
+*    - Valem as assertivas estruturais do grafo
 *
 ***********************************************************************/
 
-
 	GRF_tpCondRet GRF_ExisteVertice ( GRF_tppGrafo pGrafo , void * pValor );
+
+/***********************************************************************
+*
+*  $FC Função: GRF  &Esvazia Grafo
+*
+*  $ED Descrição da função
+*    Retorna o grafo ao seu estado original, esvaziando todas suas listas
+*
+*  $EP Parâmetros
+*     pGrafo - ponteiro para o grafo que se deseja esvaziar	
+*
+*  $FV Valor retornado
+*     CondRetOK - grafo foi esvaziado com sucesso
+*	  CondRetGrafoNaoExiste - pGrafo nao aponta para um grafo
+*
+*  $AE Assertivas de entrada
+*     - O grafo existe
+*	  - Valem as assertivas estruturais do grafo
+*
+*  $AS Assertivas de saída
+*     - O grafo nao possui nenhum vertice
+*	  - Valem as assertivas estruturais do grafo
+*
+***********************************************************************/
+
+	GRF_tpCondRet GRF_EsvaziaGrafo ( GRF_tppGrafo pGrafo ) ;
 
 /********** Fim do módulo de definição: GRF Grafo não orientado **********/
 

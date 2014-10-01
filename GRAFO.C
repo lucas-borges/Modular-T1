@@ -154,9 +154,7 @@
 	   int vertice_ret;
 	   tpVertice * verticeA, *verticeB, *verticeC;
 	   void * temp;
-
-	   printf("Entrou na remove aresta\n");
-
+	   
 	    /*Verifica se os vertices existem*/
 
 	   vertice_ret=BuscarVertice(pValorA, pGrafo->vertices , pGrafo->ComparaValor );
@@ -169,8 +167,6 @@
 	   LIS_ObterValor ( pGrafo->vertices, &temp ) ;
 	   verticeA = ( tpVertice * ) temp ;
 
-	   printf("obteve primeiro vertice\n");
-
 	   vertice_ret=BuscarVertice(pValorB, pGrafo->vertices , pGrafo->ComparaValor );
 
 	   if(vertice_ret==0)//vertice nao existe
@@ -180,9 +176,7 @@
 
 	   LIS_ObterValor ( pGrafo->vertices, &temp ) ;
 	   verticeB = ( tpVertice * ) temp ;
-
-	   printf("obteve segundo vertice\n");
-
+	   
 	   /*Verifica se aresta já existe*/
 
 	   vertice_ret=BuscarVertice(pValorB, verticeA->arestas , pGrafo->ComparaValor );
@@ -191,32 +185,16 @@
 	   {
 		   return GRF_CondRetArestaNaoExiste;
 	   }/*if*/
-
-	   printf("verificou que aresta existe\n");
-
+	   
 	   LIS_ExcluirElemento(verticeA->arestas);
-
-	   printf("excluiu aresta de a pra b\n");
-
+	   
 	   vertice_ret=BuscarVertice(pValorA, verticeB->arestas , pGrafo->ComparaValor );
-
-	   if(vertice_ret==0)//aresta nao existe
-	   {
-		   printf("nao existe de b pra a\n");
-		   return GRF_CondRetArestaNaoExiste;
-	   }/*if*/
-
-	   printf("buscou vertice a em b\n");
-
+	   
 	   LIS_ObterValor ( pGrafo->vertices, &temp ) ;
 	   verticeC = ( tpVertice * ) temp ;
-
-	   printf("%c\n",verticeC->pValor);
-
+	   
 	   LIS_ExcluirElemento(verticeB->arestas);
-
-	   printf("excluiu aresta de b pra a\n");
-
+	   
 	   return GRF_CondRetOK;
    }  /* Fim função: GRF  &Remove Aresta */
 
@@ -448,7 +426,28 @@
 
    } /* Fim função: GRF  &Existe Vértice */
 
-   
+   /***************************************************************************
+*
+*  Função: GRF  &Esvaziar Grafo
+*****/
+
+   GRF_tpCondRet GRF_EsvaziaGrafo ( GRF_tppGrafo pGrafo )
+   {
+	   LIS_tpCondRet Ret = LIS_CondRetListaNaoExiste;
+	   
+	   if ( pGrafo == NULL )
+	   {
+		   return GRF_CondRetGrafoNaoExiste ;
+	   } /* if */
+
+	   LIS_EsvaziarLista ( pGrafo->origens ) ;
+	   LIS_EsvaziarLista ( pGrafo->vertices ) ;
+	   
+	   return GRF_CondRetOK ;
+
+   } /* Fim função: GRF  &Existe Vértice */
+
+
 /*****  Código das funções encapsuladas no módulo  *****/
 
 /***********************************************************************
@@ -553,7 +552,7 @@
 			   return 1 ;
 		   }/*if*/
 
-	    } while(LIS_AvancarElementoCorrente ( atual->arestas , 1 )==LIS_CondRetOK);
+	   } while(LIS_AvancarElementoCorrente ( atual->arestas , 1 )==LIS_CondRetOK);
 
 	   return 0 ;
 	  
