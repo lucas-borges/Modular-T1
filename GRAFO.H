@@ -126,7 +126,7 @@ typedef struct GRF_tagGrafo * GRF_tppGrafo ;
 *
 *		pValor - ponteiro para o valor contido no vértice a ser criado
 *
-*		chave  - valor da chave do vertice
+*		chave  - valor da chave do vertice, deve ser obrigatoriamente um inteiro não negativo
 *		
 *  $FV Valor retornado
 *		GRF_CondRetOK                   - criou vértice sem problemas
