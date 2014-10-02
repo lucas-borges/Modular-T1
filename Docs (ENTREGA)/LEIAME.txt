@@ -1,0 +1,18 @@
+Leiame - TRAB2 : Teste de Grafo
+
+Objetivo: 
+
+	 Realizar testes automatizados em um módulo que implementa um grafo não direcionado. 
+	 É possível tratar somente um grafo simultaneamente, o qual contém em seus vértices 
+	 um caracter cada.
+
+
+Forma de Execução:
+
+        Renomear o arquivo TRAB2.EXE.txt para TRAB2.EXE e o arquivo TESTE_TRAB2.BAT.txt 
+	para TESTE_TRAB2.BAT.
+
+	Dar dois cliques no arquivo TESTE_TRAB2.BAT.
+
+	Será gerado um log de saída ("LogTesteGrafo.log") com os resultados dos testes
+	especificados no arquivo TesteGrafo.script.
