@@ -76,7 +76,7 @@
 
    void DestruirVertice ( void * pVertice );
 
-   int EncontraCaminho ( tpVertice * atual , tpVertice * destino );
+   int EncontraCaminho ( tpVertice * atual , tpVertice * destino , int * buffer );
 
    /*****  Código das funções exportadas pelo módulo  *****/
 
@@ -165,11 +165,10 @@
 *  Função: GRF &Cria Aresta
 *****/
 
-   GRF_tpCondRet GRF_CriaAresta(GRF_tpGrafo * pGrafo , int chaveA, int chaveB)
+   GRF_tpCondRet GRF_CriaAresta(GRF_tppGrafo pGrafo , int chaveA, int chaveB)
    {
 
 	   LIS_tpCondRet lis_ret;
-	   int vertice_ret;
 	   tpVertice * verticeA, * verticeB;
 	   void * pTemp;
 
@@ -236,6 +235,7 @@
    {
 
 	   tpVertice * verticeA, *verticeB;
+	   void * pTemp;
 	   
 	   if(pGrafo==NULL)
 	   {
@@ -264,8 +264,13 @@
 	   
 	   /*Excluir Aresta de a para b e de b para a*/
 
-	   verticeA = ObterVertice (pGrafo,chaveA);
-	   verticeB = ObterVertice (pGrafo,chaveB);
+	   BuscarVertice ( chaveA , pGrafo->vertices ) ;
+	   LIS_ObterValor( pGrafo->vertices , &pTemp );
+	   verticeA = ( tpVertice * ) pTemp ;
+
+	   BuscarVertice ( chaveB , pGrafo->vertices ) ;
+	   LIS_ObterValor( pGrafo->vertices , &pTemp );
+	   verticeB = ( tpVertice * ) pTemp ;
 	   
 	   BuscarVertice(chaveB, verticeA->arestas );
 	   

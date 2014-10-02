@@ -189,7 +189,7 @@ typedef struct GRF_tagGrafo * GRF_tppGrafo ;
 ***********************************************************************/
 
 
-   GRF_tpCondRet GRF_CriaAresta(GRF_tpGrafo * pGrafo , int chaveA, int chaveB);
+   GRF_tpCondRet GRF_CriaAresta( GRF_tppGrafo pGrafo , int chaveA, int chaveB);
 
 
    /***********************************************************************
