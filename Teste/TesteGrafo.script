@@ -50,7 +50,7 @@
 =existevertice 2     VerticeJaExiste 
 
 == Verificar situações relativas a dois vértices existentes
-=removearesta  1 2 ArestaNaoExiste
+
 =criaaresta    1 2 OK
 =criaaresta    2 1 ArestaJaExiste
 

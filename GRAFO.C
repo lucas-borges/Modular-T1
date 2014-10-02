@@ -255,11 +255,11 @@
 		   return GRF_CondRetVerticeNaoExiste; 
 	   } /* if */
 
-	   /*Verifica se aresta já existe*/
+	   /*Verifica se aresta não existe*/
 
-	   if(GRF_ExisteAresta(pGrafo,chaveA,chaveB)==GRF_CondRetArestaJaExiste)  //aresta já existe
+	   if(GRF_ExisteAresta(pGrafo,chaveA,chaveB)==GRF_CondRetArestaNaoExiste)  //aresta não existe
 	   {
-		   return GRF_CondRetArestaJaExiste; 
+		   return GRF_CondRetArestaNaoExiste; 
 	   } /* if */	   
 	   
 	   /*Excluir Aresta de a para b e de b para a*/
