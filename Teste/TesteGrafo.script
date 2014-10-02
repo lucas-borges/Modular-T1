@@ -104,7 +104,7 @@
 
 
 
-== Verificar ExisteCaminho e Caminha para grafo com trecho cíclico
+== Verificar existecaminho e Caminha para grafo com trecho cíclico
 =criargrafo          OK
 =inserevertice 1 'a' OK
 =existevertice 1     VerticeJaExiste

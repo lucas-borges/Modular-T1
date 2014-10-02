@@ -276,7 +276,7 @@ typedef struct GRF_tagGrafo * GRF_tppGrafo ;
 
 /***********************************************************************
 *
-*  $FC Função: GRF  &Existe Caminho
+*  $FC Função: GRF  &Obtem Caminho
 *
 *  $ED Descrição da função
 *		Procura um caminho entre dois vértices do grafo.
@@ -288,7 +288,8 @@ typedef struct GRF_tagGrafo * GRF_tppGrafo ;
 *
 *		chaveDestino - chave de um dos vértices a procurar o caminho		
 *
-*		buffer       - buffer de saída onde serão impressas as chaves na ordem do caminho da origem até a saída
+*		buffer       - buffer de saída onde será armazenada a sequência de chaves 
+*					   na ordem do caminho da origem até a saída, NULL se não é necessário
 *
 *  $FV Valor retornado
 *		GRF_CondRetOK                 - encontrou caminho entre os vértices
@@ -303,7 +304,8 @@ typedef struct GRF_tagGrafo * GRF_tppGrafo ;
 *     - pGrafo é um ponteiro válido para um Grafo
 *	  - chaveOrigem e chaveDestino são tipos válidos de chave
 *	  - Valem as assertivas estruturais do grafo
-*     - buffer é um vetor de inteiros de tamanho suficiente para conter todo o caminho
+*     - buffer é um vetor de inteiros de tamanho suficiente para conter
+*	  - todo o caminho ou NULL
 *
 *  $AS Assertivas de saída
 *     - O grafo permanece inalterado
@@ -312,7 +314,7 @@ typedef struct GRF_tagGrafo * GRF_tppGrafo ;
 *
 ***********************************************************************/
 
-    GRF_tpCondRet GRF_ExisteCaminho ( GRF_tppGrafo pGrafo , int chaveOrigem , int chaveDestino , int * buffer );
+    GRF_tpCondRet GRF_ObtemCaminho ( GRF_tppGrafo pGrafo , int chaveOrigem , int chaveDestino , int * buffer );
 
 
 /***********************************************************************

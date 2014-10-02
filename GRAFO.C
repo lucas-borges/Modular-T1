@@ -327,10 +327,10 @@
   
 /***************************************************************************
 *
-*  Função: GRF  &Existe Caminho
+*  Função: GRF  &Obtem Caminho
 *****/
 
-   GRF_tpCondRet GRF_ExisteCaminho ( GRF_tppGrafo pGrafo , int chaveOrigem , int chaveDestino , int * buffer )
+   GRF_tpCondRet GRF_ObtemCaminho ( GRF_tppGrafo pGrafo , int chaveOrigem , int chaveDestino , int * buffer )
    {
 
 	   tpVertice * origem , * destino , * aux ;
@@ -389,7 +389,7 @@
 
 	   return GRF_CondRetOK;
 
-   }   /* Fim função: GRF  &Existe Caminho */
+   }   /* Fim função: GRF  &Obtem Caminho */
 
 /***************************************************************************
 *
@@ -540,7 +540,7 @@
 
  /***************************************************************************
 *
-*  Função: GRF  &Alterar Valor Corr
+*  Função: GRF  &Alterar Valor Corrente
 *****/
 
  GRF_tpCondRet GRF_AlterarValorCorr ( GRF_tppGrafo pGrafo , void * pValor )
@@ -561,7 +561,7 @@
 
 	 return GRF_CondRetOK;	
 
- }/* Fim função: GRF  &Alterar Valor Corr */
+ }/* Fim função: GRF  &Alterar Valor Corrente */
 
  /***************************************************************************
 *
@@ -591,7 +591,7 @@
 	 LIS_ObterValor(pGrafo->vertices , &pTemp);
 	 verticeDestino = (tpVertice * ) pTemp ;
 	 
-	 if ( GRF_ExisteCaminho ( pGrafo , pGrafo->pVerticeCorr->chave , chaveDestino , NULL ) != GRF_CondRetOK )
+	 if ( GRF_ObtemCaminho ( pGrafo , pGrafo->pVerticeCorr->chave , chaveDestino , NULL ) != GRF_CondRetOK )
 	 {
 		 return GRF_CondRetVerticesDesconexos;
 	 }/* if */
@@ -690,6 +690,7 @@
 		   if(buffer != NULL)
 		   {
 			   buffer[0]=atual->chave;
+			   buffer[1]=-1;
 		   }/* if */
 		   
 		   return 1;

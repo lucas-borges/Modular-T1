@@ -43,7 +43,7 @@
 *								       a aresta entre os dois vertices correspondentes 
 *								       às chaves passadas como parâmetro
 *
-*     =existecaminho <Chave> <Chave> - chama a função GRF_ExisteCaminho () para verificar
+*     =existecaminho <Chave> <Chave> - chama a função GRF_ObtemCaminho () para verificar
 *								       se os vertices correspondentes às chaves passadas
 *								       como parametro estão interligados por meio de arestas
 *
@@ -228,11 +228,12 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 
 	/* fim ativa: Testar Criar Aresta */
 
-	/* Testar Existe Caminho */
+	/* Testar Obtem Caminho */
 	else if ( strcmp( ComandoTeste , EXISTE_CAMINHO_CMD ) == 0 )
 	{
-		int verticeOrigem , verticeDestino, buffer[10] ;
+		int verticeOrigem , verticeDestino ;
 		
+
 		numLidos = LER_LerParametros( "iii" ,
 			&verticeOrigem , &verticeDestino , &CondRetEsp ) ;
 
@@ -242,12 +243,12 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 		} /* if */
 
 
-		CondRetObt=GRF_ExisteCaminho ( pGrafo , verticeOrigem, verticeDestino,NULL) ;
-
+		CondRetObt=GRF_ObtemCaminho ( pGrafo , verticeOrigem, verticeDestino,NULL) ;
+		
 		return TST_CompararInt( CondRetEsp , CondRetObt ,
 			"Retorno errado ao verificar se existe caminho entre os vertices." );
 
-	} /* fim ativa: Testar Existe Caminho */
+	} /* fim ativa: Testar Obtem Caminho */
 
 	/* Testar Existe Vertice */
 	else if ( strcmp( ComandoTeste , EXISTE_VERTICE_CMD ) == 0 )
