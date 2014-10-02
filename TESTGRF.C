@@ -71,14 +71,20 @@
 
 #include	"CARACTER.H"
 
-static const char CRIAR_GRAFO_CMD	  [ ] = "=criargrafo"  ;
-static const char DESTROI_GRAFO_CMD   [ ] = "=destroigrafo" ;
-static const char INSERE_VERTICE_CMD  [ ] = "=inserevertice" ;
-static const char CRIA_ARESTA_CMD	  [ ] = "=criaaresta" ;
-static const char EXISTE_CAMINHO_CMD  [ ] = "=existecaminho" ;
-static const char REMOVE_ARESTA_CMD   [ ] = "=removearesta";
-static const char EXISTE_VERTICE_CMD  [ ] = "=existevertice";
-static const char ESVAZIA_GRAFO_CMD	  [ ] = "=esvaziagrafo" ;
+static const char CRIAR_GRAFO_CMD	    [ ] = "=criargrafo"  ;
+static const char DESTROI_GRAFO_CMD     [ ] = "=destroigrafo" ;
+static const char INSERE_VERTICE_CMD    [ ] = "=inserevertice" ;
+static const char CRIA_ARESTA_CMD	    [ ] = "=criaaresta" ;
+static const char EXISTE_CAMINHO_CMD    [ ] = "=existecaminho" ;
+static const char REMOVE_ARESTA_CMD     [ ] = "=removearesta";
+static const char EXISTE_VERTICE_CMD    [ ] = "=existevertice";
+static const char ESVAZIA_GRAFO_CMD	    [ ] = "=esvaziagrafo" ;
+static const char ALTERA_CORR_CMD       [ ] = "=alteracorrente";
+static const char EXISTE_ARESTA_CMD     [ ] = "=existearesta";
+static const char IR_VIZINHO_CMD        [ ] = "=irvizinho";
+static const char OBTER_CORR_CMD        [ ] = "=obtercorrente";
+static const char ALTERA_VALOR_CORR_CMD [ ] = "=alteravalorcorr";
+static const char CAMINHAR_CMD			[ ] = "=caminhar";
 
 GRF_tppGrafo pGrafo;
 
@@ -121,7 +127,7 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 			return TST_CondRetParm ;
 		}/* if */
 
-		CondRetObt = GRF_CriarGrafo ( &pGrafo , CHR_ComparaCaracter , CHR_DestruirCaracter ) ;
+		CondRetObt = GRF_CriarGrafo ( &pGrafo , CHR_DestruirCaracter ) ;
 
 		return TST_CompararInt ( CondRetEsp , CondRetObt , 
 				"Retorno errado ao criar grafo.") ;
@@ -155,11 +161,12 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 
 		CHR_tppCaracter pCaracter ;
 		char ValorVertice ;
+		int ChaveVertice;
+	
+		numLidos = LER_LerParametros( "ici" ,
+			&ChaveVertice, &ValorVertice , &CondRetEsp ) ;
 
-		numLidos = LER_LerParametros( "ci" ,
-			&ValorVertice , &CondRetEsp ) ;
-
-		if ( numLidos != 2 )
+		if ( numLidos != 3 )
 		{
 			return TST_CondRetParm ;
 		} /* if */
@@ -171,7 +178,7 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 			return TST_CondRetMemoria ;
 		}
 
-		CondRetObt = GRF_CriaVertice ( pGrafo , pCaracter ) ;
+		CondRetObt = GRF_CriaVertice ( pGrafo , pCaracter, ChaveVertice ) ;
 
 		return TST_CompararInt( CondRetEsp , CondRetObt ,
 			"Retorno errado ao criar o vertice." );
@@ -181,10 +188,9 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 	/* Testar Cria Aresta */
 	else if ( strcmp( ComandoTeste , CRIA_ARESTA_CMD ) == 0 )
 	{
-		CHR_tppCaracter pChrA , pChrB ;
-		char verticeA , verticeB ;
+		int verticeA , verticeB ;
 		
-		numLidos = LER_LerParametros( "cci" ,
+		numLidos = LER_LerParametros( "iii" ,
 			&verticeA , &verticeB , &CondRetEsp ) ;
 
 		if ( numLidos != 3 )
@@ -192,10 +198,8 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 			return TST_CondRetParm ;
 		} /* if */
 
-		pChrA = CHR_CriarCaracter ( verticeA ) ;
-		pChrB = CHR_CriarCaracter ( verticeB ) ;
 
-		CondRetObt = GRF_CriaAresta ( pChrA , pChrB , pGrafo ) ;
+		CondRetObt = GRF_CriaAresta ( pGrafo, verticeA , verticeB ) ;
 
 		return TST_CompararInt( CondRetEsp , CondRetObt ,
 			"Retorno errado ao criar a aresta." );
@@ -205,10 +209,9 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 	/*Testar Remove Aresta */
 	else if ( strcmp( ComandoTeste, REMOVE_ARESTA_CMD) ==0)
 	{
-		CHR_tppCaracter pChrA , pChrB ;
-		char verticeA , verticeB ;
+		int verticeA , verticeB ;
 		
-		numLidos = LER_LerParametros( "cci" ,
+		numLidos = LER_LerParametros( "iii" ,
 			&verticeA , &verticeB , &CondRetEsp ) ;
 
 		if ( numLidos != 3 )
@@ -216,10 +219,8 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 			return TST_CondRetParm ;
 		} /* if */
 
-		pChrA = CHR_CriarCaracter ( verticeA ) ;
-		pChrB = CHR_CriarCaracter ( verticeB ) ;
 
-		CondRetObt = GRF_RemoveAresta ( pChrA , pChrB , pGrafo ) ;
+		CondRetObt = GRF_RemoveAresta ( pGrafo,verticeA , verticeB) ;
 
 		return TST_CompararInt( CondRetEsp , CondRetObt ,
 			"Retorno errado ao remover a aresta." );
@@ -230,10 +231,9 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 	/* Testar Existe Caminho */
 	else if ( strcmp( ComandoTeste , EXISTE_CAMINHO_CMD ) == 0 )
 	{
-		char verticeOrigem , verticeDestino ;
-		CHR_tppCaracter origem , destino ; 
+		int verticeOrigem , verticeDestino, buffer[10] ;
 		
-		numLidos = LER_LerParametros( "cci" ,
+		numLidos = LER_LerParametros( "iii" ,
 			&verticeOrigem , &verticeDestino , &CondRetEsp ) ;
 
 		if ( numLidos != 3 )
@@ -241,10 +241,8 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 			return TST_CondRetParm ;
 		} /* if */
 
-		origem = CHR_CriarCaracter ( verticeOrigem ) ;
-		destino = CHR_CriarCaracter ( verticeDestino ) ;
 
-		CondRetObt=GRF_ExisteCaminho ( pGrafo , origem , destino ) ;
+		CondRetObt=GRF_ExisteCaminho ( pGrafo , verticeOrigem, verticeDestino,NULL) ;
 
 		return TST_CompararInt( CondRetEsp , CondRetObt ,
 			"Retorno errado ao verificar se existe caminho entre os vertices." );
@@ -254,11 +252,10 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 	/* Testar Existe Vertice */
 	else if ( strcmp( ComandoTeste , EXISTE_VERTICE_CMD ) == 0 )
 	{
-		CHR_tppCaracter pChr;
-		char ValorVertice ;
+		int chaveVertice ;
 
 
-		numLidos = LER_LerParametros( "ci" , &ValorVertice,
+		numLidos = LER_LerParametros( "ii" , &chaveVertice,
 			&CondRetEsp ) ;
 
 		if ( numLidos != 2 )
@@ -266,10 +263,8 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 			return TST_CondRetParm ;
 		} /* if */
 
-		pChr = CHR_CriarCaracter ( ValorVertice ) ;
-		CondRetObt = GRF_ExisteVertice ( pGrafo , ( void * ) pChr  ) ;
+		CondRetObt = GRF_ExisteVertice ( pGrafo , chaveVertice  ) ;
 
-		CHR_DestruirCaracter ( pChr ) ;
 
 		return TST_CompararInt( CondRetEsp , CondRetObt ,
 			"Retorno errado ao verificar se existe vertice." );
@@ -277,7 +272,7 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 	} /* fim ativa: Testar Existe Vertice */
 
 	/* Testar Esvazia Grafo */
-	if ( strcmp( ComandoTeste , ESVAZIA_GRAFO_CMD ) == 0 )
+	else if ( strcmp( ComandoTeste , ESVAZIA_GRAFO_CMD ) == 0 )
 	{
 
 		numLidos = LER_LerParametros( "i" ,
@@ -294,6 +289,151 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 			"Retorno errado ao esvaziar o grafo." );
 
 	} /* fim ativa: Testar Esvazia Grafo */
+
+	/* Testar Altera Corrente */
+	else if ( strcmp( ComandoTeste, ALTERA_CORR_CMD ) == 0 )
+	{
+		int vertice;
+
+		numLidos = LER_LerParametros( "ii", &vertice, &CondRetEsp);
+
+		if ( numLidos != 2)
+		{
+			return TST_CondRetParm;
+		} /*if*/
+
+		CondRetObt = GRF_AlteraCorrente ( pGrafo, vertice );
+
+		return TST_CompararInt( CondRetEsp, CondRetObt, 
+			"Retorno errado ao alterar a corrente" );
+
+	}/* fim ativa: Testar Altera Corrente */
+
+	/* Testar Existe Aresta */
+	else if( strcmp( ComandoTeste, EXISTE_ARESTA_CMD ) == 0 )
+	{
+		int verticeA, verticeB;
+
+		numLidos = LER_LerParametros ( "iii", &verticeA, &verticeB, &CondRetEsp);
+
+		if( numLidos != 2)
+		{
+			return TST_CondRetParm;
+		}/*if*/
+
+		CondRetObt = GRF_ExisteAresta ( pGrafo, verticeA, verticeB);
+
+		return TST_CompararInt( CondRetEsp, CondRetObt,
+			"Retorno errado na existe aresta");
+
+	}/* fim ativa: Testar Altera Corrente */
+
+	/* Testar Ir Vizinho*/
+	else if( strcmp( ComandoTeste, IR_VIZINHO_CMD ) == 0 )
+	{
+		int vertice;
+
+		numLidos = LER_LerParametros( "ii", &vertice, &CondRetEsp);
+
+		if( numLidos != 2)
+		{
+			return TST_CondRetParm;
+		}/*if*/
+
+		CondRetObt = GRF_IrVizinho ( pGrafo, vertice );
+
+		return TST_CompararInt( CondRetEsp , CondRetObt,
+			"Retorno errado ao ir vizinho");
+
+	}/* fim ativa: Testar Ir Vizinho */
+
+	/* Testar Obter Corrente*/
+	else if( strcmp(ComandoTeste, OBTER_CORR_CMD ) == 0)
+	{
+		int verticeEsperado, verticeObtido;
+		char valorEsperado;
+		void* temp;
+		char valorObtido;
+		TST_tpCondRet Ret;
+
+		numLidos = LER_LerParametros( "ici", &verticeEsperado, &valorEsperado, &CondRetEsp);
+
+		if( numLidos != 3)
+		{
+			return TST_CondRetParm;
+		}/*if*/
+
+		CondRetObt = GRF_ObterCorr ( pGrafo, &verticeObtido, &temp);
+
+		Ret =  TST_CompararInt( CondRetEsp , CondRetObt,
+			"Retorno errado ao obter corrente");
+
+		if ( Ret != TST_CondRetOK)
+		{
+			return Ret;
+		}/*if*/
+
+		if ( CondRetEsp != GRF_CondRetOK )
+		{
+			return TST_CondRetOK;
+		}/*if*/
+
+		Ret = TST_CompararInt( verticeEsperado, verticeObtido,
+			"Retorno errado ao obter corrente");
+
+		if ( Ret != TST_CondRetOK)
+		{
+			return Ret;
+		}/*if*/
+
+		valorObtido = CHR_ObterValor((CHR_tppCaracter)temp);
+
+		return TST_CompararChar( valorEsperado, valorObtido,
+			"Retorno errado ao obter corrente");
+
+	}/* fim ativa: Testar Obter Corrente */
+
+	/* Testar Alterar Valor Corr*/
+	else if ( strcmp( ComandoTeste, ALTERA_VALOR_CORR_CMD ) == 0 )
+	{
+		char valor;
+		CHR_tppCaracter pCaracter;
+
+		numLidos = LER_LerParametros( "ci", &valor, &CondRetEsp);
+
+		if( numLidos != 2)
+		{
+			return TST_CondRetParm;
+		}/*if*/
+
+		pCaracter = CHR_CriarCaracter (valor);
+
+		CondRetObt = GRF_AlterarValorCorr ( pGrafo, (void*)pCaracter);
+
+		return TST_CompararInt ( CondRetEsp, CondRetObt, 
+			"Retorno errado ao alterar valor corrente");
+
+	}/* fim ativa: Testar Alterar Valor Corr */
+
+	/* Testar Caminhar*/
+	else if( strcmp( ComandoTeste, CAMINHAR_CMD ) == 0 )
+	{
+		int vertice;
+
+		numLidos = LER_LerParametros ( "ii", &vertice, &CondRetEsp);
+
+		if( numLidos != 2 )
+		{
+			return TST_CondRetParm;
+		}/*if*/
+
+		CondRetObt = GRF_Caminhar( pGrafo , vertice );
+
+		return TST_CompararInt( CondRetEsp, CondRetObt,
+			"Retorno errado ao caminhar");
+
+	}/* fim ativa: Testar Caminhar */
+
 
 	return TST_CondRetNaoConhec;
 
