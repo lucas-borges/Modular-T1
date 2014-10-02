@@ -13,4 +13,24 @@ diagnosticar e corrigir os problemas encontrados
 
 
 
-Data	 Horas Trabalhadas	 Tipo Tarefa		 Descrição da Tarefa Realizada
+Data	 Horas Trabalhadas	      Tipo Tarefa	                        Descrição da Tarefa Realizada
+12/09		3			projetar				início da organização do trabalho
+19/09		0.5		  especificar módulos				especificar módulos a serem utilizados
+19/09		0.5			projetar				elaborar modelo físico e assertivas
+19/09		2		 especificar as funções				especificar funções do modulo grafo e labirinto
+19/09		3		    codificar módulo				implementar funções do modulo grafo 
+24/09		1		    codificar módulo				começo da implementação do módulo de teste
+27/09		1.5			projetar				documentação de arquitetura, assinaturas de funções e requisitos
+28/09		1		revisar especificações				assertivas de entrada e de saída
+30/09		2		revisar código do módulo			codificar nova função e corrigir erros em função de destruição
+30/09		1		redigir script de teste				redigir primeira versão do script de teste
+30/09		0.5		realizar os teste				realizar os testes
+30/09		0.5		revisar script de teste				adicionar novos casos de teste
+30/09		1		diagnosticar e corrigir 			corrigir erros obtidos nos testes
+				os problemas encontrados
+01/10		1		   revisar projetos				revisar implementação do grafo
+01/10		1			projetar				projetar mudanças necessárias pro módulo grafo
+01/10		2		    codificar módulo				implementar novas funções do módulo grafo
+01/10		2		diagnosticar e corrigir 			corrigir erros obtidos com as mudanças
+				os problemas encontrados
+01/10		1		revisar script de teste				revisar script de acordo com mudanças implementadas e adicionar novos casos de teste

@@ -17,8 +17,8 @@ Data	HorasTrabalhadas	Descrição			Detalhamento
 30/09		1		especificar as funções		projetar e implementar EsvaziarGrafo
 30/09		1		revisar código do modulo	realizar mudanças no TSTGRAFO e GRAFO.H relativas às novas funções
 30/09		1		revisar especificações		atualizar a documentaçao dos modulos GRAFO.H e TSTGRAFO
-01/09		1		revisar projetos		revisar implementação do GRAFO
-01/09		1		projetar			projetar mudanças no modulo GRAFO
-01/09		2		especificar as funções		implementar novas funções do modulo GRAFO
-01/09		2		revisar especificações		atualizar a documentação do modulo GRAFO
-01/09		1		revisar especificações		atualizar a documentação do projeto
+01/10		1		revisar projetos		revisar implementação do GRAFO
+01/10		1		projetar			projetar mudanças no modulo GRAFO
+01/10		2		especificar as funções		implementar novas funções do modulo GRAFO
+01/10		2		revisar especificações		atualizar a documentação do modulo GRAFO
+01/10		1		revisar especificações		atualizar a documentação do projeto
