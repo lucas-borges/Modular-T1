@@ -354,7 +354,7 @@ typedef struct GRF_tagGrafo * GRF_tppGrafo ;
 *
 *  $ED Descrição da função
 *		altera o elemento corrente do grafo para o elemento de chave passada
-*		como parametro.
+*		como parametro, independentemente se estão interconectados.
 *    
 *  $EP Parâmetros
 *		pGrafo -  ponteiro para o grafo onde se deseja alterar o elemento corrente
