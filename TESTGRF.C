@@ -316,7 +316,7 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 
 		numLidos = LER_LerParametros ( "iii", &verticeA, &verticeB, &CondRetEsp);
 
-		if( numLidos != 2)
+		if( numLidos != 3 )
 		{
 			return TST_CondRetParm;
 		}/*if*/

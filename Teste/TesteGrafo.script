@@ -33,9 +33,14 @@
 == Inserir um vértice e verificar se existe
 =inserevertice 1 'a' OK
 =existevertice 1     VerticeJaExiste
+=obtercorrente 1 'a' OK
 
 == Inserir mesmo vértice novamente
 =inserevertice 1 'a' VerticeJaExiste
+
+==Verificar Alterar Valor
+=alteravalorcorr 'b' OK
+=obtercorrente   1 'b' OK
 
 == Verificar situações relativas a somente um vértice existente
 =existevertice 2   VerticeNaoExiste
@@ -55,6 +60,7 @@
 =removearesta  1 2 ArestaNaoExiste
 =criaaresta    1 2 OK
 =criaaresta    2 1 ArestaJaExiste
+=existearesta  1 2 ArestaJaExiste
 =existecaminho 1 2 OK
 =existecaminho 2 1 OK
 
@@ -67,6 +73,15 @@
 =existecaminho 1 4   VerticesDesconexos
 =existecaminho 2 3   VerticesDesconexos
 =existecaminho 2 4   VerticesDesconexos
+
+==Verificar Alterar Corrente
+=alteracorrente 4 OK
+=obtercorrente 4 'd' OK
+
+==Verificar Ir Vizinho
+=irvizinho 3 OK
+=alteracorrente 1 OK
+=irvizinho 4 VerticesDesconexos
 
 == Verificar situações relativas a aresta removida
 =removearesta  1 2 OK
@@ -88,7 +103,7 @@
 
 
 
-== Verificar ExisteCaminho para grafo com trecho cíclico
+== Verificar ExisteCaminho e Caminha para grafo com trecho cíclico
 =criargrafo          OK
 =inserevertice 1 'a' OK
 =existevertice 1     VerticeJaExiste
@@ -106,6 +121,10 @@
 
 =existecaminho 1 3 OK
 =existecaminho 3 1 OK
+
+=caminhar 3 OK
+=obtercorrente 3 'c' OK
+
 
 =removearesta  3 2 OK
 =removearesta  3 2 ArestaNaoExiste
