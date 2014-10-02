@@ -553,6 +553,8 @@
 		 return GRF_CondRetVerticeNaoExiste;
 	 }
 
+	 pGrafo->ExcluirValor(pGrafo->pVerticeCorr->pValor);
+
 	 pGrafo->pVerticeCorr->pValor=pValor ;
 
 	 return GRF_CondRetOK;	

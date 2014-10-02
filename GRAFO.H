@@ -92,9 +92,6 @@ typedef struct GRF_tagGrafo * GRF_tppGrafo ;
 *  $EP Parâmetros
 *		ppGrafo - referência para ponteiro de grafo a ser criado
 *
-*		ComparaValor - ponteiro para a função que compara os valores
-*					 referenciados por vértices do grafo.
-*
 *		ExcluirValor  - ponteiro para a função que processa a
 *                     exclusão do valor referenciado pelo elemento
 *                     a ser excluído.
@@ -127,7 +124,9 @@ typedef struct GRF_tagGrafo * GRF_tppGrafo ;
 *  $EP Parâmetros
 *		pGrafo -  ponteiro para o grafo onde se deseja criar o vértice
 *
-*		pValor - ponteiro para chave do vértice a ser criado
+*		pValor - ponteiro para o valor contido no vértice a ser criado
+*
+*		chave  - valor da chave do vertice
 *		
 *  $FV Valor retornado
 *		GRF_CondRetOK                   - criou vértice sem problemas
@@ -138,17 +137,17 @@ typedef struct GRF_tagGrafo * GRF_tppGrafo ;
 *		GRF_CondRetErroAoInserirVertice - falhou ao inserir vértice na lista de vértices
 *
 *  $AE Assertivas de entrada
-*     - O grafo existe e não contém o vértice a ser inserido
+*	  - pGrafo é um ponteiro válido para um Grafo
 *	  - Valem as assertivas estruturais do grafo
+*	  - chave é um valor válido para uma chave
 *
 *  $AS Assertivas de saída
-*     - O grafo existe e tem um vértice a mais
+*	  - Se o grafo existe ele possui um vertice a mais
 *	  - Valem as assertivas estruturais do grafo
 *
 ***********************************************************************/
 
    GRF_tpCondRet GRF_CriaVertice ( GRF_tppGrafo pGrafo , void * pValor , int chave ) ;
-
 
    /***********************************************************************
 *
@@ -161,9 +160,9 @@ typedef struct GRF_tagGrafo * GRF_tppGrafo ;
 *  $EP Parâmetros
 *		pGrafo -  ponteiro para o grafo onde se deseja criar o vértice
 *
-*		pValorA - ponteiro para chave de um dos vértice a ser criada a aresta
+*		chaveA - chave de um dos vértice a ser criada a aresta
 *
-*		pValorB - ponteiro para chave de um dos vértice a ser criada a aresta		
+*		chaveB - chave de um dos vértice a ser criada a aresta		
 *
 *  $FV Valor retornado
 *		GRF_CondRetOK                - criou aresta sem problemas
@@ -175,15 +174,12 @@ typedef struct GRF_tagGrafo * GRF_tppGrafo ;
 *		GRF_CondRetErroInserirAresta - falhou ao inserir aresta
 *
 *  $AE Assertivas de entrada
-*     - O grafo existe
-*	  - Os vértices de chaves A e B existem
-*	  - Não existe aresta entre os vértices
+*     - pGrafo é um ponteiro válido para um Grafo
+*	  - As chaves A e B são válidas
 *	  - Valem as assertivas estruturais do grafo
 *
 *  $AS Assertivas de saída
-*     - O grafo existe
-*	  - Os vértices de chaves A e B existem
-*	  - Existe aresta entre os vértices
+*     - Se o grafo existe, existe agora uma aresta entre os vértices
 *	  - Valem as assertivas estruturais do grafo
 *
 ***********************************************************************/
@@ -202,9 +198,9 @@ typedef struct GRF_tagGrafo * GRF_tppGrafo ;
 *  $EP Parâmetros
 *		pGrafo -  ponteiro para o grafo onde se deseja criar a aresta
 *
-*		pValorA - ponteiro para chave de um dos vértice a ser removida a aresta
+*		chaveA - chave de um dos vértice a ser removida a aresta
 *
-*		pValorB - ponteiro para chave de um dos vértice a ser removida a aresta		
+*		chaveB - chave de um dos vértice a ser removida a aresta		
 *
 *  $FV Valor retornado
 *		GRF_CondRetOK               - removeu aresta sem problemas
@@ -214,15 +210,12 @@ typedef struct GRF_tagGrafo * GRF_tppGrafo ;
 *		GRF_CondRetVerticeNaoExiste - ao menos um dos vértices não existe
 *
 *  $AE Assertivas de entrada
-*     - O grafo existe
-*	  - Os vértices de chaves A e B existem
-*	  - Existe aresta entre os vértices
+*     - pGrafo é um ponteiro válido para um Grafo
+*	  - chaveA e chaveB são valores válidos de chaves
 *	  - Valem as assertivas estruturais do grafo
 *
 *  $AS Assertivas de saída
-*     - O grafo existe
-*	  - Os vértices de chaves A e B existem
-*	  - Não existe aresta entre os vértices
+*	  - Se o grafo existia, não existe mais aresta entre os vértices
 *	  - Valem as assertivas estruturais do grafo
 *
 ***********************************************************************/
@@ -241,18 +234,16 @@ typedef struct GRF_tagGrafo * GRF_tppGrafo ;
 *		pGrafo -  ponteiro para o grafo a ser destruido
 *
 *  $AE Assertivas de entrada
-*     - O grafo existe
+*     - pGrafo é um ponteiro valido para um Grafo
 *	  - Valem as assertivas estruturais do grafo
 *
 *  $AS Assertivas de saída
 *     - O grafo não existe
-*	  - O conteúdo dos vértices do grafo são desalocados segundo
-*		a função ExcluirValor fornecida
+*	  - O conteúdo dos vértices foi desalocado
 *
 ***********************************************************************/
 
    void GRF_DestroiGrafo (GRF_tppGrafo pGrafo);
-
 
 /***********************************************************************
 *
@@ -269,11 +260,11 @@ typedef struct GRF_tagGrafo * GRF_tppGrafo ;
 *		GRF_CondRetGrafoNaoExiste - grafo passado como ponteiro não existe
 *
 *  $AE Assertivas de entrada
-*		- O grafo existe
+*		- pGrafo é um ponteiro válido para um Grafo
 *		- Valem as assertivas estruturais do grafo
 *
 *  $AS Assertivas de saída
-*		- O grafo nao possui nenhum vertice
+*		- Se o grafo existia, o grafo nao possui mais nenhum vertice
 *		- Valem as assertivas estruturais do grafo
 *
 ***********************************************************************/
@@ -289,28 +280,32 @@ typedef struct GRF_tagGrafo * GRF_tppGrafo ;
 *		Procura um caminho entre dois vértices do grafo.
 *    
 *  $EP Parâmetros
-*		pGrafo         -  ponteiro para o grafo onde se deseja procurar o caminho
+*		pGrafo       -  ponteiro para o grafo onde se deseja procurar o caminho
 *
-*		verticeOrigem  - ponteiro para chave de um dos vértices a procurar o caminho
+*		chaveOrigem  - chave de um dos vértices a procurar o caminho
 *
-*		verticeDestino - ponteiro para chave de um dos vértices a procurar o caminho		
+*		chaveDestino - chave de um dos vértices a procurar o caminho		
+*
+*		buffer       - buffer de saída onde serão impressas as chaves na ordem do caminho da origem até a saída
 *
 *  $FV Valor retornado
-*		GRF_CondRetOK            - encontrou caminho entre os vértices
-*		GRF_CondRetGrafoNaoExiste - grafo passado como ponteiro não existe 
-*		GRF_CondRetVerticeNaoExiste - Não existe vértice com a chave passada 
-*									como ponteiro
-*		GRF_CondRetErroAoObterValor - houve erro ao obter um elemento de uma 
-*									das listas
+*		GRF_CondRetOK                 - encontrou caminho entre os vértices
+*		GRF_CondRetGrafoNaoExiste     - grafo passado como ponteiro não existe 
+*		GRF_CondRetVerticeNaoExiste   - Não existe vértice com a chave passada 
+*									    como ponteiro
+*		GRF_CondRetErroAoObterValor   - houve erro ao obter um elemento de uma 
+*									    das listas
 *		GRF_CondRetVerticesDesconexos - não há caminho entre os vértices
 *
 *  $AE Assertivas de entrada
-*     - O grafo existe
-*	  - Os vértices de origem e destino existem
+*     - pGrafo é um ponteiro válido para um Grafo
+*	  - chaveOrigem e chaveDestino são tipos válidos de chave
 *	  - Valem as assertivas estruturais do grafo
+*     - buffer é um vetor de inteiros de tamanho suficiente para conter todo o caminho
 *
 *  $AS Assertivas de saída
 *     - O grafo permanece inalterado
+*	  - buffer contém as chaves na ordem do caminho da origem ate a saida
 *	  - Valem as assertivas estruturais do grafo
 *
 ***********************************************************************/
@@ -336,9 +331,9 @@ typedef struct GRF_tagGrafo * GRF_tppGrafo ;
 *		GRF_COndRetVerticeNaoExiste - vertice nao esta contido no grafo
 *
 *  $AE Assertivas de entrada
-*		- O grafo existe
+*		- pGrafo é um ponteiro válido para Grafo
 *		- Valem as assertivas estruturais do grafo
-*		- A chave passada e de um tipo valido
+*		- A chave passada e de um tipo valido de chave
 *
 *  $AS Assertivas de saída
 *		- O grafo permanece inalterado
@@ -351,44 +346,204 @@ typedef struct GRF_tagGrafo * GRF_tppGrafo ;
 
 /***********************************************************************
 *
-*  $FC Função: GRF  &Criar Vertice Origem
+*  $FC Função: GRF  &Altera Corrente
 *
 *  $ED Descrição da função
-*		insere o vértice na lista de origens, se ainda não existir o vértice
-*		também o cria.
+*		altera o elemento corrente do grafo para o elemento de chave passada
+*		como parametro.
 *    
 *  $EP Parâmetros
-*		pGrafo -  ponteiro para o grafo onde se deseja inserir a origem
+*		pGrafo -  ponteiro para o grafo onde se deseja alterar o elemento corrente
 *
-*		pValor - ponteiro para chave do vértice a ser origem
+*		chave  - chave do elemento que deseja que se torne corrente
 *
 *  $FV Valor retornado
-*		GRF_CondRetOK                 - criou vértice sem problemas
-*		GRF_CondRetFaltouMemoria      - faltou memória ao alocar espaço  
+*		GRF_CondRetOK                 - alterou corrente sem problemas  
 *		GRF_CondRetGrafoNaoExiste     - grafo passado como ponteiro não existe 
-*		GRF_VerticeJaExiste           - já existe um vértice com a chave passada 
-*							            como ponteiro como origem
-*		GRF_CondRetErroInserirVertice - falhou ao inserir vértice na lista de origens
+*		GRF_VerticeNaoExiste          - nao existe um vértice com a chave passada
 *
 *  $AE Assertivas de entrada
-*     - O grafo existe e não contém o vértice a ser inserido como origem
+*     - pGrafo é um ponteiro valido para Grafo
+*	  - A chave passada é de um tipo valido de chave
 *	  - Valem as assertivas estruturais do grafo
 *
 *  $AS Assertivas de saída
-*     - O grafo existe e tem um vértice a mais como origem
+*     - Se o grafo existe, seu elemento corrente agora é o da chave passada como parametro
 *	  - Valem as assertivas estruturais do grafo
 *
 ***********************************************************************/
 
    GRF_tpCondRet GRF_AlteraCorrente ( GRF_tppGrafo pGrafo , int chave ) ;
 
+   /***********************************************************************
+*
+*  $FC Função: GRF  &Existe Aresta
+*
+*  $ED Descrição da função
+*		verifica se a aresta entre os vertices de chaves passadas como parametro
+*		existe.       
+*    
+*  $EP Parâmetros
+*		pGrafo -  ponteiro para o grafo onde se procurar a aresta      
+*
+*		chaveA - chave de um dos vertices pertencentes à aresta
+*
+*       chaveB - chave de um dos vertices pertencentes à aresta
+*
+*  $FV Valor retornado
+*		GRF_CondRetVerticesDesconexos - Nao existe aresta entre os vertices
+*		GRF_CondRetArestaJaExiste     - Existe aresta entre os vertices
+*		GRF_CondRetGrafoNaoExiste     - grafo passado como ponteiro não existe 
+*		GRF_CondRetVerticeNaoExiste   - o vertice de uma das chaves passadas como
+*							            parametro nao existe     
+*
+*  $AE Assertivas de entrada
+*     - pGrafo é um ponteiro válido para Grafo
+*     - as chaves passadas como parametro são de um tipo válido
+*	  - Valem as assertivas estruturais do grafo
+*
+*  $AS Assertivas de saída
+*     - O grafo permanece inalterado
+*	  - Valem as assertivas estruturais do grafo
+*
+***********************************************************************/
+
    GRF_tpCondRet GRF_ExisteAresta ( GRF_tppGrafo pGrafo , int chaveA , int chaveB ) ;
+
+   /***********************************************************************
+*
+*  $FC Função: GRF  &Ir Vizinho
+*
+*  $ED Descrição da função
+*		altera o elemento corrente do grafo passado como parametro para
+*		o vertice vizinho correspondente à chave passada como parametro
+*    
+*  $EP Parâmetros
+*		pGrafo -  ponteiro para o grafo onde se deseja inserir a origem
+*
+*		chave  -  chave do vértice a ser o novo elemento corrente do grafo
+*
+*  $FV Valor retornado
+*		GRF_CondRetOK                 - alterou o elemento corrente sem problemas
+*		GRF_CondRetVerticesDesconexos - o vertice da chave passada como parametro não
+*										é vizinho do vertice corrente
+*		GRF_CondRetGrafoNaoExiste     - grafo passado como ponteiro não existe 
+*		GRF_CondRetVerticeNaoExiste   - o vertice correspondente à chave passada 
+*							            como parametro nao existe
+*
+*  $AE Assertivas de entrada
+*     - pGrafo é um ponteiro válido para Grafo
+*	  - <chave> é um tipo válido de chave
+*	  - Valem as assertivas estruturais do grafo
+*
+*  $AS Assertivas de saída
+*     - Se o grafo existia seu elemento corrente agora é o vertice de chave <chave>
+*	  - Valem as assertivas estruturais do grafo
+*
+***********************************************************************/
 
    GRF_tpCondRet GRF_IrVizinho (GRF_tppGrafo pGrafo , int chave) ;
 
+ /***********************************************************************
+*
+*  $FC Função: GRF  &Obter Corrente
+*
+*  $ED Descrição da função
+*		obtem o valor contido no vertice elemento corrente do grafo assim
+*		como sua chave
+*    
+*  $EP Parâmetros
+*		pGrafo  - ponteiro para o grafo onde se deseja obter o valor contido na corrente
+*
+*		ppValor - endereço de um ponteiro que irá receber o valor contido no vertice corrente
+*
+*		pChave  - endereço da variavel que receberá o valor da chave do elemento corrente
+*
+*  $FV Valor retornado
+*		GRF_CondRetOK                 - obteve valores com sucesso 
+*		GRF_CondRetVerticeNaoExiste   - vertice da chave passada como parametro nao existe
+*		GRF_CondRetGrafoNaoExiste     - grafo passado como ponteiro não existe 
+*
+*  $AE Assertivas de entrada
+*     - pGrafo é um ponteiro válido para Grafo
+*	  - ppValor é um ponteiro para uma variavel de tipo válido para um valor contido em um vertice
+*     - pChave é um ponteiro válido para uma variavel de tipo int
+*	  - Valem as assertivas estruturais do grafo
+*
+*  $AS Assertivas de saída
+*     - O grafo permanece inalterado
+*	  - Se o grafo existia e não era vazio, pValor agora aponta para o valor do vertice corrente
+*	    e pChave agora aponta para o valor da chave do vertice corrente
+*	  - Valem as assertivas estruturais do grafo
+*
+***********************************************************************/
+ 
    GRF_tpCondRet GRF_ObterCorr ( GRF_tppGrafo pGrafo , int * pChave , void ** ppValor );
 
+   /***********************************************************************
+*
+*  $FC Função: GRF  &Alterar Valor Corrente
+*
+*  $ED Descrição da função
+*		altera valor contido no vertice corrente desalocando o valor atual
+*    
+*  $EP Parâmetros
+*		pGrafo -  ponteiro para o grafo onde se deseja alterar o valor do vertice corrente
+*
+*		pValor - ponteiro para o valor a ser inserido no vertice corrente
+*
+*  $FV Valor retornado
+*		GRF_CondRetOK                 - alterou valor do vertice sem problemas
+*		GRF_CondRetGrafoNaoExiste     - grafo passado como ponteiro não existe 
+*		GRF_CondVerticeNaoExiste      - o vertice corrente nao existe
+*
+*  $AE Assertivas de entrada
+*     - pGrafo é um ponteiro válido para Grafo
+*	  - pValor é um ponteiro válido para o tipo de valor a ser inserido no Grafo
+*	  - Valem as assertivas estruturais do grafo
+*
+*  $AS Assertivas de saída
+*     - Se o grafo e o vertice corrente existiam, o valor do vertice corrente agora é pValor
+*       e o valor contido anteriormente foi desalocado
+*	  - Valem as assertivas estruturais do grafo
+*
+***********************************************************************/
+
    GRF_tpCondRet GRF_AlterarValorCorr ( GRF_tppGrafo pGrafo , void * pValor );
+
+   /***********************************************************************
+*
+*  $FC Função: GRF  &Caminhar
+*
+*  $ED Descrição da função
+*		altera o vertice corrente do grafo para um elemento vertice de chave
+*		conectado ao vertice corrente atual
+*		
+*    
+*  $EP Parâmetros
+*		pGrafo       - ponteiro para o grafo onde se deseja alterar o vertice corrente
+*
+*		chaveDestino - chave do vértice a ser vertice corrente
+*
+*  $FV Valor retornado
+*		GRF_CondRetOK                 - alterou vertice corrente sem problemas
+*		GRF_CondRetVerticeNaoExiste   - vertice corrente nao existe ou vertice da 
+*                                       chave de destino nao existe  
+*		GRF_CondRetGrafoNaoExiste     - grafo passado como ponteiro não existe 
+*		GRF_CondRetVerticesDesconexos - vertice corrente e o vertice da chave de destino 
+*							            são desconexos
+*
+*  $AE Assertivas de entrada
+*     - pGrafo é um ponteiro válido para Grafo
+*	  - chaveDestino é de um tipo válido de chave
+*	  - Valem as assertivas estruturais do grafo
+*
+*  $AS Assertivas de saída
+*     - Se o grafo existe, o vertice corrente existe, e os vertices estavam 
+*       conectados, o vertice corrente do grafo agora é o da chaveDestino
+*	  - Valem as assertivas estruturais do grafo
+*
+***********************************************************************/
 
    GRF_tpCondRet GRF_Caminhar ( GRF_tppGrafo pGrafo , int chaveDestino ) ;
 
