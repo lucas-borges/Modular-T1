@@ -1,0 +1,19 @@
+Relatório:
+
+Data	HorasTrabalhadas	Descrição			Detalhamento
+
+12/09		3		estudar				estudar definições de grafo e labirinto
+18/09		3		projetar			projetando modulo GRAFO e LABIRINTO
+18/09		3		especificar as funções		especificando funcoes do modulo GRAFO 
+19/09		2		revisar projetos		revisar o escopo do trabalho
+24/09           2		projetar			projetar o modulo TSTGRAFO (comandos)
+25/09		0.5		projetar			projetar mudancas nos modulos CARACTER e GRAFO
+25/09		1		codificar modulo		implementar mudanças nos modulos CARACTER e GRAFO
+25/09		1		especificar os modulos		implementar módulo TSTGRAFO 		
+25/09		0.5		projetar			projetar função ExisteCaminho
+25/09		1.5		especificar as funções		implementar função ExisteCaminho
+25/09		1.5		revisar codigo do modulo	implementar mudanças no TSTGRAFO relativas as novas funções
+01/10		1		diagnosticar e corrigir		corrigir ExisteCaminho
+01/10		1		especificar as funções		projetar e implementar EsvaziarGrafo
+01/10		1		revisar código do modulo	realizar mudanças no TSTGRAFO e GRAFO.H relativas às novas funções
+01/10		1		revisar especificações		atualizar a documentaçao dos modulos GRAFO.H e TSTGRAFO
