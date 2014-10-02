@@ -1,0 +1,16 @@
+
+
+Data	HorasTrabalhadas	       Descrição				Detalhamento
+12/09		3			projetar				início da organização do trabalho
+18/09		0.5		  especificar módulos				especificar módulos a serem utilizados
+18/09		0.5			projetar				elaborar modelo físico e assertivas
+18/09		2		 especificar as funções				especificar funções do modulo grafo e labirinto
+18/09		3		    codificar módulo				implementar funções do modulo grafo 
+25/09		1		revisar código do módulo			mudanças em funções do modulo grafo
+25/09		2		    codificar módulo				implementar novas funções e fazer grafo.h
+25/09		0.5		redigir script de teste				redigir scripts iniciais 		
+25/09		0.5		    realizar testes				realizar primeiros testes
+25/09		2	diagnosticar e corrigir os problemas encontrados	corrigir os erros encontrados nos primeiros testes
+30/09		2	diagnosticar e corrigir os problemas encontrados	corrigir os erros encontrados nos primeiros testes
+30/09		1		    revisar módulo				ajustes na documentação e no código
+30/09		1		    revisar projeto				revisar projetos e fazer modelo, assertivas e exemplo finais
