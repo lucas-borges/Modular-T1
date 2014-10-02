@@ -120,7 +120,7 @@ typedef struct LIS_tagLista * LIS_tppLista ;
 *     LIS_CondRetFaltouMemoria - faltou memória ao alocar espaço
 *
 *  $AE Assertivas de entrada
-*     - A lista não existe
+*     - pLista é o endereço de um ponteiro válido
 *
 *  $AS Assertivas de saída
 *     - A lista existe e é vazia
@@ -144,7 +144,7 @@ typedef struct LIS_tagLista * LIS_tppLista ;
 *     OBS. não existe previsão para possíveis falhas de execução.
 *
 *  $AE Assertivas de entrada
-*     - A lista existe
+*     - pLista é um ponteiro válido para uma lista
 *	  - Valem as assertivas estruturais da lista duplamente encadeada
 *
 *  $AS Assertivas de saída
@@ -172,12 +172,12 @@ typedef struct LIS_tagLista * LIS_tppLista ;
 *	  LIS_CondRetListaNaoExiste - ponteiro da lista é NULL
 *
 *  $AE Assertivas de entrada
-*     - A lista existe
+*     - pLista é um ponteiro válido para uma lista
 *	  - Valem as assertivas estruturais da lista duplamente encadeada
 *
 *  $AS Assertivas de saída
-*     - A lista existe e é vazia
-*	  - O conteúdo dos elementos da lista são desalocados segundo
+*     - Se a lista existia, agora a lista é vazia
+*	  - Se a lista existia o conteúdo dos elementos da lista são desalocados segundo
 *		a função ExcluirValor fornecida
 *	  - Valem as assertivas estruturais da lista duplamente encadeada
 *
@@ -205,13 +205,15 @@ typedef struct LIS_tagLista * LIS_tppLista ;
 *     LIS_CondRetFaltouMemoria   - faltou memória ao alocar espaço
 *
 *  $AE Assertivas de entrada
-*     - A lista existe
+*     - pLista é um ponteiro válido para uma lista
 *	  - O elemento corrente é o seguinte ao qual se quer inserir
 *	  - Valem as assertivas estruturais da lista duplamente encadeada
+*     - pValor é um ponteiro válido para o valor que se quer inserir
 *
 *  $AS Assertivas de saída
-*     - A lista existe e tem um elemento a mais
-*	  - O elemento corrente é o elemento criado
+*     - Se a lista existia, tem um elemento a mais
+*     - Se a lista existia, elemento inserido contem pValor
+*	  - Se a lista exisita, elemento corrente é o elemento criado
 *	  - Valem as assertivas estruturais da lista duplamente encadeada
 *
 ***********************************************************************/
@@ -241,13 +243,15 @@ typedef struct LIS_tagLista * LIS_tppLista ;
 *     LIS_CondRetFaltouMemoria   - faltou memória ao alocar espaço
 *
 *  $AE Assertivas de entrada
-*     - A lista existe
+*     - pLista é um ponteiro válido para uma lista
 *	  - O elemento corrente é o anterior ao qual se quer inserir
 *	  - Valem as assertivas estruturais da lista duplamente encadeada
+*     - pValor é um ponteiro válido para o valor que se quer inserir
 *
 *  $AS Assertivas de saída
-*     - A lista existe e tem um elemento a mais
-*	  - O elemento corrente é o elemento criado
+*     - Se a lista existia, tem um elemento a mais
+*	  - Se a lista existia, elemento corrente é o elemento criado
+*     - Se a lista existia, elemento inserido contem pValor
 *	  - Valem as assertivas estruturais da lista duplamente encadeada
 *
 ***********************************************************************/
@@ -275,13 +279,13 @@ typedef struct LIS_tagLista * LIS_tppLista ;
 *	  LIS_CondRetListaNaoExiste  - ponteiro da lista é NULL
 *
 *  $AE Assertivas de entrada
-*     - A lista existe e possui ao menos um elemento
+*     - pLista é um ponteiro válido para uma lista
 *	  - O elemento corrente é o que deve ser excluído
 *	  - Valem as assertivas estruturais da lista duplamente encadeada
 *
 *  $AS Assertivas de saída
-*     - A lista existe, podendo ser vazia ou não
-*	  - O elemento foi excluido e o corrente é o descrito
+*     - Se a lista existia, possui um elemento a menos
+*	  - Se a lista existia, elemento foi excluido e o corrente é o descrito
 *		na descrição da função
 *	  - Valem as assertivas estruturais da lista duplamente encadeada
 *
@@ -307,13 +311,15 @@ typedef struct LIS_tagLista * LIS_tppLista ;
 *	  LIS_CondRetListaNaoExiste  - ponteiro da lista é NULL
 *
 *  $AE Assertivas de entrada
-*     - A lista existe e não é vazia
+*     - pLista é um ponteiro válido para uma lista
 *	  - O elemento corrente é o qual se quer obter a referência do valor
+*     - ppValor é o endereço de um ponteiro de mesmo tipo do valor contido
+*       no elemento
 *	  - Valem as assertivas estruturais da lista duplamente encadeada
 *
 *  $AS Assertivas de saída
-*     - A lista é igual à lista da entrada
-*	  - O elemento corrente é o qual se queria obter a referência do valor
+*     - A lista permanece inalterada
+*     - Se a lista existia, ppValor agora aponta para o valor contido no elemento corrente
 *	  - Valem as assertivas estruturais da lista duplamente encadeada
 *
 ***********************************************************************/
@@ -337,12 +343,12 @@ typedef struct LIS_tagLista * LIS_tppLista ;
 *		LIS_CondRetListaNaoExiste  - ponteiro da lista é NULL
 *
 *  $AE Assertivas de entrada
-*     - A lista existe e não é vazia
+*     - pLista é um ponteiro válido para uma lista
 *	  - Valem as assertivas estruturais da lista duplamente encadeada
 *
 *  $AS Assertivas de saída
 *     - Os elementos da lista não foram alterados
-*	  - O elemento corrente é o primeiro elemento da lista
+*	  - Se a lista existia, o elemento corrente é o primeiro elemento da lista
 *	  - Valem as assertivas estruturais da lista duplamente encadeada
 *
 ***********************************************************************/
@@ -366,12 +372,12 @@ typedef struct LIS_tagLista * LIS_tppLista ;
 *		LIS_CondRetListaNaoExiste  - ponteiro da lista é NULL
 *
 *  $AE Assertivas de entrada
-*     - A lista existe e não é vazia
+*     - pLista é um ponteiro válido para uma lista
 *	  - Valem as assertivas estruturais da lista duplamente encadeada
 *
 *  $AS Assertivas de saída
 *     - Os elementos da lista não foram alterados
-*	  - O elemento corrente é o último elemento da lista
+*	  - Se a lista existia, o elemento corrente é o último elemento da lista
 *	  - Valem as assertivas estruturais da lista duplamente encadeada
 *
 ***********************************************************************/
@@ -403,12 +409,12 @@ typedef struct LIS_tagLista * LIS_tppLista ;
 *	  CondRetListaNaoExiste - se a lista não existir
 *
 *  $AE Assertivas de entrada
-*     - A lista existe e não é vazia
+*     - pLista é um ponteiro válido para uma lista
 *	  - Valem as assertivas estruturais da lista duplamente encadeada
 *
 *  $AS Assertivas de saída
 *     - Os elementos da lista não foram alterados
-*	  - O elemento corrente é o elemento situado "numElem" à frente na lista
+*	  - Se a lista existia, o elemento corrente é o elemento situado "numElem" à frente na lista
 *	  - Valem as assertivas estruturais da lista duplamente encadeada 
 *
 ***********************************************************************/
@@ -435,15 +441,16 @@ typedef struct LIS_tagLista * LIS_tppLista ;
 *	  CondRetListaNaoExiste - ponteiro da lista é NULL
 *     
 *  $AE Assertivas de entrada
-*     - A lista existe e não é vazia
+*     - pLista é um ponteiro válido para uma lista
 *	  - O elemento corrente é o qual se quer alterar o valor
+*     - pValorNovo é um ponteiro para um tipo de valor que se deseja inserir
 *	  - Valem as assertivas estruturais da lista duplamente encadeada
 *
 *  $AS Assertivas de saída
-*     - A lista existe e, exceto ao elemento corrente, os demais não
+*     - Se a lista existia, exceto ao elemento corrente, os demais não
 *		foram modificados
-*	  - O elemento corrente é o qual se queria alterar o valor
-*	  - O valor do elemento corrente é "pValorNovo"
+*	  - Se a lista existia, o elemento corrente é o qual se queria alterar o valor
+*	  - Se a lista existia, o valor do elemento corrente é "pValorNovo"
 *	  - Valem as assertivas estruturais da lista duplamente encadeada
 *
 ***********************************************************************/
