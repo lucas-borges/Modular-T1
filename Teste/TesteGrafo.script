@@ -15,102 +15,102 @@
 =declararparm   VerticesDesconexos    int  8
 
 == Verificar situações relativas a grafo inexistente
-=inserevertice  'a'     GrafoNaoExiste
-=existevertice  'a'     GrafoNaoExiste
-=removearesta   'a' 'b' GrafoNaoExiste
-=criaaresta     'a' 'b' GrafoNaoExiste
-=existecaminho  'a' 'b' GrafoNaoExiste
+=inserevertice  1 'a' GrafoNaoExiste
+=existevertice  1     GrafoNaoExiste
+=removearesta   1 2   GrafoNaoExiste
+=criaaresta     1 2   GrafoNaoExiste
+=existecaminho  1 2   GrafoNaoExiste
 
 == Criar grafo
 =criargrafo OK
 
 == Verificar situações relativas a grafo sem vértices
-=existevertice 'a'     VerticeNaoExiste
-=criaaresta    'a' 'b' VerticeNaoExiste
-=removearesta  'a' 'b' VerticeNaoExiste
-=existecaminho 'a' 'b' VerticeNaoExiste
+=existevertice 1   VerticeNaoExiste
+=criaaresta    1 2 VerticeNaoExiste
+=removearesta  1 2 VerticeNaoExiste
+=existecaminho 1 2 VerticeNaoExiste
 
 == Inserir um vértice e verificar se existe
-=inserevertice 'a' OK
-=existevertice 'a' VerticeJaExiste
+=inserevertice 1 'a' OK
+=existevertice 1     VerticeJaExiste
 
 == Inserir mesmo vértice novamente
-=inserevertice 'a' VerticeJaExiste
+=inserevertice 1 'a' VerticeJaExiste
 
 == Verificar situações relativas a somente um vértice existente
-=existevertice 'b' VerticeNaoExiste
-=criaaresta    'a' 'b' VerticeNaoExiste
-=removearesta  'a' 'b' VerticeNaoExiste
-=existecaminho 'a' 'b' VerticeNaoExiste
+=existevertice 2   VerticeNaoExiste
+=criaaresta    1 2 VerticeNaoExiste
+=removearesta  1 2 VerticeNaoExiste
+=existecaminho 1 2 VerticeNaoExiste
 
 == Verificar recuperar de ExisteVértice
-=existevertice 'b' VerticeJaExiste
+=existevertice 2 VerticeJaExiste
 =recuperar
 
 == Inserir segundo vértice
-=inserevertice 'b' OK
-=existevertice 'b' VerticeJaExiste 
+=inserevertice 2 'b' OK
+=existevertice 2     VerticeJaExiste 
 
 == Verificar situações relativas a dois vértices existentes
-=removearesta  'a' 'b' ArestaNaoExiste
-=criaaresta    'a' 'b' OK
-=criaaresta    'b' 'a' ArestaJaExiste
-=existecaminho 'a' 'b' OK
-=existecaminho 'b' 'a' OK
+=removearesta  1 2 ArestaNaoExiste
+=criaaresta    1 2 OK
+=criaaresta    2 1 ArestaJaExiste
+=existecaminho 1 2 OK
+=existecaminho 2 1 OK
 
 == Verificar situações relativas a duas partes desconexas
-=inserevertice 'c'     OK
-=inserevertice 'd'     OK
-=criaaresta    'c' 'd' OK
-=existecaminho 'd' 'c' OK
-=existecaminho 'a' 'c' VerticesDesconexos
-=existecaminho 'a' 'd' VerticesDesconexos
-=existecaminho 'b' 'c' VerticesDesconexos
-=existecaminho 'b' 'd' VerticesDesconexos
+=inserevertice 3 'c' OK
+=inserevertice 4 'd' OK
+=criaaresta    3 4   OK
+=existecaminho 4 3   OK
+=existecaminho 1 3   VerticesDesconexos
+=existecaminho 1 4   VerticesDesconexos
+=existecaminho 2 3   VerticesDesconexos
+=existecaminho 2 4   VerticesDesconexos
 
 == Verificar situações relativas a aresta removida
-=removearesta  'a' 'b' OK
-=removearesta  'b' 'a' ArestaNaoExiste
-=existecaminho 'a' 'b' VerticesDesconexos
-=existecaminho 'b' 'a' VerticesDesconexos
+=removearesta  1 2 OK
+=removearesta  2 1 ArestaNaoExiste
+=existecaminho 1 2 VerticesDesconexos
+=existecaminho 2 1 VerticesDesconexos
 
 == Verificar esvaziar grafo
-=esvaziagrafo          OK
-=existevertice 'a'     VerticeNaoExiste
-=criaaresta    'b' 'c' VerticeNaoExiste
-=inserevertice 'b'     OK
-=existevertice 'b'     VerticeJaExiste
+=esvaziagrafo        OK
+=existevertice 1     VerticeNaoExiste
+=criaaresta    2  3  VerticeNaoExiste
+=inserevertice 2 'b' OK
+=existevertice 2     VerticeJaExiste
 
 == Verificar Destroi Grafo
-=destroigrafo      OK
-=existevertice 'a' GrafoNaoExiste
-=existevertice 'b' GrafoNaoExiste
+=destroigrafo    OK
+=existevertice 1 GrafoNaoExiste
+=existevertice 2 GrafoNaoExiste
 
 
 
 == Verificar ExisteCaminho para grafo com trecho cíclico
-=criargrafo        OK
-=inserevertice 'a' OK
-=existevertice 'a' VerticeJaExiste
-=inserevertice 'b' OK
-=existevertice 'b' VerticeJaExiste
-=inserevertice 'c' OK
-=existevertice 'c' VerticeJaExiste
-=inserevertice 'd' OK
-=existevertice 'd' VerticeJaExiste
+=criargrafo          OK
+=inserevertice 1 'a' OK
+=existevertice 1     VerticeJaExiste
+=inserevertice 2 'b' OK
+=existevertice 2     VerticeJaExiste
+=inserevertice 3 'c' OK
+=existevertice 3     VerticeJaExiste
+=inserevertice 4 'd' OK
+=existevertice 4     VerticeJaExiste
 
-=criaaresta 'a' 'd' OK
-=criaaresta 'a' 'b' OK
-=criaaresta 'd' 'b' OK
-=criaaresta 'b' 'c' OK
+=criaaresta 1 4 OK
+=criaaresta 1 2 OK
+=criaaresta 4 2 OK
+=criaaresta 2 3 OK
 
-=existecaminho 'a' 'c' OK
-=existecaminho 'c' 'a' OK
+=existecaminho 1 3 OK
+=existecaminho 3 1 OK
 
-=removearesta  'c' 'b' OK
-=removearesta  'c' 'b' ArestaNaoExiste
-=removearesta  'b' 'c' ArestaNaoExiste
-=existecaminho 'a' 'c' VerticesDesconexos
-=existecaminho 'c' 'a' VerticesDesconexos
+=removearesta  3 2 OK
+=removearesta  3 2 ArestaNaoExiste
+=removearesta  2 3 ArestaNaoExiste
+=existecaminho 1 3 VerticesDesconexos
+=existecaminho 3 1 VerticesDesconexos
 
 =destroigrafo OK
