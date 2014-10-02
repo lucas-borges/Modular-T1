@@ -1,0 +1,16 @@
+estudar
+especificar os módulos
+especificar as funções
+revisar especificações
+projetar
+revisar projetos
+codificar módulo
+revisar código do módulo
+redigir script de teste
+revisar script de teste
+realizar os testes
+diagnosticar e corrigir os problemas encontrados
+
+
+
+Data	 Horas Trabalhadas	 Tipo Tarefa		 Descrição da Tarefa Realizada

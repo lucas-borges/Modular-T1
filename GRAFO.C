@@ -479,7 +479,7 @@
 		   return GRF_CondRetArestaJaExiste; 
 	   } /* if */
 
-	   return GRF_CondRetVerticesDesconexos;
+	   return GRF_CondRetArestaNaoExiste;
 
  } /* Fim função: GRF  &Existe Aresta */
 
@@ -644,7 +644,7 @@
 
 			if(lis_ret!=LIS_CondRetOK)
 			{
-				return 0;
+				return -1;
 			}
 			vertice = ( tpVertice * ) temp ;
 
