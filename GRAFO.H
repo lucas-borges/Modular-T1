@@ -139,7 +139,7 @@ typedef struct GRF_tagGrafo * GRF_tppGrafo ;
 *  $AE Assertivas de entrada
 *	  - pGrafo é um ponteiro válido para um Grafo
 *	  - Valem as assertivas estruturais do grafo
-*	  - chave é um valor válido para uma chave
+*	  - chave é um valor válido para uma chave (inteiro não negativo)
 *
 *  $AS Assertivas de saída
 *	  - Se o grafo existe ele possui um vertice a mais

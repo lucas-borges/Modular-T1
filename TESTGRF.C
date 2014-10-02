@@ -22,37 +22,64 @@
 *     Comandos de teste específicos para testar o módulo lista:
 *
 *     
-*	  =criargrafo                    - chama a função GRF_CriarGrafo () que cria um grafo 
-*                                      de listas duplamente encadeadas vazio 
+*	  =criargrafo <CondRetEsp>                        - chama a função GRF_CriarGrafo () que cria um grafo 
+*                                                       de listas duplamente encadeadas vazio
+*														Obs. notação:
+*														<CondRetEsperada> é a condição de retorno
+*														que se espera do comando de teste. Estão
+*														descritas no GRAFO.H.
 *
-*	  =destroigrafo                  - chama a função GRF_DestroiGrafo () que desaloca
-*					                   todos os vertices do grafo e a cabeça do grafo.
+*	  =destroigrafo <CondRetEsp>                      - chama a função GRF_DestroiGrafo () que desaloca
+*					                                    todos os vertices do grafo e a cabeça do grafo.
 *
-*	  =inserevertice <Chave>         - chama função GRF_CriaVertice () para criar
-*						               um vertice com a chave passada como parametro
-*						               e em seguida insere o vertice na lista de 
-*						               vertices do grafo.
-*						               Obs. notação <Chave> = chave que identifica o
-*						               vertice
+*	  =inserevertice <Chave> <CondRetEsp>             - chama função GRF_CriaVertice () para criar
+*						                                um vertice com a chave passada como parametro
+*						                                e em seguida insere o vertice na lista de 
+*						                                vertices do grafo.
+*						                                Obs. notação:
+*														<Chave> é a chave que identifica o vértice
+*														tem de ser um inteiro não negativo
+*														<Char> é o caracter a ser inserido no vértice
 *
-*     =criaaresta <Chave> <Chave>    - chama a função GRF_CriaAresta () para criar
-*								       uma aresta entre os vertices correspondentes
-*								       às chaves passadas como parâmetro
+*     =criaaresta <Chave> <Chave> <CondRetEsp>        - chama a função GRF_CriaAresta () para criar
+*								                        uma aresta entre os vertices correspondentes
+*								                        às chaves passadas como parâmetro
 *
-*     =removearesta <Chave> <Chave>  - chama a função GRF_RemoveAresta () para remover
-*								       a aresta entre os dois vertices correspondentes 
-*								       às chaves passadas como parâmetro
+*     =removearesta <Chave> <Chave> <CondRetEsp>      - chama a função GRF_RemoveAresta () para remover
+*								                        a aresta entre os dois vertices correspondentes 
+*								                        às chaves passadas como parâmetro
 *
-*     =existecaminho <Chave> <Chave> - chama a função GRF_ObtemCaminho () para verificar
-*								       se os vertices correspondentes às chaves passadas
-*								       como parametro estão interligados por meio de arestas
+*     =existecaminho <Chave> <Chave> <CondRetEsp>     - chama a função GRF_ObtemCaminho () para verificar
+*								                        se os vertices correspondentes às chaves passadas
+*								                        como parametro estão interligados por meio de arestas
 *
-*     =existevertice <Chave>         - chama a função GRF_ExisteVertice () para verificar
-*								       se o vertice correspondente à chave passada como
-*								       parametro está contido no grafo
+*     =existevertice <Chave> <CondRetEsp>             - chama a função GRF_ExisteVertice () para verificar
+*								                        se o vertice correspondente à chave passada como
+*								                        parametro está contido no grafo
 *
-*     =esvaziagrafo                  - chama a função GRF_EsvaziaGrafo () que desaloca todos
-*								       os vertices do grafo
+*     =esvaziagrafo <CondRetEsp>                      - chama a função GRF_EsvaziaGrafo () que desaloca todos
+*								                        os vertices do grafo
+*
+*     =alteracorrente <Chave> <CondRetEsp>            - chama a função GRF_AlteraCorrente () que altera o
+*														vértice corrente para o especificado
+*
+*     =existearesta <Chave> <Chave> <CondRetEsp>      - chama a função GRF_ExisteAresta () para verificar
+*														se existe uma aresta entre os vértices identificados
+*														pelas chaves fornecidas
+*
+*     =irvizinho <Chave> <CondRetEsp>                 - chama a função GRF_IrVizinho () que move o corrente
+*														para o vértice de chave dada se eles são vizinhos
+*
+*     =obtercorrente <ChaveEsp> <CharEsp> <CondRetEsp> - chama a função GRF_ObterCorr () que obtém a chave
+*														 e o valor do vértice corrente e confere se são os
+*														 esperados
+*
+*     =alteravalorcorr <Char> <CondRetEsp>	     	  - chama a função GRF_AlterarValorCorr () para alterar
+*														o valor do vértice corrente para o char dado	
+*
+*     =caminhar <Chave> <CondRetEsp>                  - chama a função GRF_Caminhar () que move o corrente
+*														para o vértice da chave dada se eles estiverem 
+*														conectados
 *
 *
 *
