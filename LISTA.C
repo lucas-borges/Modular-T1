@@ -13,6 +13,7 @@
 *
 *  $HA Histórico de evolução:
 *     Versão  Autor    Data     Observações
+*     6		 csgslb	30/set/2014 documentação de assertivas de entrada e saída
 *	  5		 csgslb 03/set/2014 padronização de retornos para teste automatizado
 *								e dos nomes das funções
 *     4       avs   01/fev/2006 criar linguagem script simbólica

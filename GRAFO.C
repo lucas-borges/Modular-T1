@@ -12,7 +12,7 @@
 *
 *  $HA Histórico de evolução:
 *     Versão  Autor    Data     Observações
-*	  1		 csgslb 03/set/2014 início desenvolvimento
+*	  1		 csgslb 23/set/2014 início desenvolvimento
 *
 *
 ***************************************************************************/

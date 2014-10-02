@@ -13,13 +13,16 @@
 *
 *  $HA Histórico de evolução:
 *     Versão  Autor    Data     Observações
-*     1      csgslb 16/abr/2003 início desenvolvimento
+*     1      csgslb 23/set/2014 início desenvolvimento
 *
 *  $ED Descrição do módulo
 *     Implementa grafos não orientados utilizando listas 
 *	  genéricas duplamente encadeadas.
-*     Podem existir n listas em operação simultaneamente.
+*     Podem existir n grafos em operação simultaneamente.
 *     O grafo possui uma cabeça encapsulando o seu estado.
+*	  Cada vértice possui uma chave que o identifica. A chave
+*	  tem de ser um número inteiro não negativo. Dois vértices
+*	  não podem ter a mesma chave.
 *
 *
 *
