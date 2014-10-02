@@ -113,7 +113,7 @@ typedef struct GRF_tagGrafo * GRF_tppGrafo ;
 *
 ***********************************************************************/
 
-   GRF_tpCondRet GRF_CriarGrafo ( GRF_tppGrafo * ppGrafo , int ( * ComparaValor ) ( void * pValorA , void * pValorB ) , void (* ExcluirValor ) ( void * pValor ) );
+   GRF_tpCondRet GRF_CriarGrafo ( GRF_tppGrafo * ppGrafo , void ( * ExcluirValor ) ( void * pValor ) );
 
 
 /***********************************************************************
@@ -147,7 +147,7 @@ typedef struct GRF_tagGrafo * GRF_tppGrafo ;
 *
 ***********************************************************************/
 
-   GRF_tpCondRet GRF_CriaVertice ( GRF_tppGrafo pGrafo , void * pValor ) ;
+   GRF_tpCondRet GRF_CriaVertice ( GRF_tppGrafo pGrafo , void * pValor , int chave ) ;
 
 
    /***********************************************************************
@@ -189,7 +189,7 @@ typedef struct GRF_tagGrafo * GRF_tppGrafo ;
 ***********************************************************************/
 
 
-   GRF_tpCondRet GRF_CriaAresta(void * pValorA, void * pValorB, GRF_tppGrafo pGrafo);
+   GRF_tpCondRet GRF_CriaAresta(GRF_tpGrafo * pGrafo , int chaveA, int chaveB);
 
 
    /***********************************************************************

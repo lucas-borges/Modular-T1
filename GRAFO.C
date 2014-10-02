@@ -65,9 +65,6 @@
 
 		 tpVertice * pVerticeCorr;
 
-		 int ( * ComparaValor ) ( void * pValorA , void * pValorB ) ;
-			   /* Ponteiro para funçao que compara duas chaves, retornando 0 se iguais e 1 se diferentes */
-
 		 void ( * ExcluirValor ) ( void * pvalor ) ;
 			   /* Ponteiro para a função de destruição do valor contido em um vertice */
 
@@ -88,7 +85,7 @@
 *  Função: GRF  &Criar grafo
 *****/
 
-   GRF_tpCondRet GRF_CriarGrafo ( GRF_tppGrafo * ppGrafo , int ( * ComparaValor ) ( void * pValorA , void * pValorB ) , void ( * ExcluirValor ) ( void * pValor ) )
+   GRF_tpCondRet GRF_CriarGrafo ( GRF_tppGrafo * ppGrafo , void ( * ExcluirValor ) ( void * pValor ) )
    {
 
 	   *ppGrafo= ( GRF_tpGrafo * ) malloc ( sizeof ( GRF_tpGrafo )) ;
@@ -99,7 +96,6 @@
 
 	   LIS_CriarLista ( &( ( * ppGrafo ) -> vertices ) , DestruirVertice ) ; //ao destruir a lista de vértices tem que destruir o vértice
 	   (*ppGrafo)->ExcluirValor=ExcluirValor;
-	   (*ppGrafo)->ComparaValor=ComparaValor ;
 	   (*ppGrafo)->pVerticeCorr=NULL;
 
 	   return GRF_CondRetOK;
@@ -175,7 +171,7 @@
 	   LIS_tpCondRet lis_ret;
 	   int vertice_ret;
 	   tpVertice * verticeA, * verticeB;
-	   void * temp;
+	   void * pTemp;
 
 	   if(pGrafo==NULL)
 	   {
@@ -204,8 +200,13 @@
 	   
 	   /*Inserir Aresta de a para b e de b para a*/
 
-	   verticeA = ObterVertice (pGrafo,chaveA);
-	   verticeB = ObterVertice (pGrafo,chaveB);
+	   BuscarVertice ( chaveA , pGrafo->vertices ) ;
+	   LIS_ObterValor( pGrafo->vertices , &pTemp );
+	   verticeA = ( tpVertice * ) pTemp ;
+
+	   BuscarVertice ( chaveB , pGrafo->vertices ) ;
+	   LIS_ObterValor( pGrafo->vertices , &pTemp );
+	   verticeB = ( tpVertice * ) pTemp ;
 
 	   lis_ret= LIS_InserirElementoApos(verticeA->arestas,verticeB);
 
@@ -581,7 +582,7 @@
 	 LIS_ObterValor(pGrafo->vertices , &pTemp);
 	 verticeDestino = (tpVertice * ) pTemp ;
 	 
-	 if(GRF_ExisteCaminho(pGrafo,pGrafo->pVerticeCorr->chave,chaveDestino) != GRF_CondRetOK)
+	 if ( GRF_ExisteCaminho ( pGrafo , pGrafo->pVerticeCorr->chave , chaveDestino , NULL ) != GRF_CondRetOK )
 	 {
 		 return GRF_CondRetVerticesDesconexos;
 	 }
@@ -696,8 +697,12 @@
 		   proximo = ( tpVertice * ) temp ;
 
 		
-		   if ( EncontraCaminho ( proximo , destino ) == 1 )
+		   if ( EncontraCaminho ( proximo , destino , &buffer[1] ) == 1 )
 		   {
+			   if(buffer!=NULL)
+			   {
+					buffer[0]=atual->chave;
+		       }
 			   return 1 ;
 		   }/* if */
 
