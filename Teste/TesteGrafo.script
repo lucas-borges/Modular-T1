@@ -28,7 +28,6 @@
 =existevertice 1   VerticeNaoExiste
 =criaaresta    1 2 VerticeNaoExiste
 =removearesta  1 2 VerticeNaoExiste
-=existecaminho 1 2 VerticeNaoExiste
 
 == Inserir um vértice e verificar se existe
 =inserevertice 1 'a' OK
@@ -41,7 +40,6 @@
 =existevertice 2   VerticeNaoExiste
 =criaaresta    1 2 VerticeNaoExiste
 =removearesta  1 2 VerticeNaoExiste
-=existecaminho 1 2 VerticeNaoExiste
 
 == Verificar recuperar de ExisteVértice
 =existevertice 2 VerticeJaExiste
@@ -55,62 +53,4 @@
 =removearesta  1 2 ArestaNaoExiste
 =criaaresta    1 2 OK
 =criaaresta    2 1 ArestaJaExiste
-=existecaminho 1 2 OK
-=existecaminho 2 1 OK
 
-== Verificar situações relativas a duas partes desconexas
-=inserevertice 3 'c' OK
-=inserevertice 4 'd' OK
-=criaaresta    3 4   OK
-=existecaminho 4 3   OK
-=existecaminho 1 3   VerticesDesconexos
-=existecaminho 1 4   VerticesDesconexos
-=existecaminho 2 3   VerticesDesconexos
-=existecaminho 2 4   VerticesDesconexos
-
-== Verificar situações relativas a aresta removida
-=removearesta  1 2 OK
-=removearesta  2 1 ArestaNaoExiste
-=existecaminho 1 2 VerticesDesconexos
-=existecaminho 2 1 VerticesDesconexos
-
-== Verificar esvaziar grafo
-=esvaziagrafo        OK
-=existevertice 1     VerticeNaoExiste
-=criaaresta    2  3  VerticeNaoExiste
-=inserevertice 2 'b' OK
-=existevertice 2     VerticeJaExiste
-
-== Verificar Destroi Grafo
-=destroigrafo    OK
-=existevertice 1 GrafoNaoExiste
-=existevertice 2 GrafoNaoExiste
-
-
-
-== Verificar ExisteCaminho para grafo com trecho cíclico
-=criargrafo          OK
-=inserevertice 1 'a' OK
-=existevertice 1     VerticeJaExiste
-=inserevertice 2 'b' OK
-=existevertice 2     VerticeJaExiste
-=inserevertice 3 'c' OK
-=existevertice 3     VerticeJaExiste
-=inserevertice 4 'd' OK
-=existevertice 4     VerticeJaExiste
-
-=criaaresta 1 4 OK
-=criaaresta 1 2 OK
-=criaaresta 4 2 OK
-=criaaresta 2 3 OK
-
-=existecaminho 1 3 OK
-=existecaminho 3 1 OK
-
-=removearesta  3 2 OK
-=removearesta  3 2 ArestaNaoExiste
-=removearesta  2 3 ArestaNaoExiste
-=existecaminho 1 3 VerticesDesconexos
-=existecaminho 3 1 VerticesDesconexos
-
-=destroigrafo OK
