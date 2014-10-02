@@ -79,9 +79,10 @@
 =obtercorrente 4 'd' OK
 
 ==Verificar Ir Vizinho
-=irvizinho 3 OK
-=alteracorrente 1 OK
-=irvizinho 4 VerticesDesconexos
+=irvizinho      3     OK
+=obtercorrente  3 'c' OK
+=alteracorrente 1     OK
+=irvizinho      4     VerticesDesconexos
 
 == Verificar situações relativas a aresta removida
 =removearesta  1 2 OK
