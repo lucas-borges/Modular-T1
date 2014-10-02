@@ -685,7 +685,7 @@
 
 	   if ( atual->chave == destino->chave )
 	   {
-		   if(buffer!=NULL)
+		   if(buffer != NULL)
 		   {
 			   buffer[0]=atual->chave;
 		   }
@@ -704,12 +704,16 @@
 		   proximo = ( tpVertice * ) temp ;
 
 		
-		   if ( EncontraCaminho ( proximo , destino , &buffer[1] ) == 1 )
+		   if ( buffer!=NULL )
 		   {
-			   if(buffer!=NULL)
+			   if(EncontraCaminho ( proximo , destino , &buffer[1] ) == 1)
 			   {
 					buffer[0]=atual->chave;
+					return 1 ;
 		       }
+		   }/* if */
+		   else if (EncontraCaminho ( proximo , destino , NULL ) == 1 )
+		   {
 			   return 1 ;
 		   }/* if */
 
