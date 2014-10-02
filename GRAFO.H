@@ -227,7 +227,7 @@ typedef struct GRF_tagGrafo * GRF_tppGrafo ;
 *
 ***********************************************************************/
 
-   GRF_tpCondRet GRF_RemoveAresta(void * pValorA, void * pValorB, GRF_tppGrafo pGrafo);
+   GRF_tpCondRet GRF_RemoveAresta(GRF_tppGrafo pGrafo, int chaveA , int chaveB);
 
 
 /***********************************************************************
@@ -315,7 +315,7 @@ typedef struct GRF_tagGrafo * GRF_tppGrafo ;
 *
 ***********************************************************************/
 
-    GRF_tpCondRet GRF_ExisteCaminho ( GRF_tppGrafo pGrafo , void * verticeOrigem , void * verticeDestino );
+    GRF_tpCondRet GRF_ExisteCaminho ( GRF_tppGrafo pGrafo , int chaveOrigem , int chaveDestino , int * buffer );
 
 
 /***********************************************************************
@@ -346,7 +346,7 @@ typedef struct GRF_tagGrafo * GRF_tppGrafo ;
 *
 ***********************************************************************/
 
-	GRF_tpCondRet GRF_ExisteVertice ( GRF_tppGrafo pGrafo , void * pValor );
+	GRF_tpCondRet GRF_ExisteVertice ( GRF_tppGrafo pGrafo , int chave );
 
 
 /***********************************************************************
@@ -380,7 +380,17 @@ typedef struct GRF_tagGrafo * GRF_tppGrafo ;
 *
 ***********************************************************************/
 
-   GRF_tpCondRet GRF_CriaVerticeOrigem ( GRF_tppGrafo pGrafo , void * pValor );
+   GRF_tpCondRet GRF_AlteraCorrente ( GRF_tppGrafo pGrafo , int chave ) ;
+
+   GRF_tpCondRet GRF_ExisteAresta ( GRF_tppGrafo pGrafo , int chaveA , int chaveB ) ;
+
+   GRF_tpCondRet GRF_IrVizinho (GRF_tppGrafo pGrafo , int chave) ;
+
+   GRF_tpCondRet GRF_ObterCorr ( GRF_tppGrafo pGrafo , int * pChave , void ** ppValor );
+
+   GRF_tpCondRet GRF_AlterarValorCorr ( GRF_tppGrafo pGrafo , void * pValor );
+
+   GRF_tpCondRet GRF_Caminhar ( GRF_tppGrafo pGrafo , int chaveDestino ) ;
 
 
 /********** Fim do módulo de definição: GRF Grafo não orientado **********/
