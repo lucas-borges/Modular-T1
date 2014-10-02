@@ -402,7 +402,7 @@
 	   if ( pGrafo == NULL )
 	   {
 		   return GRF_CondRetGrafoNaoExiste;
-	   }
+	   }/* if */
 	   
 	   if (BuscarVertice(chave, pGrafo->vertices)==1)
 	   {
@@ -430,7 +430,7 @@
 	 if (BuscarVertice (chave, pGrafo->vertices)==-1)
 	 {
 		 return GRF_CondRetVerticeNaoExiste;
-	 }
+	 }/* if */
 	 
 	 LIS_ObterValor(pGrafo->vertices,&ptemp);
 	 pGrafo->pVerticeCorr=(tpVertice*)ptemp;
@@ -494,22 +494,24 @@
 	 if(pGrafo==NULL)
 	 {
 		 return GRF_CondRetGrafoNaoExiste ;
-	 }
+	 }/* if */
+
 	 if(GRF_ExisteVertice(pGrafo,chave)==GRF_CondRetVerticeNaoExiste)
 	 {
 		 return GRF_CondRetVerticeNaoExiste;
-	 }
+	 }/* if */
 
 	 if( BuscarVertice( chave , pGrafo->pVerticeCorr->arestas ) == -1 )
 	 {
 		 return GRF_CondRetVerticesDesconexos;
-	 }
+	 }/* if */
 
 	 LIS_ObterValor(pGrafo->pVerticeCorr->arestas,&pTemp);
 
 	 pGrafo->pVerticeCorr = (tpVertice * ) pTemp ;
 	 
 	 return GRF_CondRetOK;
+
  } /* Fim função: GRF  &Ir Vizinho */
 
  /***************************************************************************
@@ -522,12 +524,12 @@
 	 if(pGrafo==NULL)
 	 {
 		 return GRF_CondRetGrafoNaoExiste;
-	 }
+	 }/* if */
 
 	 if(pGrafo->pVerticeCorr==NULL)
 	 {
 		 return GRF_CondRetVerticeNaoExiste;
-	 }
+	 }/* if */
 
 	 *pChave = pGrafo->pVerticeCorr->chave ;
 	 * ppValor = pGrafo->pVerticeCorr->pValor ;
@@ -546,12 +548,12 @@
 	 if( pGrafo == NULL )
 	 {
 		 return GRF_CondRetGrafoNaoExiste;
-	 }
+	 }/* if */
 	 
 	 if(pGrafo->pVerticeCorr==NULL)
 	 {
 		 return GRF_CondRetVerticeNaoExiste;
-	 }
+	 }/* if */
 
 	 pGrafo->ExcluirValor(pGrafo->pVerticeCorr->pValor);
 
@@ -574,17 +576,17 @@
 	 if( pGrafo == NULL )
 	 {
 		 return GRF_CondRetGrafoNaoExiste ;
-	 }
+	 }/* if */
 
 	 if(pGrafo->pVerticeCorr==NULL)
 	 {
 		 return GRF_CondRetVerticeNaoExiste;
-	 }
+	 }/* if */
 
 	 if(GRF_ExisteVertice (pGrafo,chaveDestino) == GRF_CondRetVerticeNaoExiste )
 	 {
 		 return GRF_CondRetVerticeNaoExiste;
-	 }	 
+	 }/* if */	 
 
 	 LIS_ObterValor(pGrafo->vertices , &pTemp);
 	 verticeDestino = (tpVertice * ) pTemp ;
@@ -592,13 +594,13 @@
 	 if ( GRF_ExisteCaminho ( pGrafo , pGrafo->pVerticeCorr->chave , chaveDestino , NULL ) != GRF_CondRetOK )
 	 {
 		 return GRF_CondRetVerticesDesconexos;
-	 }
+	 }/* if */
 
 	 pGrafo->pVerticeCorr=verticeDestino;
 
 	 return GRF_CondRetOK;
 	 
- }
+ }/* Fim função: GRF  &Caminhar */
 
 /*****  Código das funções encapsuladas no módulo  *****/
 
@@ -688,7 +690,7 @@
 		   if(buffer != NULL)
 		   {
 			   buffer[0]=atual->chave;
-		   }
+		   }/* if */
 		   
 		   return 1;
 	   } /* if */
@@ -710,7 +712,7 @@
 			   {
 					buffer[0]=atual->chave;
 					return 1 ;
-		       }
+		       }/* if */
 		   }/* if */
 		   else if (EncontraCaminho ( proximo , destino , NULL ) == 1 )
 		   {

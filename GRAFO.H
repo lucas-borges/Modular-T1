@@ -143,6 +143,8 @@ typedef struct GRF_tagGrafo * GRF_tppGrafo ;
 *
 *  $AS Assertivas de saída
 *	  - Se o grafo existe ele possui um vertice a mais
+*     - O vertice criado será o vertice corrente do grafo
+*       SOMENTE se o grafo era vazio
 *	  - Valem as assertivas estruturais do grafo
 *
 ***********************************************************************/

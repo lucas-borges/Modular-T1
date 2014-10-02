@@ -13,7 +13,12 @@ Data	HorasTrabalhadas	Descrição			Detalhamento
 25/09		0.5		projetar			projetar função ExisteCaminho
 25/09		1.5		especificar as funções		implementar função ExisteCaminho
 25/09		1.5		revisar codigo do modulo	implementar mudanças no TSTGRAFO relativas as novas funções
-01/10		1		diagnosticar e corrigir		corrigir ExisteCaminho
-01/10		1		especificar as funções		projetar e implementar EsvaziarGrafo
-01/10		1		revisar código do modulo	realizar mudanças no TSTGRAFO e GRAFO.H relativas às novas funções
-01/10		1		revisar especificações		atualizar a documentaçao dos modulos GRAFO.H e TSTGRAFO
+30/09		1		diagnosticar e corrigir		corrigir ExisteCaminho
+30/09		1		especificar as funções		projetar e implementar EsvaziarGrafo
+30/09		1		revisar código do modulo	realizar mudanças no TSTGRAFO e GRAFO.H relativas às novas funções
+30/09		1		revisar especificações		atualizar a documentaçao dos modulos GRAFO.H e TSTGRAFO
+01/09		1		revisar projetos		revisar implementação do GRAFO
+01/09		1		projetar			projetar mudanças no modulo GRAFO
+01/09		2		especificar as funções		implementar novas funções do modulo GRAFO
+01/09		2		revisar especificações		atualizar a documentação do modulo GRAFO
+01/09		1		revisar especificações		atualizar a documentação do projeto
