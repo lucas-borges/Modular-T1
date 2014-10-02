@@ -43,6 +43,9 @@
 
          LIS_tppLista arestas ;
                /* Ponteiro para o elemento sucessor */	
+		 
+		 int chave ;
+			   /* Valor que representa chave do vertice */
 
 		 void ( * ExcluirValor ) ( void * pvalor ) ;
 			   /* Ponteiro para a função de destruição do valor contido em um vertice */
@@ -60,7 +63,7 @@
 
          LIS_tppLista vertices;
 
-		 LIS_tppLista origens;
+		 tpVertice * pVerticeCorr;
 
 		 int ( * ComparaValor ) ( void * pValorA , void * pValorB ) ;
 			   /* Ponteiro para funçao que compara duas chaves, retornando 0 se iguais e 1 se diferentes */
@@ -72,7 +75,7 @@
 
    /***** Protótipos das funções encapuladas no módulo *****/
 
-   int BuscarVertice ( void * pValor, LIS_tppLista pLista , int ( * ComparaValor ) ( void * pValorA , void * pValorB ) );
+   int BuscarVertice ( int chave , LIS_tppLista pLista );
 
    void DestruirVertice ( void * pVertice );
 
@@ -94,10 +97,10 @@
 		   return GRF_CondRetFaltouMemoria;
 	   } /* if */
 
-	   LIS_CriarLista ( &( ( * ppGrafo ) -> origens ) , NULL ) ;
 	   LIS_CriarLista ( &( ( * ppGrafo ) -> vertices ) , DestruirVertice ) ; //ao destruir a lista de vértices tem que destruir o vértice
 	   (*ppGrafo)->ExcluirValor=ExcluirValor;
 	   (*ppGrafo)->ComparaValor=ComparaValor ;
+	   (*ppGrafo)->pVerticeCorr=NULL;
 
 	   return GRF_CondRetOK;
 
@@ -109,18 +112,19 @@
 *  Função: GRF  &Criar Vertice
 *****/
    
- GRF_tpCondRet GRF_CriaVertice ( GRF_tppGrafo pGrafo , void * pValor ) 
+ GRF_tpCondRet GRF_CriaVertice ( GRF_tppGrafo pGrafo , void * pValor , int chave ) 
  {
 
 	   int Ret;
 	   tpVertice* vertice;
+	   
 
 	   if(pGrafo==NULL)
 	   {
 		   return GRF_CondRetGrafoNaoExiste;
 	   } /* if */
 
-	   if(BuscarVertice ( pValor , pGrafo->vertices , pGrafo->ComparaValor ) == 1 ) //Checa se o vertice já existe
+	   if(GRF_ExisteVertice ( pGrafo , chave ) == GRF_CondRetVerticeJaExiste ) //Checa se o vertice já existe
 	   {
 			return GRF_CondRetVerticeJaExiste ;
 	   } /* if */
@@ -137,6 +141,7 @@
 	   vertice->ExcluirValor=pGrafo->ExcluirValor;
 	   LIS_CriarLista ( &vertice->arestas , NULL ); //NULL pois a lista vai apontar para outros vértices e não queremos que 
 													//ao remover uma aresta os vértices que elas apontam sejam removidos também
+	   vertice->chave=chave;
 
 	   if( vertice->arestas == NULL )
 	   {
@@ -149,6 +154,10 @@
 		   return GRF_CondRetErroInserirVertice;
 	   } /* if */
 
+	   if(pGrafo->pVerticeCorr==NULL) //Caso seja o primeiro seta corrente
+	   {
+		   pGrafo->pVerticeCorr=vertice;
+	   } /* if */
 
 	   return GRF_CondRetOK;
 
@@ -160,7 +169,7 @@
 *  Função: GRF &Cria Aresta
 *****/
 
-   GRF_tpCondRet GRF_CriaAresta(void * pValorA, void * pValorB, GRF_tpGrafo * pGrafo)
+   GRF_tpCondRet GRF_CriaAresta(GRF_tpGrafo * pGrafo , int chaveA, int chaveB)
    {
 
 	   LIS_tpCondRet lis_ret;
@@ -175,36 +184,28 @@
 
 	   /*Verifica se os vertices existem*/
 
-	   vertice_ret=BuscarVertice(pValorA , pGrafo->vertices , pGrafo->ComparaValor );
-
-	   if(vertice_ret==0)  //vertice nao existe
+	   if(GRF_ExisteVertice(pGrafo , chaveA)==GRF_CondRetVerticeNaoExiste)  //vertice nao existe
 	   {
 		   return GRF_CondRetVerticeNaoExiste; 
 	   }/* if */
 
-	   LIS_ObterValor ( pGrafo->vertices, &temp ) ;
-	   verticeA = ( tpVertice * ) temp ;
-
-	   vertice_ret=BuscarVertice(pValorB ,pGrafo->vertices , pGrafo->ComparaValor );
-
-	   if(vertice_ret==0)  //vertice nao existe
+	   
+	   if(GRF_ExisteVertice(pGrafo , chaveB)==GRF_CondRetVerticeNaoExiste)  //vertice nao existe
 	   {
 		   return GRF_CondRetVerticeNaoExiste; 
 	   } /* if */
 
-	   LIS_ObterValor ( pGrafo->vertices, &temp ) ;
-	   verticeB = ( tpVertice * ) temp ;
-
 	   /*Verifica se aresta já existe*/
 
-	   vertice_ret=BuscarVertice(pValorB, verticeA->arestas , pGrafo->ComparaValor );
-
-	   if(vertice_ret==1)  //aresta já existe
+	   if(GRF_ExisteAresta(pGrafo,chaveA,chaveB)==GRF_CondRetArestaJaExiste)  //aresta já existe
 	   {
 		   return GRF_CondRetArestaJaExiste; 
-	   } /* if */
-
+	   } /* if */	   
+	   
 	   /*Inserir Aresta de a para b e de b para a*/
+
+	   verticeA = ObterVertice (pGrafo,chaveA);
+	   verticeB = ObterVertice (pGrafo,chaveB);
 
 	   lis_ret= LIS_InserirElementoApos(verticeA->arestas,verticeB);
 
@@ -230,12 +231,10 @@
 *  Função: GRF  &Remove Aresta
 *****/
    
-   GRF_tpCondRet GRF_RemoveAresta(void * pValorA, void * pValorB, GRF_tpGrafo * pGrafo)
+   GRF_tpCondRet GRF_RemoveAresta(GRF_tppGrafo pGrafo, int chaveA , int chaveB)
    {
 
-	   int vertice_ret;
-	   tpVertice * verticeA, *verticeB, *verticeC;
-	   void * temp;
+	   tpVertice * verticeA, *verticeB;
 	   
 	   if(pGrafo==NULL)
 	   {
@@ -244,41 +243,34 @@
 
 	    /*Verifica se os vertices existem*/
 
-	   vertice_ret=BuscarVertice(pValorA, pGrafo->vertices , pGrafo->ComparaValor );
-
-	   if(vertice_ret==0)//vertice nao existe
+	   if(GRF_ExisteVertice(pGrafo , chaveA)==GRF_CondRetVerticeNaoExiste)  //vertice nao existe
 	   {
 		   return GRF_CondRetVerticeNaoExiste; 
 	   }/* if */
 
-	   LIS_ObterValor ( pGrafo->vertices, &temp ) ;
-	   verticeA = ( tpVertice * ) temp ;
-
-	   vertice_ret=BuscarVertice(pValorB, pGrafo->vertices , pGrafo->ComparaValor );
-
-	   if(vertice_ret==0)//vertice nao existe
+	   
+	   if(GRF_ExisteVertice(pGrafo , chaveB)==GRF_CondRetVerticeNaoExiste)  //vertice nao existe
 	   {
 		   return GRF_CondRetVerticeNaoExiste; 
 	   } /* if */
 
-	   LIS_ObterValor ( pGrafo->vertices, &temp ) ;
-	   verticeB = ( tpVertice * ) temp ;
-	   
-	   /*Verifica se aresta existe*/
+	   /*Verifica se aresta já existe*/
 
-	   vertice_ret=BuscarVertice(pValorB, verticeA->arestas , pGrafo->ComparaValor );
-
-	   if(vertice_ret==0) //aresta nao existe
+	   if(GRF_ExisteAresta(pGrafo,chaveA,chaveB)==GRF_CondRetArestaJaExiste)  //aresta já existe
 	   {
-		   return GRF_CondRetArestaNaoExiste;
-	   } /* if */
+		   return GRF_CondRetArestaJaExiste; 
+	   } /* if */	   
+	   
+	   /*Excluir Aresta de a para b e de b para a*/
+
+	   verticeA = ObterVertice (pGrafo,chaveA);
+	   verticeB = ObterVertice (pGrafo,chaveB);
+	   
+	   BuscarVertice(chaveB, verticeA->arestas );
 	   
 	   LIS_ExcluirElemento(verticeA->arestas);
 	   
-	   vertice_ret=BuscarVertice(pValorA, verticeB->arestas , pGrafo->ComparaValor );
-	   
-	   LIS_ObterValor ( pGrafo->vertices, &temp ) ;
-	   verticeC = ( tpVertice * ) temp ;
+	   BuscarVertice(chaveA, verticeB->arestas );
 	   
 	   LIS_ExcluirElemento(verticeB->arestas);
 	   
@@ -300,7 +292,6 @@
 		   return ;
 	   } /* if */
 
-	   LIS_DestruirLista(pGrafo->origens);
 	   LIS_DestruirLista(pGrafo->vertices);
 	   free(pGrafo);
 
@@ -320,12 +311,12 @@
 		   return GRF_CondRetGrafoNaoExiste ;
 	   } /* if */
 
-	   LIS_EsvaziarLista ( pGrafo->origens ) ;
 	   LIS_EsvaziarLista ( pGrafo->vertices ) ;
+	   pGrafo->pVerticeCorr=NULL;
 	   
 	   return GRF_CondRetOK ;
 
-   } /* Fim função: GRF  &Existe Vértice */
+   } /* Fim função: GRF  &Esvaziar Grafo */
 
   
 /***************************************************************************
@@ -333,7 +324,7 @@
 *  Função: GRF  &Existe Caminho
 *****/
 
-   GRF_tpCondRet GRF_ExisteCaminho ( GRF_tppGrafo pGrafo , void * verticeOrigem , void * verticeDestino )
+   GRF_tpCondRet GRF_ExisteCaminho ( GRF_tppGrafo pGrafo , int chaveOrigem , int chaveDestino , int * buffer )
    {
 
 	   tpVertice * origem , * destino , * aux ;
@@ -344,7 +335,7 @@
 		   return GRF_CondRetGrafoNaoExiste ;
 	   } /* if */
 
-	   if ( BuscarVertice ( verticeOrigem , pGrafo->vertices , pGrafo->ComparaValor ) == 0 )
+	   if ( BuscarVertice ( chaveOrigem , pGrafo->vertices ) == -1 )
 	   {
 		   return GRF_CondRetVerticeNaoExiste ;
 	   } /* if */
@@ -357,7 +348,7 @@
 	   origem = ( tpVertice * ) temp ;
 
 
-	   if ( BuscarVertice ( verticeDestino , pGrafo->vertices , pGrafo->ComparaValor ) == 0 )
+	   if ( BuscarVertice ( chaveDestino , pGrafo->vertices ) == -1 )
 	   {
 		   return GRF_CondRetVerticeNaoExiste ;
 	   } /* if */
@@ -385,7 +376,7 @@
 
 	   LIS_IrInicioLista ( origem->arestas ) ;
 	   
-	   if ( EncontraCaminho ( origem , destino ) == 0 )
+	   if ( EncontraCaminho ( origem , destino , buffer) == -1 )
 	   {
 		   return GRF_CondRetVerticesDesconexos ;
 	   } /* if */
@@ -399,7 +390,7 @@
 *  Função: GRF  &Existe Vértice
 *****/
 
-   GRF_tpCondRet GRF_ExisteVertice ( GRF_tppGrafo pGrafo , void * pValor )
+   GRF_tpCondRet GRF_ExisteVertice ( GRF_tppGrafo pGrafo , int chave )
    {
 
 	   if ( pGrafo == NULL )
@@ -407,7 +398,7 @@
 		   return GRF_CondRetGrafoNaoExiste;
 	   }
 	   
-	   if (BuscarVertice(pValor, pGrafo->vertices, pGrafo->ComparaValor)==1)
+	   if (BuscarVertice(chave, pGrafo->vertices)==1)
 	   {
 		   return GRF_CondRetVerticeJaExiste;
 	   } /* if */
@@ -418,55 +409,188 @@
 
 /***************************************************************************
 *
-*  Função: GRF  &CriaVerticeOrigem
+*  Função: GRF  &Alterar Corrente
 *****/
    
- GRF_tpCondRet GRF_CriaVerticeOrigem ( GRF_tppGrafo pGrafo , void * pValor ) 
+ GRF_tpCondRet GRF_AlteraCorrente ( GRF_tppGrafo pGrafo , int chave ) 
  {
+	 void * ptemp;
 
-	   int Ret;
-	   GRF_tpCondRet ret_grafo;
-	   tpVertice* vertice;
-	   void * temp;
+	 if (pGrafo==NULL) 
+	 {
+		 return GRF_CondRetGrafoNaoExiste;
+	 } /* if */
 
+	 if (BuscarVertice (chave, pGrafo->vertices)==-1)
+	 {
+		 return GRF_CondRetVerticeNaoExiste;
+	 }
+	 
+	 LIS_ObterValor(pGrafo->vertices,&ptemp);
+	 pGrafo->pVerticeCorr=(tpVertice*)ptemp;
+
+	 return GRF_CondRetOK;
+
+   }  /* Fim função: GRF  &Alterar Corrente */
+
+ /***************************************************************************
+*
+*  Função: GRF  &Existe Aresta
+*****/
+   
+ GRF_tpCondRet GRF_ExisteAresta ( GRF_tppGrafo pGrafo , int chaveA , int chaveB ) 
+ { 
+	   tpVertice * verticeA, * verticeB;
+	   void * temp;   
+	 
 	   if(pGrafo==NULL)
 	   {
 		   return GRF_CondRetGrafoNaoExiste;
 	   } /* if */
 
-	   if(BuscarVertice ( pValor , pGrafo->origens , pGrafo->ComparaValor ) == 1 ) //Checa se o vértice já é origem
+	   /*Verifica se os vertices existem*/
+
+	   if(BuscarVertice(chaveA , pGrafo->vertices )==-1)  //vertice nao existe
 	   {
-		   return GRF_CondRetVerticeJaExiste;
+		   return GRF_CondRetVerticeNaoExiste; 
+	   }/* if */
+
+	   LIS_ObterValor ( pGrafo->vertices, &temp ) ;
+	   verticeA = ( tpVertice * ) temp ;
+
+	   if(BuscarVertice(chaveB ,pGrafo->vertices )==-1)  //vertice nao existe
+	   {
+		   return GRF_CondRetVerticeNaoExiste; 
 	   } /* if */
 
-	   if(BuscarVertice ( pValor , pGrafo->vertices , pGrafo->ComparaValor ) == 0 ) //Checa se o vertice já existe
+	   LIS_ObterValor ( pGrafo->vertices, &temp ) ;
+	   verticeB = ( tpVertice * ) temp ;
+
+	   /*Verifica se aresta já existe*/
+
+	   if(BuscarVertice(chaveB, verticeA->arestas )==1)  //aresta já existe
 	   {
-		   ret_grafo=GRF_CriaVertice ( pGrafo ,pValor );
-
-		   if(ret_grafo!=GRF_CondRetOK)
-		   {
-			   return ret_grafo;
-		   } /* if */
-
-		   LIS_ObterValor(pGrafo->vertices,&temp);
-		   vertice=(tpVertice*)temp;
-		 
-	   } else {
-		   LIS_ObterValor(pGrafo->vertices,&temp);
-		   vertice=(tpVertice*)temp;
+		   return GRF_CondRetArestaJaExiste; 
 	   } /* if */
 
-	   Ret=LIS_InserirElementoApos(pGrafo->origens,vertice); 
+	   return GRF_CondRetVerticesDesconexos;
 
-	   if( Ret != LIS_CondRetOK )
-	   {
-				return GRF_CondRetErroInserirVertice; 
-	   } /* if */
+ } /* Fim função: GRF  &Existe Aresta */
 
-	   return GRF_CondRetOK;
+ /***************************************************************************
+*
+*  Função: GRF  &Ir Vizinho
+*****/
+ GRF_tpCondRet GRF_IrVizinho (GRF_tppGrafo pGrafo , int chave)
+ {
+	 void * pTemp;
+	 
+	 if(pGrafo==NULL)
+	 {
+		 return GRF_CondRetGrafoNaoExiste ;
+	 }
+	 if(GRF_ExisteVertice(pGrafo,chave)==GRF_CondRetVerticeNaoExiste)
+	 {
+		 return GRF_CondRetVerticeNaoExiste;
+	 }
 
-   }  /* Fim função: GRF  &Criar Vertice Origem*/
+	 if( BuscarVertice( chave , pGrafo->pVerticeCorr->arestas ) == -1 )
+	 {
+		 return GRF_CondRetVerticesDesconexos;
+	 }
 
+	 LIS_ObterValor(pGrafo->pVerticeCorr->arestas,&pTemp);
+
+	 pGrafo->pVerticeCorr = (tpVertice * ) pTemp ;
+	 
+	 return GRF_CondRetOK;
+ } /* Fim função: GRF  &Ir Vizinho */
+
+ /***************************************************************************
+*
+*  Função: GRF  &Obter Corrente
+*****/
+
+ GRF_tpCondRet GRF_ObterCorr ( GRF_tppGrafo pGrafo , int * pChave , void ** ppValor )
+ {
+	 if(pGrafo==NULL)
+	 {
+		 return GRF_CondRetGrafoNaoExiste;
+	 }
+
+	 if(pGrafo->pVerticeCorr==NULL)
+	 {
+		 return GRF_CondRetVerticeNaoExiste;
+	 }
+
+	 *pChave = pGrafo->pVerticeCorr->chave ;
+	 * ppValor = pGrafo->pVerticeCorr->pValor ;
+
+	 return GRF_CondRetOK; 
+
+ }/* Fim função: GRF  &Obter Corrente */
+
+ /***************************************************************************
+*
+*  Função: GRF  &Alterar Valor Corr
+*****/
+
+ GRF_tpCondRet GRF_AlterarValorCorr ( GRF_tppGrafo pGrafo , void * pValor )
+ {
+	 if( pGrafo == NULL )
+	 {
+		 return GRF_CondRetGrafoNaoExiste;
+	 }
+	 
+	 if(pGrafo->pVerticeCorr==NULL)
+	 {
+		 return GRF_CondRetVerticeNaoExiste;
+	 }
+
+	 pGrafo->pVerticeCorr->pValor=pValor ;
+
+	 return GRF_CondRetOK;	
+
+ }/* Fim função: GRF  &Alterar Valor Corr */
+
+ /***************************************************************************
+*
+*  Função: GRF  &Caminhar
+*****/
+
+ GRF_tpCondRet GRF_Caminhar ( GRF_tppGrafo pGrafo , int chaveDestino )
+ {
+	 tpVertice * verticeDestino ;
+	 void * pTemp;
+
+	 if( pGrafo == NULL )
+	 {
+		 return GRF_CondRetGrafoNaoExiste ;
+	 }
+
+	 if(pGrafo->pVerticeCorr==NULL)
+	 {
+		 return GRF_CondRetVerticeNaoExiste;
+	 }
+
+	 if(GRF_ExisteVertice (pGrafo,chaveDestino) == GRF_CondRetVerticeNaoExiste )
+	 {
+		 return GRF_CondRetVerticeNaoExiste;
+	 }	 
+
+	 LIS_ObterValor(pGrafo->vertices , &pTemp);
+	 verticeDestino = (tpVertice * ) pTemp ;
+	 
+	 if(GRF_ExisteCaminho(pGrafo,pGrafo->pVerticeCorr->chave,chaveDestino) != GRF_CondRetOK)
+	 {
+		 return GRF_CondRetVerticesDesconexos;
+	 }
+
+	 pGrafo->pVerticeCorr=verticeDestino;
+
+	 return GRF_CondRetOK;
+	 
+ }
 
 /*****  Código das funções encapsuladas no módulo  *****/
 
@@ -498,7 +622,7 @@
 *
 ***********************************************************************/
 
-   int BuscarVertice ( void * pValor, LIS_tppLista pLista , int ( * ComparaValor ) ( void * pValorA , void * pValorB ) )
+   int BuscarVertice ( int chave , LIS_tppLista pLista )
    {
 
 	    void * temp;
@@ -516,7 +640,7 @@
 			}
 			vertice = ( tpVertice * ) temp ;
 
-			if ( ComparaValor ( pValor , vertice->pValor ) == 0 ) 
+			if ( vertice->chave == chave ) 
 			{
 				return 1;
 			} /* if */
@@ -524,7 +648,7 @@
 
 		} while ( LIS_AvancarElementoCorrente ( pLista , 1 ) == LIS_CondRetOK ) ;
 
-		return 0 ;
+		return -1 ;
 
    } /* Fim função: GRF  -Buscar Vértice */
 
@@ -537,7 +661,7 @@
 *
 ***********************************************************************/
   
-   int EncontraCaminho ( tpVertice * atual , tpVertice * destino )
+   int EncontraCaminho ( tpVertice * atual , tpVertice * destino , int * buffer)
    {
 	   void * temp ;
 	   tpVertice * proximo ;
@@ -545,20 +669,25 @@
 	     
 	   if ( atual->visitado == 1 )
 	   {
-		   return 0 ;
+		   return -1 ;
 	   } /* if */
 	   
 	   atual->visitado = 1 ;
 
 
-	   if ( atual->pValor == destino->pValor )
+	   if ( atual->chave == destino->chave )
 	   {
+		   if(buffer!=NULL)
+		   {
+			   buffer[0]=atual->chave;
+		   }
+		   
 		   return 1;
 	   } /* if */
 
 	   if(LIS_IrInicioLista(atual->arestas)!=LIS_CondRetOK)
 	   {
-		   return 0;
+		   return -1;
 	   } /* if */
 	   
 	   do
@@ -574,7 +703,7 @@
 
 	   } while(LIS_AvancarElementoCorrente ( atual->arestas , 1 )==LIS_CondRetOK);
 
-	   return 0 ;
+	   return -1 ;
 	  
 
    } /* Fim função: GRF  -Encontra caminho */
